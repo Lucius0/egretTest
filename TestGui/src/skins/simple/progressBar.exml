@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="400" height="220" xmlns:e="http://ns.egret-labs.org/egret" xmlns:w="http://ns.egret-labs.org/wing"
+        >
+<w:HostComponent name="egret.gui.ProgressBar"/>  //此处作为进度条对象名称
+<w:Declarations/>
+<e:states>
+	<e:State name="normal" />
+	<e:State name="disabled" />
+</e:states>
+<e:Rect id="track" fillColor="0xe6e6e6" strokeAlpha="1" strokeWeight="2" strokeColor="14210003" left="0" right="0"/>
+<e:Rect id="thumb" width="20" top="0" bottom="0" fillColor="822867"/>
+<e:Label id="labelDisplay" textAlign="center" verticalAlign="middle" maxDisplayedLines="1"
+         size="20" textColor="0x707070" left="5" right="5" verticalCenter="0" height="104"/>
+</e:Skin>

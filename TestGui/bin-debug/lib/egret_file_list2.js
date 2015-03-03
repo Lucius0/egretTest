@@ -1,0 +1,1 @@
+var egret_file_list = ["egret_all.js"];
