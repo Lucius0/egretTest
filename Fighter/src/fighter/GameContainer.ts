@@ -92,22 +92,22 @@ module fighter
             }
         }
         /**游戏开始*/
-        private gameStart():void{
-            this.myScore = 0;
-            this.removeChild(this.btnStart);
-            this.bg.start();
-            this.touchEnabled=true;
-            this.addEventListener(egret.Event.ENTER_FRAME,this.gameViewUpdate,this);
-            this.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.touchHandler,this);
-            this.myFighter.x = (this.stageW-this.myFighter.width)/2;
-            this.myFighter.fire();//开火
-            this.myFighter.blood = 10;
-            this.myFighter.addEventListener("createBullet",this.createBulletHandler,this);
-            this.enemyFightersTimer.addEventListener(egret.TimerEvent.TIMER,this.createEnemyFighter,this);
-            this.enemyFightersTimer.start();
-            if(this.scorePanel.parent==this)
-                this.removeChild(this.scorePanel);
-        }
+            private gameStart():void{
+                this.myScore = 0;
+                this.removeChild(this.btnStart);
+                this.bg.start();
+                this.touchEnabled=true;
+                this.addEventListener(egret.Event.ENTER_FRAME,this.gameViewUpdate,this);
+                this.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.touchHandler,this);
+                this.myFighter.x = (this.stageW-this.myFighter.width)/2;
+                this.myFighter.fire();//开火
+                this.myFighter.blood = 10;
+                this.myFighter.addEventListener("createBullet",this.createBulletHandler,this);
+                this.enemyFightersTimer.addEventListener(egret.TimerEvent.TIMER,this.createEnemyFighter,this);
+                this.enemyFightersTimer.start();
+                if(this.scorePanel.parent==this)
+                    this.removeChild(this.scorePanel);
+            }
         /**响应Touch*/
         private touchHandler(evt:egret.TouchEvent):void{
             if(evt.type==egret.TouchEvent.TOUCH_MOVE)
