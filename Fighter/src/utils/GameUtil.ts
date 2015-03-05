@@ -28,4 +28,13 @@ module fighter
         return result;
     }
 
+    export function isHtml5():boolean
+    {
+        return egret.MainContext.runtimeType == egret.MainContext.RUNTIME_HTML5;
+    }
+
+    export function isNative():boolean
+    {
+        return egret.MainContext.runtimeType == egret.MainContext.RUNTIME_NATIVE;
+    }
 }

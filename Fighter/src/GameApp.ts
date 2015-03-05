@@ -36,7 +36,7 @@ class GameApp extends egret.DisplayObjectContainer{
             this.addChild(gameContainer);
             //FPS
             egret.Profiler.getInstance().run();
-
+            //egret.Profiler.getInstance().deviceContext = new egret.HTML5DeviceContext(30);
         }
     }
     /**preload资源组加载进度*/

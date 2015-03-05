@@ -289,6 +289,7 @@ module fighter
                 this.removeChild(bullet);
                 fighter.Bullet.reclaim(bullet,"b1");
             }
+
             while(this.enemyBullets.length>0) {
                 bullet = this.enemyBullets.pop();
                 this.removeChild(bullet);
