@@ -1,0 +1,24 @@
+{
+	"groups":[
+	{
+		"keys":"stand,mikaPng,mikaJson",
+		"name":"mika"
+	}],
+	"resources":[
+	{
+		"name":"mikaPng",
+		"type":"image",
+		"url":"assets/simple/mika/mika.png"
+	},
+	{
+		"name":"stand",
+		"scale9grid":"1,1,36,55",
+		"type":"image",
+		"url":"assets/simple/mika/stand.png"
+	},
+	{
+		"name":"mikaJson",
+		"type":"json",
+		"url":"assets/simple/mika/mika.json"
+	}]
+}
