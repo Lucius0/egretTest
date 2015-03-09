@@ -1,2 +1,11 @@
 {"file":"map.png","frames":{
+<<<<<<< HEAD
 "map":{"x":0,"y":0,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440}}}
+=======
+"m1":{"x":885,"y":1,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440},
+"m2":{"x":1,"y":1,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440},
+"m3":{"x":1,"y":443,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440},
+"m4":{"x":443,"y":1,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440},
+"m5":{"x":443,"y":443,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440},
+"m6":{"x":885,"y":443,"w":440,"h":440,"offX":0,"offY":0,"sourceW":440,"sourceH":440}}}
+>>>>>>> 84a3da22c1bee0b2628aaba50f6d1d751febfa94

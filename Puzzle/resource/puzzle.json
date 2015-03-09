@@ -1,7 +1,11 @@
 {
   "groups":[
     {
+<<<<<<< HEAD
       "keys":"map_png, map_json, button_disabled_png, button_down_png, button_normal_png",
+=======
+      "keys":"bgImage, map_png, map_json, button_disabled_png, button_down_png, button_normal_png",
+>>>>>>> 84a3da22c1bee0b2628aaba50f6d1d751febfa94
       "name":"puzzle"
     }],
   "resources":[
@@ -12,7 +16,11 @@
     },
     {
       "name":"map_json",
+<<<<<<< HEAD
       "type":"json",
+=======
+      "type":"sheet",
+>>>>>>> 84a3da22c1bee0b2628aaba50f6d1d751febfa94
       "url":"assets/simple/puzzle/map.json"
     },
     {
@@ -32,5 +40,13 @@
       "scale9grid":"4,3,13,15",
       "type":"image",
       "url":"assets/simple/NormalButton/button_normal.png"
+<<<<<<< HEAD
+=======
+    },
+    {
+      "name":"bgImage",
+      "type":"image",
+      "url":"assets/white.jpg"
+>>>>>>> 84a3da22c1bee0b2628aaba50f6d1d751febfa94
     }]
 }
