@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-class Main2 extends egret.DisplayObjectContainer{
+class TweenTest extends egret.DisplayObjectContainer{
 
     /**
      * 加载进度界面
