@@ -21,13 +21,13 @@ class GuiTest extends egret.DisplayObjectContainer
     private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("preload");
+        RES.loadGroup("rollMc");
     }
     /**
      * preload资源组加载完成
      */
     private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload") {
+        if (event.groupName == "rollMc") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -68,7 +68,9 @@ class GuiTest extends egret.DisplayObjectContainer
         //
         //this.createTabWithViewStack();
         //
-        this.createTabWithArrayCollection();
+        //this.createTabWithArrayCollection();
+        //
+        this.createRollMc();
     }
 
     private createLabel():void
@@ -341,5 +343,15 @@ class GuiTest extends egret.DisplayObjectContainer
     private onBarItemClick(event:egret.gui.ListEvent):void
     {
         console.log(event.itemIndex);
+    }
+
+    private createRollMc():void
+    {
+        var data = RES.getRes("rollMc_json");
+        var texture = RES.getRes("rollMc_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        var mc:egret.MovieClip = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+
+        this.addChild(mc);
     }
 }
