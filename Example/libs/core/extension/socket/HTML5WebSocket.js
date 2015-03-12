@@ -26,12 +26,15 @@
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var HTML5WebSocket = (function () {
         function HTML5WebSocket() {
             this.host = "";
             this.port = 0;
             if (!window["WebSocket"]) {
-                egret.Logger.fatal("当前浏览器不支持WebSocket");
+                egret.Logger.fatalWithErrorId(3100);
             }
         }
         HTML5WebSocket.prototype.addCallBacks = function (onConnect, onClose, onSocketData, onError, thisObject) {
@@ -46,6 +49,7 @@ var egret;
             this.port = port;
             var socketServerUrl = "ws://" + this.host + ":" + this.port;
             this.socket = new window["WebSocket"](socketServerUrl);
+            this.socket.binaryType = "arraybuffer";
             this._bindEvent();
         };
         HTML5WebSocket.prototype._bindEvent = function () {

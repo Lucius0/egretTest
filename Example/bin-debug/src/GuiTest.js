@@ -25,13 +25,13 @@ var GuiTest = (function (_super) {
     GuiTest.prototype.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("preload");
+        RES.loadGroup("rollMc");
     };
     /**
      * preload资源组加载完成
      */
     GuiTest.prototype.onResourceLoadComplete = function (event) {
-        if (event.groupName == "preload") {
+        if (event.groupName == "rollMc") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -67,7 +67,9 @@ var GuiTest = (function (_super) {
         //
         //this.createTabWithViewStack();
         //
-        this.createTabWithArrayCollection();
+        //this.createTabWithArrayCollection();
+        //
+        this.createRollMc();
     };
     GuiTest.prototype.createLabel = function () {
         var label = new egret.gui.Label();
@@ -271,6 +273,51 @@ var GuiTest = (function (_super) {
     };
     GuiTest.prototype.onBarItemClick = function (event) {
         console.log(event.itemIndex);
+    };
+    GuiTest.prototype.createRollMc = function () {
+        var data = RES.getRes("rollMc_json");
+        var texture = RES.getRes("rollMc_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        this.mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+        this.mc.gotoAndStop(1);
+        this.addChild(this.mc);
+        this.mc.touchEnabled = true;
+        this.preHeight = this.stage.stageHeight;
+        this.curFrame = 1;
+        this.mc.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+        this.mc.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+    };
+    GuiTest.prototype.onTouchBegin = function (e) {
+        this.touchBeginY = e.stageY;
+    };
+    GuiTest.prototype.onTouchEnd = function (e) {
+        this.touchEndY = e.stageY;
+        if (this.touchEndY - this.touchBeginY < 0) {
+            this.curFrame--;
+            if (this.curFrame <= 0) {
+                this.curFrame = this.mc.totalFrames;
+            }
+            this.preHeight = -this.stage.stageHeight;
+        }
+        else {
+            this.curFrame++;
+            if (this.curFrame > this.mc.totalFrames) {
+                this.curFrame = 1;
+            }
+            this.preHeight = this.stage.stageHeight;
+        }
+        egret.Tween.removeTweens(this);
+        var tw = egret.Tween.get(this.mc);
+        this.mc.touchEnabled = false;
+        tw.to({ y: this.preHeight }, 1000);
+        tw.call(this.onCall, this);
+    };
+    GuiTest.prototype.onCall = function () {
+        this.mc.y = -this.preHeight;
+        this.mc.gotoAndStop(this.curFrame);
+        var tw = egret.Tween.get(this.mc);
+        tw.to({ y: 0 }, 1000);
+        this.mc.touchEnabled = true;
     };
     return GuiTest;
 })(egret.DisplayObjectContainer);

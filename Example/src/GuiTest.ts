@@ -345,13 +345,71 @@ class GuiTest extends egret.DisplayObjectContainer
         console.log(event.itemIndex);
     }
 
+    private mc:egret.MovieClip;
     private createRollMc():void
     {
         var data = RES.getRes("rollMc_json");
         var texture = RES.getRes("rollMc_png");
         var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
-        var mc:egret.MovieClip = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+        this.mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
 
-        this.addChild(mc);
+        this.mc.gotoAndStop(1);
+        this.addChild(this.mc);
+        this.mc.touchEnabled = true;
+        this.preHeight = this.stage.stageHeight;
+        this.curFrame = 1;
+        this.mc.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+        this.mc.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+    }
+
+    private touchBeginY:number;
+    private touchEndY:number;
+    private curFrame:number;
+    private preHeight:number;
+
+    private onTouchBegin(e:egret.TouchEvent):void
+    {
+        this.touchBeginY = e.stageY;
+    }
+
+    private onTouchEnd(e:egret.TouchEvent):void
+    {
+        this.touchEndY = e.stageY;
+
+        if(this.touchEndY - this.touchBeginY < 0)
+        {
+            this.curFrame--;
+            if(this.curFrame <= 0)
+            {
+                this.curFrame = this.mc.totalFrames;
+            }
+            this.preHeight = -this.stage.stageHeight;
+        }
+        else
+        {
+            this.curFrame++;
+            if(this.curFrame > this.mc.totalFrames)
+            {
+                this.curFrame = 1;
+            }
+            this.preHeight = this.stage.stageHeight;
+        }
+
+        egret.Tween.removeTweens(this);
+
+        var tw:egret.Tween = egret.Tween.get(this.mc);
+        this.mc.touchEnabled = false;
+        tw.to({y:this.preHeight}, 1000);
+        tw.call(this.onCall, this);
+    }
+
+
+    private onCall():void
+    {
+        this.mc.y = -this.preHeight;
+        this.mc.gotoAndStop(this.curFrame);
+        var tw:egret.Tween = egret.Tween.get(this.mc);
+        tw.to({y:0}, 1000);
+        this.mc.touchEnabled = true;
     }
 }

@@ -26,6 +26,9 @@
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var NativeSocket = (function () {
         function NativeSocket() {
             this.host = "";
