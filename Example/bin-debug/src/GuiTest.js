@@ -69,7 +69,9 @@ var GuiTest = (function (_super) {
         //
         //this.createTabWithArrayCollection();
         //
-        this.createRollMc();
+        //this.createRollMc();
+        //
+        this.createLightLine();
     };
     GuiTest.prototype.createLabel = function () {
         var label = new egret.gui.Label();
@@ -318,6 +320,10 @@ var GuiTest = (function (_super) {
         var tw = egret.Tween.get(this.mc);
         tw.to({ y: 0 }, 1000);
         this.mc.touchEnabled = true;
+    };
+    GuiTest.prototype.createLightLine = function () {
+        var light = new Light();
+        this.addChild(light);
     };
     return GuiTest;
 })(egret.DisplayObjectContainer);

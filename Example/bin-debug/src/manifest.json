@@ -1,11 +1,13 @@
 [
 	"skins\\simple\\CloseButtonSkin.exml",
+	"Line.ts",
 	"skins\\simple\\HScrollBarThumbSkin.exml",
 	"skins\\simple\\PuzzleSkin.exml",
 	"skins\\simple\\TitleWindowDemoSkin.exml",
 	"skins\\simple\\TreeDisclosureButtonSkin.exml",
 	"skins\\simple\\VScrollBarThumbSkin.exml",
 	"AssetAdapter.ts",
+	"Light.ts",
 	"PanelDemo.ts",
 	"skins\\simple\\DropDownListItemRendererSkin.exml",
 	"skins\\simple\\DropDownListOpenButtonSkin.exml",

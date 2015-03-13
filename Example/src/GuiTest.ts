@@ -70,7 +70,9 @@ class GuiTest extends egret.DisplayObjectContainer
         //
         //this.createTabWithArrayCollection();
         //
-        this.createRollMc();
+        //this.createRollMc();
+        //
+        this.createLightLine();
     }
 
     private createLabel():void
@@ -403,7 +405,6 @@ class GuiTest extends egret.DisplayObjectContainer
         tw.call(this.onCall, this);
     }
 
-
     private onCall():void
     {
         this.mc.y = -this.preHeight;
@@ -411,5 +412,11 @@ class GuiTest extends egret.DisplayObjectContainer
         var tw:egret.Tween = egret.Tween.get(this.mc);
         tw.to({y:0}, 1000);
         this.mc.touchEnabled = true;
+    }
+
+    private createLightLine():void
+    {
+        var light:Light = new Light();
+        this.addChild(light);
     }
 }

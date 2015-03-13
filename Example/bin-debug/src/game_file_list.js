@@ -1,11 +1,13 @@
 var game_file_list = [
 	"skins/simple/CloseButtonSkin.js",
+	"Line.js",
 	"skins/simple/HScrollBarThumbSkin.js",
 	"skins/simple/PuzzleSkin.js",
 	"skins/simple/TitleWindowDemoSkin.js",
 	"skins/simple/TreeDisclosureButtonSkin.js",
 	"skins/simple/VScrollBarThumbSkin.js",
 	"AssetAdapter.js",
+	"Light.js",
 	"PanelDemo.js",
 	"skins/simple/DropDownListItemRendererSkin.js",
 	"skins/simple/DropDownListOpenButtonSkin.js",
