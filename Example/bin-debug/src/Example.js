@@ -25,7 +25,7 @@ var Example = (function (_super) {
     Example.prototype.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        //RES.loadGroup("rollMc");
+        RES.loadGroup("1");
         RES.loadGroup("preload");
     };
     /**
@@ -35,6 +35,9 @@ var Example = (function (_super) {
         if (event.groupName == "preload") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
+        }
+        if (event.groupName == "1") {
+            alert("ok");
         }
     };
     Example.prototype.createScene = function () {
@@ -375,17 +378,17 @@ var Example = (function (_super) {
         mask.x = (this.stage.stageWidth - mask.width) / 2;
         mask.y = (this.stage.stageHeight - mask.height) / 2;
         mask.blendMode = egret.BlendMode.ERASE_REVERSE;
-        //this.addChild(mask);
-        //var texture = new egret.RenderTexture();
-        ////为保证擦除结果正确，传入clipRect参数，规定最终RenderTexture大小只有mask区域大小
-        //texture.drawToTexture(this, new egret.Rectangle(mask.x, mask.y, maskW, maskH));
-        //var bitmap = new egret.Bitmap(texture);
-        //bitmap.x = 200;
-        //egret.MainContext.instance.stage.addChild(bitmap);
+        this.addChild(mask);
+        var texture = new egret.RenderTexture();
+        //为保证擦除结果正确，传入clipRect参数，规定最终RenderTexture大小只有mask区域大小
+        texture.drawToTexture(this, new egret.Rectangle(mask.x, mask.y, maskW, maskH));
+        var bitmap = new egret.Bitmap(texture);
+        bitmap.x = 200;
+        egret.MainContext.instance.stage.addChild(bitmap);
         // 矩形遮罩，使用 DisplayObject.mask 属性
-        var hero2 = this.createBitmapByName("hero");
-        hero2.mask = new egret.Rectangle(mask.x, mask.y, maskW, maskH);
-        egret.MainContext.instance.stage.addChild(hero2);
+        //var hero2 = this.createBitmapByName("hero");
+        //hero2.mask = new egret.Rectangle(mask.x, mask.y, maskW, maskH);
+        //egret.MainContext.instance.stage.addChild(hero2);
     };
     return Example;
 })(egret.DisplayObjectContainer);

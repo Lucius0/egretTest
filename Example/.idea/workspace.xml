@@ -24,11 +24,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Example.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Example.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Example.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6961806" vertical-offset="11949" max-vertical-offset="12525">
-              <caret line="494" column="5" selection-start-line="494" selection-start-column="5" selection-end-line="494" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="529" max-vertical-offset="12600">
+              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SocketDemo.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/SocketDemo.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.08488964" vertical-offset="0" max-vertical-offset="1050">
+              <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NetDemo.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NetDemo.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="186" max-vertical-offset="775">
+              <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -37,8 +57,8 @@
       <file leaf-file-name="resource.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resource/resource.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.029411" vertical-offset="0" max-vertical-offset="8675">
-              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+            <state vertical-scroll-proportion="-3.6764705" vertical-offset="75" max-vertical-offset="8675">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -71,7 +91,6 @@
         <option value="$PROJECT_DIR$/src/skins/simple/progressBar.exml" />
         <option value="$PROJECT_DIR$/src/Main2.ts" />
         <option value="$PROJECT_DIR$/src/NetDemo.ts" />
-        <option value="$PROJECT_DIR$/src/SocketDemo.ts" />
         <option value="$PROJECT_DIR$/src/skins/PanelDemo.ts" />
         <option value="$PROJECT_DIR$/src/PanelDemo.ts" />
         <option value="$PROJECT_DIR$/src/skins/simple/PuzzleSkin.exml" />
@@ -90,6 +109,7 @@
         <option value="$PROJECT_DIR$/egretProperties.json" />
         <option value="$PROJECT_DIR$/resource/resource.json" />
         <option value="$PROJECT_DIR$/src/Example.ts" />
+        <option value="$PROJECT_DIR$/src/SocketDemo.ts" />
       </list>
     </option>
   </component>
@@ -361,7 +381,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -494,20 +514,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2386" max-vertical-offset="3425">
           <caret line="108" column="55" selection-start-line="108" selection-start-column="55" selection-end-line="108" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NetDemo.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="125" max-vertical-offset="775">
-          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SocketDemo.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="86" max-vertical-offset="975">
-          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -745,16 +751,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resource/resource.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.029411" vertical-offset="0" max-vertical-offset="8675">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        <state vertical-scroll-proportion="-3.6764705" vertical-offset="75" max-vertical-offset="8675">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Example.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6961806" vertical-offset="11949" max-vertical-offset="12525">
-          <caret line="494" column="5" selection-start-line="494" selection-start-column="5" selection-end-line="494" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="529" max-vertical-offset="12600">
+          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NetDemo.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="186" max-vertical-offset="775">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SocketDemo.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08488964" vertical-offset="0" max-vertical-offset="1050">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
           <folding />
         </state>
       </provider>

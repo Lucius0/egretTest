@@ -1,3 +1,6 @@
+/**
+ *
+ */
 class SocketDemo
 {
     private webSocket:egret.WebSocket;

@@ -21,7 +21,7 @@ class Example extends egret.DisplayObjectContainer
     private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        //RES.loadGroup("rollMc");
+        RES.loadGroup("rollMc");
         RES.loadGroup("preload");
     }
     /**
@@ -31,6 +31,9 @@ class Example extends egret.DisplayObjectContainer
         if (event.groupName == "preload") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
+        }
+        if(event.groupName == "rollMc") {
+            //alert("ok");
         }
     }
 
