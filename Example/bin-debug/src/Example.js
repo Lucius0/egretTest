@@ -71,7 +71,9 @@ var Example = (function (_super) {
         //
         //this.createRollMc();
         //
-        this.createLightLine();
+        //this.createLightLine();
+        //
+        this.createLocalStorage();
     };
     Example.prototype.createLabel = function () {
         var label = new egret.gui.Label();
@@ -324,6 +326,25 @@ var Example = (function (_super) {
     Example.prototype.createLightLine = function () {
         var light = new Light();
         this.addChild(light);
+    };
+    Example.prototype.createLocalStorage = function () {
+        var btn = new egret.gui.Button();
+        btn.label = "touch me";
+        btn.touchEnabled = true;
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickLocalStorage, this);
+        this.guiLayer.addElement(btn);
+    };
+    Example.prototype.clickLocalStorage = function () {
+        var value;
+        if (egret.localStorage.getItem("pro")) {
+            value = egret.localStorage.getItem("pro");
+        }
+        else {
+            value = "1";
+        }
+        console.log(value);
+        var v2 = (parseInt(value) + 1).toString();
+        egret.localStorage.setItem("pro", v2);
     };
     return Example;
 })(egret.DisplayObjectContainer);

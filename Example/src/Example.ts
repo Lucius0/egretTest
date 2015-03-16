@@ -72,7 +72,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createRollMc();
         //
-        this.createLightLine();
+        //this.createLightLine();
+        //
+        this.createLocalStorage();
     }
 
     private createLabel():void
@@ -418,5 +420,29 @@ class Example extends egret.DisplayObjectContainer
     {
         var light:Light = new Light();
         this.addChild(light);
+    }
+
+    private createLocalStorage():void
+    {
+        var btn:egret.gui.Button = new egret.gui.Button();
+        btn.label = "touch me";
+        btn.touchEnabled  = true;
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickLocalStorage, this);
+
+        this.guiLayer.addElement(btn);
+    }
+
+    private clickLocalStorage():void
+    {
+        var value:string;
+        if(egret.localStorage.getItem("pro")){
+            value =egret.localStorage.getItem("pro");
+        }else{
+            value="1";
+        }
+
+        console.log(value);
+        var v2:string = (parseInt(value)+1).toString();
+        egret.localStorage.setItem("pro",v2);
     }
 }
