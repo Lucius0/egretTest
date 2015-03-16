@@ -336,6 +336,26 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            Object.defineProperty(TextBase.prototype, "textHeight", {
+                /**
+                 * 文本全部显示时的高度（无行间距）
+                 */
+                get: function () {
+                    return this._textField == null ? 0 : this._textField.textHeight;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(TextBase.prototype, "textWidth", {
+                /**
+                 * 文本全部显示时宽
+                 */
+                get: function () {
+                    return this._textField == null ? 0 : this._textField.textWidth;
+                },
+                enumerable: true,
+                configurable: true
+            });
             /**
              * 创建组件的子对象
              */

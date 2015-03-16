@@ -98,7 +98,7 @@ var egret;
                 if (text === void 0) { text = ""; }
                 if (title === void 0) { title = ""; }
                 if (closeHandler === void 0) { closeHandler = null; }
-                if (firstButtonLabel === void 0) { firstButtonLabel = "确定"; }
+                if (firstButtonLabel === void 0) { firstButtonLabel = "OK"; }
                 if (secondButtonLabel === void 0) { secondButtonLabel = ""; }
                 if (modal === void 0) { modal = true; }
                 if (center === void 0) { center = true; }

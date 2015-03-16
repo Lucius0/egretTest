@@ -4604,6 +4604,14 @@ declare module egret.gui {
         _textFlowChanged: boolean;
         textFlow: Array<egret.ITextElement>;
         /**
+         * 文本全部显示时的高度（无行间距）
+         */
+        textHeight: number;
+        /**
+         * 文本全部显示时宽
+         */
+        textWidth: number;
+        /**
          * 创建组件的子对象
          */
         createChildren(): void;

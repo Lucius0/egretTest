@@ -242,7 +242,7 @@ declare module egret {
          */
         readBytes(bytes: ByteArray, offset?: number, length?: number): void;
         /**
-         * [只读] 表示此 Socket 对象目前是否已连接
+         * 表示此 Socket 对象目前是否已连接
          */
         connected: boolean;
         private _type;
