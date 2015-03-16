@@ -22,7 +22,7 @@
 	"uiskins\\TitleWindowDemo.ts",
 	"uiskins\\ToggleRenderer.ts",
 	"uiskins\\ViewStackDemo.ts",
-	"Example.ts",
+	"GuiTest.ts",
 	"skins\\simple\\AlertSkin.exml",
 	"skins\\simple\\ButtonSkin.exml",
 	"skins\\simple\\CheckBoxSkin.exml",

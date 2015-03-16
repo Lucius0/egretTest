@@ -500,7 +500,7 @@ var egret;
         };
         Object.defineProperty(TextField.prototype, "numLines", {
             /**
-             * 文本行数。
+             * 文本行数。【只读】
              * @member {number} egret.TextField#numLines
              */
             get: function () {

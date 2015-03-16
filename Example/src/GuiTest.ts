@@ -1,16 +1,12 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var Example = (function (_super) {
-    __extends(Example, _super);
-    function Example() {
-        _super.call(this);
+class GuiTest extends egret.DisplayObjectContainer
+{
+    constructor()
+    {
+        super();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
-    Example.prototype.onAddToStage = function (event) {
+
+    private onAddToStage(event: egret.Event) {
         //注入自定义的素材解析器
         egret.Injector.mapClass("egret.gui.IAssetAdapter", AssetAdapter);
         //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
@@ -18,27 +14,32 @@ var Example = (function (_super) {
         //初始化Resource资源加载库
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
-    };
+    }
     /**
      * 配置文件加载完成,开始预加载preload资源组。
      */
-    Example.prototype.onConfigComplete = function (event) {
+    private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadGroup("rollMc");
-    };
+    }
     /**
      * preload资源组加载完成
      */
-    Example.prototype.onResourceLoadComplete = function (event) {
+    private onResourceLoadComplete(event: RES.ResourceEvent): void {
         if (event.groupName == "rollMc") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
-    };
-    Example.prototype.createScene = function () {
+    }
+
+    private guiLayer:egret.gui.UIStage;
+
+    private createScene():void
+    {
         this.guiLayer = new egret.gui.UIStage();
         this.addChild(this.guiLayer);
+
         //this.createLabel();
         //
         //this.createButton();
@@ -71,12 +72,12 @@ var Example = (function (_super) {
         //
         //this.createRollMc();
         //
-        //this.createLightLine();
-        //
-        this.createLocalStorage();
-    };
-    Example.prototype.createLabel = function () {
-        var label = new egret.gui.Label();
+        this.createLightLine();
+    }
+
+    private createLabel():void
+    {
+        var label:egret.gui.Label = new egret.gui.Label();
         label.text = "测试文本";
         label.fontFamily = "Tahoma";
         label.size = 35;
@@ -85,21 +86,29 @@ var Example = (function (_super) {
         label.italic = true;
         label.textAlign = "center";
         this.guiLayer.addElement(label);
-    };
-    Example.prototype.createButton = function () {
-        var btn = new egret.gui.Button();
+    }
+
+    private createButton():void
+    {
+        var btn:egret.gui.Button = new egret.gui.Button();
         btn.label = "测试按钮";
         btn.y = 100;
         this.guiLayer.addElement(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchTapHandle, this);
-    };
-    Example.prototype.touchTapHandle = function (e) {
+    }
+
+    private touchTapHandle(e:egret.TouchEvent):void
+    {
         console.log("touch tap");
-    };
-    Example.prototype.createToggleButton = function () {
+    }
+
+    private toggleBtns:egret.gui.ToggleButton[];
+    private createToggleButton():void
+    {
         this.toggleBtns = [];
-        for (var i = 0; i < 4; i++) {
-            var btn = new egret.gui.ToggleButton();
+        for(var i:number = 0; i < 4; i++)
+        {
+            var btn:egret.gui.ToggleButton = new egret.gui.ToggleButton();
             btn.label = i + 1 + "";
             btn.y = 200;
             btn.width = 80;
@@ -108,39 +117,51 @@ var Example = (function (_super) {
             this.toggleBtns.push(btn);
             this.guiLayer.addElement(btn);
         }
-    };
-    Example.prototype.toggleBtnChange = function (e) {
-        for (var i = 0; i < this.toggleBtns.length; i++) {
-            var btn = this.toggleBtns[i];
+    }
+
+    private toggleBtnChange(e:egret.Event):void
+    {
+        for(var i:number = 0; i < this.toggleBtns.length; i++)
+        {
+            var btn:egret.gui.ToggleButton = this.toggleBtns[i];
             btn.selected = (btn == e.target);
         }
-    };
-    Example.prototype.createCheckBox = function () {
-        var cbx1 = new egret.gui.CheckBox();
+    }
+
+    private createCheckBox():void
+    {
+        var cbx1:egret.gui.CheckBox = new egret.gui.CheckBox();
         cbx1.addEventListener(egret.Event.CHANGE, this.checkBoxChangeHandld, this);
         cbx1.label = "checkBox1";
         cbx1.y = 300;
         this.guiLayer.addElement(cbx1);
-        var cbx2 = new egret.gui.CheckBox();
+
+        var cbx2:egret.gui.CheckBox = new egret.gui.CheckBox();
         cbx2.addEventListener(egret.Event.CHANGE, this.checkBoxChangeHandld, this);
         cbx2.label = "checkBox2";
         cbx2.y = 300;
         cbx2.x = cbx1.width + 120;
         this.guiLayer.addElement(cbx2);
-    };
-    Example.prototype.checkBoxChangeHandld = function (e) {
+    }
+
+    private checkBoxChangeHandld(e:egret.Event):void
+    {
         console.log(e.target.selected);
-    };
-    Example.prototype.createRadioButton = function () {
-        var radioGroup = new egret.gui.RadioButtonGroup();
+    }
+
+    private createRadioButton():void
+    {
+        var radioGroup:egret.gui.RadioButtonGroup = new egret.gui.RadioButtonGroup();
         radioGroup.addEventListener(egret.Event.CHANGE, this.radioButtonChangeHandle, this);
-        var rdb1 = new egret.gui.RadioButton();
+
+        var rdb1:egret.gui.RadioButton = new egret.gui.RadioButton();
         rdb1.label = "radion1";
         rdb1.value = 1;
         rdb1.y = 400;
         rdb1.group = radioGroup;
         this.guiLayer.addElement(rdb1);
-        var rdb2 = new egret.gui.RadioButton();
+
+        var rdb2:egret.gui.RadioButton = new egret.gui.RadioButton();
         rdb2.label = "radion2";
         rdb2.value = 2;
         rdb2.y = 400;
@@ -148,13 +169,17 @@ var Example = (function (_super) {
         rdb2.selected = true;
         rdb2.group = radioGroup;
         this.guiLayer.addElement(rdb2);
-    };
-    Example.prototype.radioButtonChangeHandle = function (e) {
-        var radioGroup = e.target;
+    }
+
+    private radioButtonChangeHandle(e:egret.Event):void
+    {
+        var radioGroup:egret.gui.RadioButtonGroup = e.target;
         console.log(radioGroup.selectedValue);
-    };
-    Example.prototype.createSlider = function () {
-        var hSlider = new egret.gui.HSlider();
+    }
+
+    private createSlider():void
+    {
+        var hSlider:egret.gui.HSlider = new egret.gui.HSlider();
         hSlider.width = 200;
         hSlider.y = 500;
         hSlider.minimum = 0;
@@ -162,11 +187,16 @@ var Example = (function (_super) {
         hSlider.value = 10;
         hSlider.addEventListener(egret.Event.CHANGE, this.slideChangeHandle, this);
         this.guiLayer.addElement(hSlider);
-    };
-    Example.prototype.slideChangeHandle = function (e) {
+    }
+
+    private slideChangeHandle(e:egret.Event):void
+    {
         console.log(e.target.value);
-    };
-    Example.prototype.createProgressBar = function () {
+    }
+
+    private pBar:egret.gui.ProgressBar;
+    private createProgressBar():void
+    {
         this.pBar = new egret.gui.ProgressBar();
         //this.pBar.hostComponentKey = "HProgressBar";
         this.pBar.y = 600;
@@ -177,61 +207,83 @@ var Example = (function (_super) {
         this.pBar.value = 0;
         this.pBar.labelFunction = this.barLabelFunction;
         this.guiLayer.addElement(this.pBar);
-        var timer = new egret.Timer(100, 100);
+        var timer:egret.Timer = new egret.Timer(100, 100);
         timer.addEventListener(egret.TimerEvent.TIMER, this.progressBarChange, this);
         timer.start();
-    };
-    Example.prototype.barLabelFunction = function (value, maximum) {
-        return "加载中... " + Math.ceil(value / maximum * 100) + "%";
-    };
-    Example.prototype.progressBarChange = function (e) {
+    }
+
+    private barLabelFunction(value:number,maximum:number):string
+    {
+        return "加载中... "+Math.ceil(value/maximum*100)+"%";
+    }
+
+    private progressBarChange(e:egret.TimerEvent):void {
         this.pBar.value += 1;
-    };
-    Example.prototype.createAlert = function () {
-        var btn = new egret.gui.Button();
+    }
+
+    private createAlert():void
+    {
+        var btn:egret.gui.Button = new egret.gui.Button();
         btn.label = "测试弹框";
         btn.y = 700;
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchTapCreateAlertHandler, this);
         this.guiLayer.addElement(btn);
-    };
-    Example.prototype.touchTapCreateAlertHandler = function (e) {
+    }
+
+    private touchTapCreateAlertHandler(e:egret.TouchEvent):void
+    {
         //var alert:egret.gui.Alert = new egret.gui.Alert();
         //alert.contentText = "a";
         //alert.title = "title";
         egret.gui.Alert.show("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊", "Title", this.confirmHandle, "OK", "CANCEL");
-    };
-    Example.prototype.confirmHandle = function (e) {
-        if (e.detail == egret.gui.Alert.FIRST_BUTTON) {
+    }
+
+    private confirmHandle(e:egret.gui.CloseEvent):void
+    {
+        if(e.detail == egret.gui.Alert.FIRST_BUTTON)
+        {
             console.log("用户点击了OK");
         }
-        else {
+        else
+        {
             console.log("用户点击了CANCEL");
         }
-    };
-    Example.prototype.createPanel = function () {
-        var panel = new uidemo.PanelDemo();
+    }
+
+    private createPanel():void
+    {
+        var panel:uidemo.PanelDemo = new uidemo.PanelDemo();
         this.guiLayer.addElement(panel);
-    };
-    Example.prototype.createDataGroup = function () {
-        var sourceArr = [];
-        for (var i = 1; i < 5; i++) {
-            sourceArr.push({ label: "item" + i });
+    }
+
+    private createDataGroup():void
+    {
+        var sourceArr:any[] = [];
+        for(var i:number = 1; i < 5; i++)
+        {
+            sourceArr.push({label:"item" + i});
         }
-        var myCollection = new egret.gui.ArrayCollection(sourceArr);
-        var dataGroup = new egret.gui.DataGroup();
+
+        var myCollection:egret.gui.ArrayCollection = new egret.gui.ArrayCollection(sourceArr);
+
+        var dataGroup:egret.gui.DataGroup = new egret.gui.DataGroup();
         dataGroup.itemRenderer = new egret.gui.ClassFactory(uiskins.LabelRenderer);
         dataGroup.dataProvider = myCollection;
         dataGroup.percentHeight = 100;
         dataGroup.percentWidth = 100;
         this.guiLayer.addElement(dataGroup);
-    };
-    Example.prototype.createList = function () {
-        var sourceArr = [];
-        for (var i = 1; i < 50; i++) {
-            sourceArr.push({ name: "item" + i });
+    }
+
+    private createList():void
+    {
+        var sourceArr:any[] = [];
+        for(var i:number = 1; i < 50; i++)
+        {
+            sourceArr.push({name:"item" + i});
         }
-        var myCollection = new egret.gui.ArrayCollection(sourceArr);
-        var dataList = new egret.gui.List();
+
+        var myCollection:egret.gui.ArrayCollection = new egret.gui.ArrayCollection(sourceArr);
+        var dataList:egret.gui.List = new egret.gui.List();
         dataList.itemRendererSkinName = "skins.simple.ToggleRendererSkin";
         dataList.itemRenderer = new egret.gui.ClassFactory(uiskins.ToggleRenderer);
         dataList.dataProvider = myCollection;
@@ -241,48 +293,68 @@ var Example = (function (_super) {
         dataList.selectedIndex = 0;
         dataList.addEventListener(egret.gui.ListEvent.ITEM_CLICK, this.listClickhandler, this);
         this.guiLayer.addElement(dataList);
-    };
-    Example.prototype.listClickhandler = function (e) {
-        console.log(e.item.name + " clicked");
-    };
-    Example.prototype.createTitleWindow = function () {
-        var tw = new uiskins.TitleWindowDemo();
+    }
+
+    private listClickhandler(e:egret.gui.ListEvent):void
+    {
+        console.log(e.item.name+" clicked");
+    }
+
+    private createTitleWindow():void
+    {
+        var tw:uiskins.TitleWindowDemo = new uiskins.TitleWindowDemo();
         this.guiLayer.addElement(tw);
-    };
-    Example.prototype.createViewStack = function () {
-        var vs = new uiskins.ViewStackDemo();
+    }
+
+    private createViewStack():void
+    {
+        var vs:uiskins.ViewStackDemo = new uiskins.ViewStackDemo();
         this.guiLayer.addElement(vs);
-    };
-    Example.prototype.createTabWithViewStack = function () {
-        var viewStack = new egret.gui.ViewStack();
-        for (var i = 0; i < 3; i++) {
-            var group = new egret.gui.Group();
+    }
+
+    private createTabWithViewStack():void
+    {
+        var viewStack:egret.gui.ViewStack = new egret.gui.ViewStack();
+        for(var i:number = 0; i < 3; i++)
+        {
+            var group:egret.gui.Group = new egret.gui.Group();
             group.name = "Group_" + i;
-            var btn = new egret.gui.Button();
+            var btn:egret.gui.Button = new egret.gui.Button();
             btn.label = "Button_" + i;
             group.addElement(btn);
             viewStack.addElement(group);
         }
+
         viewStack.selectedIndex = 0;
-        var tabBar = new egret.gui.TabBar();
+        var tabBar:egret.gui.TabBar = new egret.gui.TabBar();
         tabBar.dataProvider = viewStack;
+
         this.guiLayer.addElement(viewStack);
         this.guiLayer.addElement(tabBar);
-    };
-    Example.prototype.createTabWithArrayCollection = function () {
-        var tabBar = new egret.gui.TabBar();
+    }
+
+    private createTabWithArrayCollection():void
+    {
+        var tabBar:egret.gui.TabBar = new egret.gui.TabBar();
         tabBar.dataProvider = new egret.gui.ArrayCollection(["tab 1", "tab 2", "tab 3"]);
         tabBar.addEventListener(egret.gui.ListEvent.ITEM_CLICK, this.onBarItemClick, this);
+
         this.guiLayer.addElement(tabBar);
-    };
-    Example.prototype.onBarItemClick = function (event) {
+    }
+
+    private onBarItemClick(event:egret.gui.ListEvent):void
+    {
         console.log(event.itemIndex);
-    };
-    Example.prototype.createRollMc = function () {
+    }
+
+    private mc:egret.MovieClip;
+    private createRollMc():void
+    {
         var data = RES.getRes("rollMc_json");
         var texture = RES.getRes("rollMc_png");
         var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
         this.mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+
         this.mc.gotoAndStop(1);
         this.addChild(this.mc);
         this.mc.touchEnabled = true;
@@ -290,62 +362,61 @@ var Example = (function (_super) {
         this.curFrame = 1;
         this.mc.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         this.mc.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-    };
-    Example.prototype.onTouchBegin = function (e) {
+    }
+
+    private touchBeginY:number;
+    private touchEndY:number;
+    private curFrame:number;
+    private preHeight:number;
+
+    private onTouchBegin(e:egret.TouchEvent):void
+    {
         this.touchBeginY = e.stageY;
-    };
-    Example.prototype.onTouchEnd = function (e) {
+    }
+
+    private onTouchEnd(e:egret.TouchEvent):void
+    {
         this.touchEndY = e.stageY;
-        if (this.touchEndY - this.touchBeginY < 0) {
+
+        if(this.touchEndY - this.touchBeginY < 0)
+        {
             this.curFrame--;
-            if (this.curFrame <= 0) {
+            if(this.curFrame <= 0)
+            {
                 this.curFrame = this.mc.totalFrames;
             }
             this.preHeight = -this.stage.stageHeight;
         }
-        else {
+        else
+        {
             this.curFrame++;
-            if (this.curFrame > this.mc.totalFrames) {
+            if(this.curFrame > this.mc.totalFrames)
+            {
                 this.curFrame = 1;
             }
             this.preHeight = this.stage.stageHeight;
         }
+
         egret.Tween.removeTweens(this);
-        var tw = egret.Tween.get(this.mc);
+
+        var tw:egret.Tween = egret.Tween.get(this.mc);
         this.mc.touchEnabled = false;
-        tw.to({ y: this.preHeight }, 1000);
+        tw.to({y:this.preHeight}, 1000);
         tw.call(this.onCall, this);
-    };
-    Example.prototype.onCall = function () {
+    }
+
+    private onCall():void
+    {
         this.mc.y = -this.preHeight;
         this.mc.gotoAndStop(this.curFrame);
-        var tw = egret.Tween.get(this.mc);
-        tw.to({ y: 0 }, 1000);
+        var tw:egret.Tween = egret.Tween.get(this.mc);
+        tw.to({y:0}, 1000);
         this.mc.touchEnabled = true;
-    };
-    Example.prototype.createLightLine = function () {
-        var light = new Light();
+    }
+
+    private createLightLine():void
+    {
+        var light:Light = new Light();
         this.addChild(light);
-    };
-    Example.prototype.createLocalStorage = function () {
-        var btn = new egret.gui.Button();
-        btn.label = "touch me";
-        btn.touchEnabled = true;
-        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.localStorageClick, this);
-        this.guiLayer.addElement(btn);
-    };
-    Example.prototype.localStorageClick = function (e) {
-        var value;
-        if (egret.localStorage.getItem("pro")) {
-            value = egret.localStorage.getItem("pro");
-        }
-        else {
-            value = "1";
-        }
-        console.log(value);
-        var v2 = (parseInt(value) + 1).toString();
-        egret.localStorage.setItem("pro", v2);
-    };
-    return Example;
-})(egret.DisplayObjectContainer);
-Example.prototype.__class__ = "Example";
+    }
+}

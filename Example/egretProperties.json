@@ -1,5 +1,5 @@
 {
-	"document_class": "Example",
+	"document_class": "GuiTest",
 	"modules": [
 		{
 			"name": "core"
@@ -17,5 +17,5 @@
 	"native": {
 		"path_ignore": []
 	},
-	"egret_version": "1.6.0"
+	"egret_version": "1.5.5"
 }

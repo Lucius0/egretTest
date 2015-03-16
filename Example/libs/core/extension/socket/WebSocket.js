@@ -210,7 +210,7 @@ var egret;
         };
         Object.defineProperty(WebSocket.prototype, "connected", {
             /**
-             * 表示此 Socket 对象目前是否已连接
+             * [只读] 表示此 Socket 对象目前是否已连接
              */
             get: function () {
                 return this._connected;

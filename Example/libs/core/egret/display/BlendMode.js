@@ -38,17 +38,10 @@ var egret;
          */
         BlendMode.ADD = "add";
         /**
-         * 根据显示对象的 Alpha 值擦除背景。Alpha 值不为0的区域将被擦除。
+         * 根据显示对象的 Alpha 值擦除背景。
          * @constant {string} egret.BlendMode.ERASE
-         * @private
          */
         BlendMode.ERASE = "erase";
-        /**
-         * 根据显示对象的 Alpha 值擦除背景。Alpha 值为0的区域将被擦除。
-         * 注意：由于 CanvasAPI 的限制，只会保留 Alpha 值不为1的区域。
-         * @constant {string} egret.BlendMode.ERASE
-         */
-        BlendMode.ERASE_REVERSE = "erase_reverse";
         return BlendMode;
     })();
     egret.BlendMode = BlendMode;

@@ -174,7 +174,7 @@ var egret;
         };
         Object.defineProperty(DisplayObject.prototype, "parent", {
             /**
-             * 表示包含此显示对象的 DisplayObjectContainer 对象。
+             * 表示包含此显示对象的 DisplayObjectContainer 对象。【只读】
              * 使用 parent 属性可以指定高于显示列表层次结构中当前显示对象的显示对象的相对路径。
              * @member {egret.DisplayObjectContainer} egret.DisplayObject#parent
              */
@@ -621,7 +621,7 @@ var egret;
             if (mask && !isCommandPush) {
                 renderContext.pushMask(mask);
             }
-            o._render(renderContext);
+            this._render(renderContext);
             if (mask && !isCommandPush) {
                 renderContext.popMask();
             }
@@ -631,7 +631,7 @@ var egret;
             if (o._filter && !isCommandPush) {
                 renderContext.setGlobalFilter(null);
             }
-            o.destroyCacheBounds();
+            this.destroyCacheBounds();
         };
         DisplayObject.prototype._setGlobalFilter = function (renderContext) {
             var o = this;
@@ -699,7 +699,7 @@ var egret;
             o._calculateWorldTransform();
             if (egret.MainContext._renderLoopPhase == "updateTransform") {
                 if (o.needDraw || o._texture_to_render || o._cacheAsBitmap) {
-                    egret.RenderCommand.push(o._draw, o);
+                    egret.RenderCommand.push(this._draw, this);
                 }
             }
         };
@@ -974,7 +974,7 @@ var egret;
         };
         Object.defineProperty(DisplayObject.prototype, "stage", {
             /**
-             * 显示对象的舞台。
+             * 显示对象的舞台。【只读】
              * 例如，您可以创建多个显示对象并加载到显示列表中，每个显示对象的 stage 属性是指相同的 Stage 对象。
              * 如果显示对象未添加到显示列表，则其 stage 属性会设置为 null。
              * @member {number} egret.DisplayObject#stage
