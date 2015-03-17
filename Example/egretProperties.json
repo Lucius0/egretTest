@@ -12,6 +12,10 @@
 		},
 		{
 			"name": "socket"
+		},
+		{
+			"name": "particle",
+		  	"path": "."
 		}
 	],
 	"native": {

@@ -23,12 +23,13 @@ class Example extends egret.DisplayObjectContainer
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadGroup("rollMc");
         RES.loadGroup("preload");
+        RES.loadGroup("particle");
     }
     /**
      * preload资源组加载完成
      */
     private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload") {
+        if (event.groupName == "preload" || event.groupName == "particle") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -80,7 +81,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createLocalStorage();
         //
-        this.createMask();
+        //this.createMask();
+
+        this.createParticle();
     }
 
     /**
@@ -495,5 +498,11 @@ class Example extends egret.DisplayObjectContainer
         //var hero2 = this.createBitmapByName("hero");
         //hero2.mask = new egret.Rectangle(mask.x, mask.y, maskW, maskH);
         //egret.MainContext.instance.stage.addChild(hero2);
+    }
+
+    private createParticle():void
+    {
+        var p:ParticleDemo = new ParticleDemo();
+        this.addChild(p);
     }
 }

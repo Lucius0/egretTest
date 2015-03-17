@@ -7,8 +7,22 @@
 	{
 		"keys":"rollMc_png,rollMc_json",
 	  	"name":"rollMc"
+	},
+	{
+	  	"keys":"particle_json,particle_png",
+	  	"name":"particle"
 	}],
 	"resources":[
+	{
+	  "name":"particle_json",
+	  "type":"json",
+	  "url":"assets/simple/Particle/newParticle.json"
+	},
+	{
+	  "name":"particle_png",
+	  "type":"image",
+	  "url":"assets/simple/Particle/newParticle.png"
+	},
 	{
 	  "name":"hero",
 	  "type":"image",

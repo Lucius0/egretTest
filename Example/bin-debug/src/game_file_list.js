@@ -9,6 +9,7 @@ var game_file_list = [
 	"AssetAdapter.js",
 	"Light.js",
 	"PanelDemo.js",
+	"ParticleDemo.js",
 	"skins/simple/DropDownListItemRendererSkin.js",
 	"skins/simple/DropDownListOpenButtonSkin.js",
 	"skins/simple/HScrollBarSkin.js",

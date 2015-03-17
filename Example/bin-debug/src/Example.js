@@ -25,19 +25,19 @@ var Example = (function (_super) {
     Example.prototype.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("1");
+        RES.loadGroup("rollMc");
         RES.loadGroup("preload");
+        RES.loadGroup("particle");
     };
     /**
      * preload资源组加载完成
      */
     Example.prototype.onResourceLoadComplete = function (event) {
-        if (event.groupName == "preload") {
+        if (event.groupName == "preload" || event.groupName == "particle") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
-        if (event.groupName == "1") {
-            alert("ok");
+        if (event.groupName == "rollMc") {
         }
     };
     Example.prototype.createScene = function () {
@@ -79,7 +79,8 @@ var Example = (function (_super) {
         //
         //this.createLocalStorage();
         //
-        this.createMask();
+        //this.createMask();
+        this.createParticle();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -389,6 +390,10 @@ var Example = (function (_super) {
         //var hero2 = this.createBitmapByName("hero");
         //hero2.mask = new egret.Rectangle(mask.x, mask.y, maskW, maskH);
         //egret.MainContext.instance.stage.addChild(hero2);
+    };
+    Example.prototype.createParticle = function () {
+        var p = new ParticleDemo();
+        this.addChild(p);
     };
     return Example;
 })(egret.DisplayObjectContainer);

@@ -194,5 +194,9 @@ var egret_file_list = [
 	"core/extension/gui/managers/PopUpManager.js",
 	"core/extension/socket/HTML5WebSocket.js",
 	"core/extension/socket/NativeSocket.js",
-	"core/extension/socket/WebSocket.js"
+	"core/extension/socket/WebSocket.js",
+	"particle/Particle.js",
+	"particle/ParticleSystem.js",
+	"particle/GravityParticle.js",
+	"particle/GravityParticleSystem.js"
 ];
