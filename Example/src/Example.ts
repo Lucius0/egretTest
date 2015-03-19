@@ -21,15 +21,16 @@ class Example extends egret.DisplayObjectContainer
     private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("rollMc");
-        RES.loadGroup("preload");
-        RES.loadGroup("particle");
+        //RES.loadGroup("rollMc");
+        //RES.loadGroup("preload");
+        //RES.loadGroup("particle");
+        RES.loadGroup("btnSource");
     }
     /**
      * preload资源组加载完成
      */
     private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload" || event.groupName == "particle") {
+        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -82,8 +83,10 @@ class Example extends egret.DisplayObjectContainer
         //this.createLocalStorage();
         //
         //this.createMask();
+        //
+        //this.createParticle();
 
-        this.createParticle();
+        this.createButtonByCustomerSkin();
     }
 
     /**
@@ -396,7 +399,7 @@ class Example extends egret.DisplayObjectContainer
     }
 
     private onTouchEnd(e:egret.TouchEvent):void
-    {
+    {e.stopPropagation()
         this.touchEndY = e.stageY;
 
         if(this.touchEndY - this.touchBeginY < 0)
@@ -504,5 +507,12 @@ class Example extends egret.DisplayObjectContainer
     {
         var p:ParticleDemo = new ParticleDemo();
         this.addChild(p);
+    }
+
+    private createButtonByCustomerSkin():void
+    {
+        var btn:egret.gui.Button = new egret.gui.Button();
+        btn.skinName = "skins.simple.TestButtonSkin";
+        this.guiLayer.addElement(btn);
     }
 }

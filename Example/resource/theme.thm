@@ -1,6 +1,7 @@
 {
 	"skins":
 	{
+		"ToggleOnOffButton":"skins.simple.ToggleSwitchSkin",
 		"egret.gui.Alert":"skins.simple.AlertSkin",
 		"egret.gui.Button":"skins.simple.ButtonSkin",
 		"egret.gui.CheckBox":"skins.simple.CheckBoxSkin",
@@ -22,7 +23,6 @@
 		"egret.gui.TitleWindow":"skins.simple.TitleWindowSkin",
 		"egret.gui.ToggleButton":"skins.simple.ToggleButtonSkin",
 		"egret.gui.ToggleSwitch":"skins.simple.ToggleSwitchSkin",
-		"ToggleOnOffButton":"skins.simple.ToggleSwitchSkin",
 		"egret.gui.Tree":"skins.simple.TreeSkin",
 		"egret.gui.TreeItemRenderer":"skins.simple.TreeItemRendererSkin",
 		"egret.gui.VScrollBar":"skins.simple.VScrollBarSkin",

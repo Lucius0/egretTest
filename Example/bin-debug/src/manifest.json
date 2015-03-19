@@ -15,6 +15,7 @@
 	"skins\\simple\\HScrollBarSkin.exml",
 	"skins\\simple\\HSliderThumbSkin.exml",
 	"skins\\simple\\TabBarButtonSkin.exml",
+	"skins\\simple\\TestButtonSkin.exml",
 	"skins\\simple\\ToggleRendererSkin.exml",
 	"skins\\simple\\TreeItemRendererSkin.exml",
 	"skins\\simple\\VScrollBarSkin.exml",

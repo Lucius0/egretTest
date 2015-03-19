@@ -15,6 +15,7 @@ var game_file_list = [
 	"skins/simple/HScrollBarSkin.js",
 	"skins/simple/HSliderThumbSkin.js",
 	"skins/simple/TabBarButtonSkin.js",
+	"skins/simple/TestButtonSkin.js",
 	"skins/simple/ToggleRendererSkin.js",
 	"skins/simple/TreeItemRendererSkin.js",
 	"skins/simple/VScrollBarSkin.js",

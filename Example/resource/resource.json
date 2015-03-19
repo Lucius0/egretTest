@@ -11,8 +11,18 @@
 	{
 	  	"keys":"particle_json,particle_png",
 	  	"name":"particle"
+	},
+	{
+		"keys":"btn_json",
+		"name":"btnSource"
 	}],
 	"resources":[
+	{
+	  "name":"btn_json",
+	  "subkeys":"custom_down,custom_normal,icon_down,icon_normal,music_down,music_non_down,music_non_normal,music_normal,pause_down,pause_normal,play_down,play_normal,retry2_down,retry2_normal,retry_down,retry_normal,return_down,return_normal,setting_down,setting_normal,sound_down,sound_non_down,sound_non_normal,sound_normal",
+	  "type":"sheet",
+	  "url":"assets/simple/ButtonSource/btn.json"
+	},
 	{
 	  "name":"particle_json",
 	  "type":"json",
