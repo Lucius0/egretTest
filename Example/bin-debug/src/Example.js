@@ -25,21 +25,22 @@ var Example = (function (_super) {
     Example.prototype.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        //RES.loadGroup("rollMc");
+        RES.loadGroup("rollMc");
         //RES.loadGroup("preload");
         //RES.loadGroup("particle");
-        RES.loadGroup("btnSource");
+        //RES.loadGroup("btnSource");
     };
     /**
      * preload资源组加载完成
      */
     Example.prototype.onResourceLoadComplete = function (event) {
-        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource") {
+        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
-        if (event.groupName == "rollMc") {
-        }
+        //if(event.groupName == "rollMc") {
+        //    //alert("ok");
+        //}
     };
     Example.prototype.createScene = function () {
         this.guiLayer = new egret.gui.UIStage();
@@ -83,7 +84,9 @@ var Example = (function (_super) {
         //this.createMask();
         //
         //this.createParticle();
-        this.createButtonByCustomerSkin();
+        //
+        //this.createButtonByCustomerSkin();
+        this.createMc();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -314,6 +317,7 @@ var Example = (function (_super) {
         this.touchBeginY = e.stageY;
     };
     Example.prototype.onTouchEnd = function (e) {
+        e.stopPropagation();
         this.touchEndY = e.stageY;
         if (this.touchEndY - this.touchBeginY < 0) {
             this.curFrame--;
@@ -402,6 +406,21 @@ var Example = (function (_super) {
         var btn = new egret.gui.Button();
         btn.skinName = "skins.simple.TestButtonSkin";
         this.guiLayer.addElement(btn);
+    };
+    Example.prototype.createMc = function () {
+        var data = RES.getRes("rollMc_json");
+        var texture = RES.getRes("rollMc_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        this.mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+        this.mc.gotoAndPlay(1);
+        this.mc.addEventListener(egret.Event.COMPLETE, this.playOver, this);
+        this.addChild(this.mc);
+    };
+    Example.prototype.playOver = function (e) {
+        this.mc.removeEventListener(egret.Event.COMPLETE, this.playOver, this);
+        if (e.target) {
+            e.target.parent.removeChild(e.target);
+        }
     };
     return Example;
 })(egret.DisplayObjectContainer);

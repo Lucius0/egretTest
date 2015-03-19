@@ -21,22 +21,22 @@ class Example extends egret.DisplayObjectContainer
     private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        //RES.loadGroup("rollMc");
+        RES.loadGroup("rollMc");
         //RES.loadGroup("preload");
         //RES.loadGroup("particle");
-        RES.loadGroup("btnSource");
+        //RES.loadGroup("btnSource");
     }
     /**
      * preload资源组加载完成
      */
     private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource") {
+        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
-        if(event.groupName == "rollMc") {
-            //alert("ok");
-        }
+        //if(event.groupName == "rollMc") {
+        //    //alert("ok");
+        //}
     }
 
     private guiLayer:egret.gui.UIStage;
@@ -85,8 +85,10 @@ class Example extends egret.DisplayObjectContainer
         //this.createMask();
         //
         //this.createParticle();
+        //
+        //this.createButtonByCustomerSkin();
 
-        this.createButtonByCustomerSkin();
+        this.createMc();
     }
 
     /**
@@ -514,5 +516,26 @@ class Example extends egret.DisplayObjectContainer
         var btn:egret.gui.Button = new egret.gui.Button();
         btn.skinName = "skins.simple.TestButtonSkin";
         this.guiLayer.addElement(btn);
+    }
+
+    private createMc():void
+    {
+        var data = RES.getRes("rollMc_json");
+        var texture = RES.getRes("rollMc_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        this.mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+
+        this.mc.gotoAndPlay(1);
+        this.mc.addEventListener(egret.Event.COMPLETE, this.playOver, this);
+        this.addChild(this.mc);
+    }
+
+    private playOver(e:egret.Event):void
+    {
+        this.mc.removeEventListener(egret.Event.COMPLETE, this.playOver, this);
+        if(e.target)
+        {
+            e.target.parent.removeChild(e.target);
+        }
     }
 }
