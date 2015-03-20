@@ -87,8 +87,11 @@ class Example extends egret.DisplayObjectContainer
         //this.createParticle();
         //
         //this.createButtonByCustomerSkin();
-
-        this.createMc();
+        //
+        //this.createMc();
+        //
+        this.createRectWithBorder();
+        //this.test();
     }
 
     /**
@@ -537,5 +540,15 @@ class Example extends egret.DisplayObjectContainer
         {
             e.target.parent.removeChild(e.target);
         }
+    }
+
+    private createRectWithBorder():void
+    {
+        var sp:egret.Sprite = new egret.Sprite();
+        sp.graphics.lineStyle(2, 0xFFFFFF, 1); // 边框有条线
+        sp.graphics.beginFill(0x3476CD);
+        sp.graphics.drawRect(0, 0, 100, 100)
+        sp.graphics.endFill();
+        this.stage.addChild(sp);
     }
 }

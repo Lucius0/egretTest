@@ -86,7 +86,10 @@ var Example = (function (_super) {
         //this.createParticle();
         //
         //this.createButtonByCustomerSkin();
-        this.createMc();
+        //
+        //this.createMc();
+        //
+        this.test();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -421,6 +424,14 @@ var Example = (function (_super) {
         if (e.target) {
             e.target.parent.removeChild(e.target);
         }
+    };
+    Example.prototype.test = function () {
+        var sp = new egret.Sprite();
+        //sp.graphics.lineStyle(2, 0xFFFFFF, 1);
+        sp.graphics.beginFill(0x3476CD);
+        sp.graphics.drawRect(0, 0, 100, 100);
+        sp.graphics.endFill();
+        this.stage.addChild(sp);
     };
     return Example;
 })(egret.DisplayObjectContainer);
