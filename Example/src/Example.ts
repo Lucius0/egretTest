@@ -21,8 +21,8 @@ class Example extends egret.DisplayObjectContainer
     private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
+        //RES.loadGroup("rollMc");
+        RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
     }
@@ -82,7 +82,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createLocalStorage();
         //
-        //this.createMask();
+        this.createMask();
         //
         //this.createParticle();
         //
@@ -90,7 +90,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createMc();
         //
-        this.createRectWithBorder();
+        //this.createRectWithBorder();
         //this.test();
     }
 

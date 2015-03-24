@@ -25,8 +25,8 @@ var Example = (function (_super) {
     Example.prototype.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
+        //RES.loadGroup("rollMc");
+        RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
     };
@@ -81,7 +81,7 @@ var Example = (function (_super) {
         //
         //this.createLocalStorage();
         //
-        //this.createMask();
+        this.createMask();
         //
         //this.createParticle();
         //
@@ -89,7 +89,8 @@ var Example = (function (_super) {
         //
         //this.createMc();
         //
-        this.test();
+        //this.createRectWithBorder();
+        //this.test();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -425,9 +426,9 @@ var Example = (function (_super) {
             e.target.parent.removeChild(e.target);
         }
     };
-    Example.prototype.test = function () {
+    Example.prototype.createRectWithBorder = function () {
         var sp = new egret.Sprite();
-        //sp.graphics.lineStyle(2, 0xFFFFFF, 1);
+        sp.graphics.lineStyle(2, 0xFFFFFF, 1); // 边框有条线
         sp.graphics.beginFill(0x3476CD);
         sp.graphics.drawRect(0, 0, 100, 100);
         sp.graphics.endFill();

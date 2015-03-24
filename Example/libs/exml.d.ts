@@ -95,6 +95,10 @@ declare module skins.simple{
 	}
 }
 declare module skins.simple{
+	class TestBtnSkin extends egret.gui.Skin{
+	}
+}
+declare module skins.simple{
 	class TestButtonSkin extends egret.gui.Skin{
 	}
 }

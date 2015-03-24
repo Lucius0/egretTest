@@ -1,3 +1,6 @@
+/**
+ *
+ */
 var SocketDemo = (function () {
     function SocketDemo() {
         this.createGameScene();

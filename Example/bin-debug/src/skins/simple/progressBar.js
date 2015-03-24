@@ -16,10 +16,8 @@ var skins;
                 this.__s(this, ["height", "width"], [220, 400]);
                 this.elementsContent = [this.__3_i(), this.track_i(), this.thumb_i(), this.labelDisplay_i()];
                 this.states = [
-                    new egret.gui.State("normal", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("normal", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(progressBar.prototype, "skinParts", {
