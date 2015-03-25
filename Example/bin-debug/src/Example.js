@@ -81,7 +81,7 @@ var Example = (function (_super) {
         //
         //this.createLocalStorage();
         //
-        this.createMask();
+        //this.createMask();
         //
         //this.createParticle();
         //
@@ -90,7 +90,7 @@ var Example = (function (_super) {
         //this.createMc();
         //
         //this.createRectWithBorder();
-        //this.test();
+        this.createDictionary();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -433,6 +433,16 @@ var Example = (function (_super) {
         sp.graphics.drawRect(0, 0, 100, 100);
         sp.graphics.endFill();
         this.stage.addChild(sp);
+    };
+    Example.prototype.createDictionary = function () {
+        var s = "字符串";
+        var o = { name: "对象" };
+        var a = ["数组"];
+        var dic = new utils.Dictionary(); //new Dictionary([{ key: "one", value: "1" }, { key: "two", value: { hitted: true } }]);
+        dic.add(s, s);
+        dic.add(o, o);
+        dic.add(a, a);
+        alert(dic.getByKey(s));
     };
     return Example;
 })(egret.DisplayObjectContainer);

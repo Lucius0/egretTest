@@ -82,7 +82,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createLocalStorage();
         //
-        this.createMask();
+        //this.createMask();
         //
         //this.createParticle();
         //
@@ -91,7 +91,8 @@ class Example extends egret.DisplayObjectContainer
         //this.createMc();
         //
         //this.createRectWithBorder();
-        //this.test();
+
+        this.createDictionary();
     }
 
     /**
@@ -550,5 +551,19 @@ class Example extends egret.DisplayObjectContainer
         sp.graphics.drawRect(0, 0, 100, 100)
         sp.graphics.endFill();
         this.stage.addChild(sp);
+    }
+
+    private createDictionary():void
+    {
+        var s:string = "字符串";
+        var o:Object = {name : "对象"};
+        var a:string[] = ["数组"];
+
+        var dic:utils.Dictionary = new utils.Dictionary(); //new Dictionary([{ key: "one", value: "1" }, { key: "two", value: { hitted: true } }]);
+        dic.add(s, s);
+        dic.add(o, o);
+        dic.add(a, a);
+
+        alert(dic.getByKey(s));
     }
 }
