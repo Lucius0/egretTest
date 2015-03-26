@@ -1,0 +1,25 @@
+{
+	"document_class": "Example",
+	"modules": [
+		{
+			"name": "core"
+		},
+		{
+			"name": "res"
+		},
+		{
+			"name": "gui"
+		},
+		{
+			"name": "socket"
+		},
+		{
+			"name": "particle",
+		  	"path": "."
+		}
+	],
+	"native": {
+		"path_ignore": []
+	},
+	"egret_version": "1.6.0"
+}
