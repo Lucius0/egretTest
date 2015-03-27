@@ -26,8 +26,8 @@ var Example = (function (_super) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
-        RES.loadGroup("particle");
+        RES.loadGroup("preload");
+        //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
     };
     /**
@@ -83,14 +83,19 @@ var Example = (function (_super) {
         //
         //this.createMask();
         //
-        this.createParticle();
+        //this.createParticle();
         //
         //this.createButtonByCustomerSkin();
         //
         //this.createMc();
         //
         //this.createRectWithBorder();
+        //
         //this.createDictionary();
+        //
+        //this.callExternalFunction();
+        //
+        this.createProtobuf();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -443,6 +448,26 @@ var Example = (function (_super) {
         dic.add(o, o);
         dic.add(a, a);
         alert(dic.getByKey(s));
+    };
+    Example.prototype.callExternalFunction = function () {
+        // 在core.d.ts 添加一个方法
+        // declare function greed(msg:string): void;
+        // 在index.html 同时也添加一个方法
+        // function greed(msg) { alert(msg); }
+        //greed("hello");
+    };
+    Example.prototype.createProtobuf = function () {
+        var message = dcodeIO.ProtoBuf.loadProto(RES.getRes("simple_proto"));
+        var user_login_class = message.build("user_login_c2s");
+        var user_login = new user_login_class({
+            "accid": 888,
+            "tstamp": 999,
+            "ticket": "yongsong"
+        });
+        var bytes = user_login.toArrayBuffer();
+        console.log("序列化数据：", bytes);
+        var new_user_login = user_login_class.decode(bytes);
+        console.log("反序列化数据：", new_user_login);
     };
     return Example;
 })(egret.DisplayObjectContainer);

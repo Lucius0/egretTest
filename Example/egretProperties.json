@@ -16,6 +16,10 @@
 		{
 			"name": "particle",
 		  	"path": "."
+		},
+		{
+		  	"name": "protobuf",
+		  	"path": "."
 		}
 	],
 	"native": {

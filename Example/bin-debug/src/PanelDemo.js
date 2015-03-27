@@ -33,7 +33,11 @@ var uidemo;
         };
         PanelDemo.prototype.TouchTapHandler = function (e) {
             var name = e.target.name;
-            console.log(name + "---");
+            switch (name) {
+                case "btn_0":
+                    this.btn_0.label = name + "00000";
+                    break;
+            }
         };
         return PanelDemo;
     })(egret.gui.Panel);

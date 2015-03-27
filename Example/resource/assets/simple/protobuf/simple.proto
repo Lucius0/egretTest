@@ -1,0 +1,36 @@
+message Person
+{
+    required string name = 1;
+    required string address = 2;
+    required string phone_number = 3;
+    required int32 age = 4;
+    optional Location location = 5;
+}
+
+message Location
+{
+    required string region = 1;
+    required string country = 2;
+}
+
+message user_login_c2s
+{
+    required int32 accid = 1;
+    required int32 tstamp = 2;
+    required string ticket = 3;
+}
+
+message user_login_s2c
+{
+    required int32 flag = 1;
+}
+
+message user_register_c2s
+{
+    required string user_name = 1;
+}
+
+message user_register_s2c
+{
+    required int32 flag = 1;
+}

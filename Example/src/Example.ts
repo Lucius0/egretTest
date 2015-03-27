@@ -22,8 +22,8 @@ class Example extends egret.DisplayObjectContainer
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
-        RES.loadGroup("particle");
+        RES.loadGroup("preload");
+        //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
     }
     /**
@@ -84,15 +84,19 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createMask();
         //
-        this.createParticle();
+        //this.createParticle();
         //
         //this.createButtonByCustomerSkin();
         //
         //this.createMc();
         //
         //this.createRectWithBorder();
-
+        //
         //this.createDictionary();
+        //
+        //this.callExternalFunction();
+        //
+        this.createProtobuf();
     }
 
     /**
@@ -565,5 +569,33 @@ class Example extends egret.DisplayObjectContainer
         dic.add(a, a);
 
         alert(dic.getByKey(s));
+    }
+
+    private callExternalFunction():void
+    {
+        // 在core.d.ts 添加一个方法
+        // declare function greed(msg:string): void;
+        // 在index.html 同时也添加一个方法
+        // function greed(msg) { alert(msg); }
+        //greed("hello");
+    }
+
+    private createProtobuf():void
+    {
+        var message = dcodeIO.ProtoBuf.loadProto(RES.getRes("simple_proto"));
+
+        var user_login_class = message.build("user_login_c2s");
+
+        var user_login = new user_login_class({
+           "accid":888,
+            "tstamp": 999,
+            "ticket":"yongsong"
+        });
+
+        var bytes = user_login.toArrayBuffer();
+        console.log("序列化数据：", bytes);
+
+        var new_user_login = user_login_class.decode(bytes);
+        console.log("反序列化数据：", new_user_login);
     }
 }
