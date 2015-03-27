@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by lucius on 2015/3/1.
  */
@@ -14,7 +8,8 @@ var uiskins;
         function TitleWindowDemo() {
             _super.call(this);
         }
-        TitleWindowDemo.prototype.createChildren = function () {
+        var __egretProto__ = TitleWindowDemo.prototype;
+        __egretProto__.createChildren = function () {
             _super.prototype.createChildren.call(this);
             this.win = new egret.gui.TitleWindow();
             this.win.skinName = "skins.simple.TitleWindowDemoSkin";
@@ -29,10 +24,10 @@ var uiskins;
             this.win.addEventListener(egret.gui.CloseEvent.CLOSE, this.closeWindHandler, this);
             egret.gui.PopUpManager.addPopUp(this.win, true, true);
         };
-        TitleWindowDemo.prototype.btnTouchHandler = function (e) {
+        __egretProto__.btnTouchHandler = function (e) {
             egret.gui.PopUpManager.removePopUp(this.win);
         };
-        TitleWindowDemo.prototype.closeWindHandler = function (e) {
+        __egretProto__.closeWindHandler = function (e) {
             egret.gui.PopUpManager.removePopUp(this.win);
         };
         return TitleWindowDemo;

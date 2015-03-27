@@ -15,33 +15,34 @@ var utils;
                 }
             }
         }
-        Dictionary.prototype.add = function (key, value) {
+        var __egretProto__ = Dictionary.prototype;
+        __egretProto__.add = function (key, value) {
             this[key] = value;
             this._keys.push(key);
             this._values.push(value);
         };
-        Dictionary.prototype.remove = function (key) {
+        __egretProto__.remove = function (key) {
             var index = this._keys.indexOf(key, 0);
             this._keys.splice(index, 1);
             this._values.splice(index, 1);
             delete this[key];
         };
-        Dictionary.prototype.getByKey = function (key) {
+        __egretProto__.getByKey = function (key) {
             return this[key];
         };
-        Dictionary.prototype.keys = function () {
+        __egretProto__.keys = function () {
             return this._keys;
         };
-        Dictionary.prototype.values = function () {
+        __egretProto__.values = function () {
             return this._values;
         };
-        Dictionary.prototype.containsKey = function (key) {
+        __egretProto__.containsKey = function (key) {
             if (typeof this[key] === "undefined") {
                 return false;
             }
             return true;
         };
-        Dictionary.prototype.toLookup = function () {
+        __egretProto__.toLookup = function () {
             return this;
         };
         return Dictionary;

@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -36,56 +30,57 @@ var skins;
                     ])
                 ];
             }
-            Object.defineProperty(PuzzleSkin.prototype, "skinParts", {
+            var __egretProto__ = PuzzleSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return PuzzleSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            PuzzleSkin.prototype.__5_i = function () {
+            __egretProto__.__5_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__s(t, ["bottom", "left", "right", "source", "top"], [-4, -2, -2, "panel_headeback_png", -2]);
                 return t;
             };
-            PuzzleSkin.prototype.btn_0_i = function () {
+            __egretProto__.btn_0_i = function () {
                 var t = new egret.gui.Button();
                 this.btn_0 = t;
                 this.__s(t, ["enabled", "label", "name", "verticalCenter", "width", "x"], [true, "3 x 3", "btn_0", 2, 112, 21]);
                 return t;
             };
-            PuzzleSkin.prototype.btn_1_i = function () {
+            __egretProto__.btn_1_i = function () {
                 var t = new egret.gui.Button();
                 this.btn_1 = t;
                 this.__s(t, ["enabled", "horizontalCenter", "label", "name", "verticalCenter", "width"], [true, 0, "4 x 4", "btn_1", 0, 112]);
                 return t;
             };
-            PuzzleSkin.prototype.btn_2_i = function () {
+            __egretProto__.btn_2_i = function () {
                 var t = new egret.gui.Button();
                 this.btn_2 = t;
                 this.__s(t, ["enabled", "label", "name", "verticalCenter", "width", "x"], [true, "5 x 5", "btn_2", 0, 112, 336]);
                 return t;
             };
-            PuzzleSkin.prototype.contentGroup_i = function () {
+            __egretProto__.contentGroup_i = function () {
                 var t = new egret.gui.Group();
                 this.contentGroup = t;
                 this.__s(t, ["bottom", "clipAndEnableScrolling", "top", "percentWidth"], [0, true, 50, 100]);
                 t.elementsContent = [this.btn_0_i(), this.btn_1_i(), this.btn_2_i()];
                 return t;
             };
-            PuzzleSkin.prototype.moveArea_i = function () {
+            __egretProto__.moveArea_i = function () {
                 var t = new egret.gui.Group();
                 this.moveArea = t;
                 this.__s(t, ["height", "left", "right"], [50, 0, 0]);
                 t.elementsContent = [this.__5_i(), this.titleDisplay_i()];
                 return t;
             };
-            PuzzleSkin.prototype.__4_i = function () {
+            __egretProto__.__4_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__s(t, ["bottom", "left", "right", "source", "top"], [-10, -4, -10, "panel_back_png", -4]);
                 return t;
             };
-            PuzzleSkin.prototype.titleDisplay_i = function () {
+            __egretProto__.titleDisplay_i = function () {
                 var t = new egret.gui.Label();
                 this.titleDisplay = t;
                 this.__s(t, ["fontFamily", "left", "maxDisplayedLines", "minHeight", "right", "size", "textAlign", "textColor", "verticalAlign", "verticalCenter"], ["Tahoma", 5, 1, 28, 5, 26, "center", 0x727070, "middle", 0]);

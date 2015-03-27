@@ -15,12 +15,6 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var particle;
 (function (_particle) {
     var GravityParticleSystem = (function (_super) {
@@ -31,7 +25,8 @@ var particle;
             this.emissionRate = this.lifespan / this.maxParticles;
             this.particleClass = _particle.GravityParticle;
         }
-        GravityParticleSystem.prototype.parseConfig = function (config) {
+        var __egretProto__ = GravityParticleSystem.prototype;
+        __egretProto__.parseConfig = function (config) {
             this.emitterX = getValue(config.emitter.x);
             this.emitterY = getValue(config.emitter.y);
             this.emitterXVariance = getValue(config.emitterVariance.x);
@@ -68,7 +63,7 @@ var particle;
                 return value;
             }
         };
-        GravityParticleSystem.prototype.initParticle = function (particle) {
+        __egretProto__.initParticle = function (particle) {
             var locParticle = particle;
             var lifespan = GravityParticleSystem.getValue(this.lifespan, this.lifespanVariance);
             locParticle.currentTime = 0;
@@ -110,7 +105,7 @@ var particle;
         GravityParticleSystem.getValue = function (base, variance) {
             return base + variance * (Math.random() * 2 - 1);
         };
-        GravityParticleSystem.prototype.advanceParticle = function (particle, dt) {
+        __egretProto__.advanceParticle = function (particle, dt) {
             var locParticle = particle;
             dt = dt / 1000;
             var restTime = locParticle.totalTime - locParticle.currentTime;

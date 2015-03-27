@@ -34,21 +34,22 @@ var egret;
             this.host = "";
             this.port = 0;
         }
-        NativeSocket.prototype.addCallBacks = function (onConnect, onClose, onSocketData, onError, thisObject) {
+        var __egretProto__ = NativeSocket.prototype;
+        __egretProto__.addCallBacks = function (onConnect, onClose, onSocketData, onError, thisObject) {
             this.onConnect = onConnect;
             this.onClose = onClose;
             this.onSocketData = onSocketData;
             this.onError = onError;
             this.thisObject = thisObject;
         };
-        NativeSocket.prototype.connect = function (host, port) {
+        __egretProto__.connect = function (host, port) {
             this.host = host;
             this.port = port;
             var socketServerUrl = "ws://" + this.host + ":" + this.port;
             this.socket = new __global["egret_native"]["WebSocket"](socketServerUrl);
             this._bindEvent();
         };
-        NativeSocket.prototype._bindEvent = function () {
+        __egretProto__._bindEvent = function () {
             var that = this;
             var socket = this.socket;
             socket.onOpen = function () {
@@ -72,10 +73,10 @@ var egret;
                 }
             };
         };
-        NativeSocket.prototype.send = function (message) {
+        __egretProto__.send = function (message) {
             this.socket.send(message);
         };
-        NativeSocket.prototype.close = function () {
+        __egretProto__.close = function () {
             this.socket.close();
         };
         return NativeSocket;

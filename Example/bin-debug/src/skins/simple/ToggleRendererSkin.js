@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -29,26 +23,27 @@ var skins;
                     ])
                 ];
             }
-            Object.defineProperty(ToggleRendererSkin.prototype, "skinParts", {
+            var __egretProto__ = ToggleRendererSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return ToggleRendererSkin._skinParts;
                 },
                 enumerable: true,
                 configurable: true
             });
-            ToggleRendererSkin.prototype.labelDisplay_i = function () {
+            __egretProto__.labelDisplay_i = function () {
                 var t = new egret.gui.Label();
                 this.labelDisplay = t;
                 this.__s(t, ["fontFamily", "percentHeight", "paddingLeft", "size", "textAlign", "textColor", "verticalAlign", "percentWidth"], ["Tahoma", 100, 20, 24, "left", 0x111111, "middle", 100]);
                 return t;
             };
-            ToggleRendererSkin.prototype.__4_i = function () {
+            __egretProto__.__4_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__4 = t;
                 this.__s(t, ["percentHeight", "percentWidth"], [100, 100]);
                 return t;
             };
-            ToggleRendererSkin.prototype.toggleButton_i = function () {
+            __egretProto__.toggleButton_i = function () {
                 var t = new egret.gui.ToggleButton();
                 this.toggleButton = t;
                 this.__s(t, ["hostComponentKey", "right", "verticalCenter"], ["ToggleOnOffButton", 30, 0]);

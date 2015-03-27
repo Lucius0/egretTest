@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Copyright (c) 2014,Egret-Labs.org
  * All rights reserved.
@@ -67,34 +61,35 @@ var egret;
             }
             this.socket.addCallBacks(this.onConnect, this.onClose, this.onSocketData, this.onError, this);
         }
+        var __egretProto__ = WebSocket.prototype;
         /**
          * 将套接字连接到指定的主机和端口
          * @param host 要连接到的主机的名称或 IP 地址
          * @param port 要连接到的端口号
          * @method egret.WebSocket#connect
          */
-        WebSocket.prototype.connect = function (host, port) {
+        __egretProto__.connect = function (host, port) {
             this.socket.connect(host, port);
         };
         /**
          * 关闭套接字
          * @method egret.WebSocket#close
          */
-        WebSocket.prototype.close = function () {
+        __egretProto__.close = function () {
             this.socket.close();
         };
-        WebSocket.prototype.onConnect = function () {
+        __egretProto__.onConnect = function () {
             this._connected = true;
             this.dispatchEventWith(egret.Event.CONNECT);
         };
-        WebSocket.prototype.onClose = function () {
+        __egretProto__.onClose = function () {
             this._connected = false;
             this.dispatchEventWith(egret.Event.CLOSE);
         };
-        WebSocket.prototype.onError = function () {
+        __egretProto__.onError = function () {
             this.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
         };
-        WebSocket.prototype.onSocketData = function (message) {
+        __egretProto__.onSocketData = function (message) {
             if (typeof message == "string") {
                 this._readMessage += message;
             }
@@ -107,7 +102,7 @@ var egret;
          * 对套接字输出缓冲区中积累的所有数据进行刷新
          * @method egret.WebSocket#flush
          */
-        WebSocket.prototype.flush = function () {
+        __egretProto__.flush = function () {
             if (!this._connected) {
                 egret.Logger.warningWithErrorId(3101);
                 return;
@@ -128,7 +123,7 @@ var egret;
          * @param message 要写入套接字的字符串
          * @method egret.WebSocket#writeUTF
          */
-        WebSocket.prototype.writeUTF = function (message) {
+        __egretProto__.writeUTF = function (message) {
             if (!this._connected) {
                 egret.Logger.warningWithErrorId(3101);
                 return;
@@ -153,7 +148,7 @@ var egret;
          * @returns {string}
          * @method egret.WebSocket#readUTF
          */
-        WebSocket.prototype.readUTF = function () {
+        __egretProto__.readUTF = function () {
             var message;
             if (this._type == WebSocket.TYPE_BINARY) {
                 this._readByte.position = 0;
@@ -175,7 +170,7 @@ var egret;
          * @param length 要写入的字节数。默认值 0 导致从 offset 参数指定的值开始写入整个缓冲区
          * @method egret.WebSocket#writeBytes
          */
-        WebSocket.prototype.writeBytes = function (bytes, offset, length) {
+        __egretProto__.writeBytes = function (bytes, offset, length) {
             if (offset === void 0) { offset = 0; }
             if (length === void 0) { length = 0; }
             if (!this._connected) {
@@ -197,7 +192,7 @@ var egret;
          * @param length 要读取的字节数。默认值 0 导致读取所有可用的数据
          * @method egret.WebSocket#readBytes
          */
-        WebSocket.prototype.readBytes = function (bytes, offset, length) {
+        __egretProto__.readBytes = function (bytes, offset, length) {
             if (offset === void 0) { offset = 0; }
             if (length === void 0) { length = 0; }
             if (!this._readByte) {
@@ -208,7 +203,7 @@ var egret;
             this._readByte.readBytes(bytes, offset, length);
             this._readByte.clear();
         };
-        Object.defineProperty(WebSocket.prototype, "connected", {
+        Object.defineProperty(__egretProto__, "connected", {
             /**
              * 表示此 Socket 对象目前是否已连接
              */
@@ -218,7 +213,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(WebSocket.prototype, "type", {
+        Object.defineProperty(__egretProto__, "type", {
             get: function () {
                 return this._type;
             },
@@ -238,11 +233,11 @@ var egret;
         /**
          * 以字符串格式发送和接收数据
          */
-        WebSocket.TYPE_STRING = "WebSocket_type_string";
+        WebSocket.TYPE_STRING = "webSocketTypeString";
         /**
          * 以二进制格式发送和接收数据
          */
-        WebSocket.TYPE_BINARY = "WebSocket_type_binary";
+        WebSocket.TYPE_BINARY = "webSocketTypeBinary";
         return WebSocket;
     })(egret.EventDispatcher);
     egret.WebSocket = WebSocket;

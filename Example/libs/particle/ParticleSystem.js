@@ -15,12 +15,6 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var particle;
 (function (_particle) {
     var ParticleSystem = (function (_super) {
@@ -69,7 +63,8 @@ var particle;
             this.emissionRate = emissionRate;
             this.texture = texture;
         }
-        ParticleSystem.prototype.getParticle = function () {
+        var __egretProto__ = ParticleSystem.prototype;
+        __egretProto__.getParticle = function () {
             var result;
             if (this._pool.length) {
                 result = this._pool.pop();
@@ -82,7 +77,7 @@ var particle;
             }
             return result;
         };
-        ParticleSystem.prototype.removeParticle = function (particle) {
+        __egretProto__.removeParticle = function (particle) {
             var index = this.particles.indexOf(particle);
             if (index != -1) {
                 particle.reset();
@@ -95,7 +90,7 @@ var particle;
                 return false;
             }
         };
-        ParticleSystem.prototype.initParticle = function (particle) {
+        __egretProto__.initParticle = function (particle) {
             particle.x = this.emitterX;
             particle.y = this.emitterY;
             particle.currentTime = 0;
@@ -105,7 +100,7 @@ var particle;
          * 开始创建粒子
          * @param duration {number} 粒子出现总时间
          */
-        ParticleSystem.prototype.start = function (duration) {
+        __egretProto__.start = function (duration) {
             if (duration === void 0) { duration = -1; }
             if (this.emissionRate != 0) {
                 this.emissionTime = duration;
@@ -116,7 +111,7 @@ var particle;
          * 停止创建粒子
          * @param clear {boolean} 是否清除掉现有粒子
          */
-        ParticleSystem.prototype.stop = function (clear) {
+        __egretProto__.stop = function (clear) {
             if (clear === void 0) { clear = false; }
             this.emissionTime = 0;
             egret.Ticker.getInstance().unregister(this.update, this);
@@ -124,7 +119,7 @@ var particle;
                 this.clear();
             }
         };
-        ParticleSystem.prototype.update = function (dt) {
+        __egretProto__.update = function (dt) {
             //粒子数很少的时候可能会错过添加粒子的时机
             if (this.emissionTime == -1 || this.emissionTime > 0) {
                 this.frameTime += dt;
@@ -158,7 +153,7 @@ var particle;
                 }
             }
         };
-        ParticleSystem.prototype.setCurrentParticles = function (num) {
+        __egretProto__.setCurrentParticles = function (num) {
             for (var i = this.numParticles; i < num && this.numParticles < this.maxParticles; i++) {
                 this.addOneParticle();
             }
@@ -167,19 +162,19 @@ var particle;
          * 更换粒子纹理
          * @param texture {egret.Texture} 新的纹理
          */
-        ParticleSystem.prototype.changeTexture = function (texture) {
+        __egretProto__.changeTexture = function (texture) {
             if (this.texture != texture) {
                 this.texture = texture;
                 this._texture_to_render = texture;
             }
         };
-        ParticleSystem.prototype.clear = function () {
+        __egretProto__.clear = function () {
             while (this.particles.length) {
                 this.removeParticle(this.particles[0]);
             }
             this.numParticles = 0;
         };
-        ParticleSystem.prototype.addOneParticle = function () {
+        __egretProto__.addOneParticle = function () {
             //todo 这里可能需要返回成功与否
             var particle = this.getParticle();
             this.initParticle(particle);
@@ -188,10 +183,10 @@ var particle;
                 this.numParticles++;
             }
         };
-        ParticleSystem.prototype.advanceParticle = function (particle, dt) {
+        __egretProto__.advanceParticle = function (particle, dt) {
             particle.y -= dt / 6;
         };
-        ParticleSystem.prototype._render = function (renderContext) {
+        __egretProto__._render = function (renderContext) {
             if (this.numParticles > 0) {
                 var renderFilter = egret.RenderFilter.getInstance();
                 //todo 考虑不同粒子使用不同的texture，或者使用egret.SpriteSheet

@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by lucius on 2015/3/13.
  */
@@ -20,20 +14,21 @@ var Line = (function (_super) {
         this.lineSize = lineSize;
         this.draw();
     }
-    Line.prototype.draw = function () {
+    var __egretProto__ = Line.prototype;
+    __egretProto__.draw = function () {
         this.graphics.clear();
         this.graphics.lineStyle(this.lineSize, 0xFFFFFF);
         this.graphics.moveTo(this.sX, this.sY);
         this.graphics.lineTo(this.eX, this.eY);
     };
-    Line.prototype.update = function () {
+    __egretProto__.update = function () {
         this.draw();
         this.lineSize -= 1;
         if (this.lineSize < 1) {
             this.clear();
         }
     };
-    Line.prototype.clear = function () {
+    __egretProto__.clear = function () {
         this.graphics.clear();
         for (var i = 0; i < Line.sets.length; i++) {
             var l = Line.sets[i];

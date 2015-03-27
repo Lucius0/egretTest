@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -31,13 +25,14 @@ var skins;
                     new egret.gui.State("disabled", [])
                 ];
             }
-            TestButtonSkin.prototype.__4_i = function () {
+            var __egretProto__ = TestButtonSkin.prototype;
+            __egretProto__.__4_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__4 = t;
                 this.__s(t, ["source", "x", "y"], ["custom_down", 0, 0]);
                 return t;
             };
-            TestButtonSkin.prototype.__5_i = function () {
+            __egretProto__.__5_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__5 = t;
                 this.__s(t, ["source", "x", "y"], ["custom_normal", 0, 0]);

@@ -37,14 +37,15 @@ var egret;
                 egret.Logger.fatalWithErrorId(3100);
             }
         }
-        HTML5WebSocket.prototype.addCallBacks = function (onConnect, onClose, onSocketData, onError, thisObject) {
+        var __egretProto__ = HTML5WebSocket.prototype;
+        __egretProto__.addCallBacks = function (onConnect, onClose, onSocketData, onError, thisObject) {
             this.onConnect = onConnect;
             this.onClose = onClose;
             this.onSocketData = onSocketData;
             this.onError = onError;
             this.thisObject = thisObject;
         };
-        HTML5WebSocket.prototype.connect = function (host, port) {
+        __egretProto__.connect = function (host, port) {
             this.host = host;
             this.port = port;
             var socketServerUrl = "ws://" + this.host + ":" + this.port;
@@ -52,7 +53,7 @@ var egret;
             this.socket.binaryType = "arraybuffer";
             this._bindEvent();
         };
-        HTML5WebSocket.prototype._bindEvent = function () {
+        __egretProto__._bindEvent = function () {
             var that = this;
             var socket = this.socket;
             socket.onopen = function () {
@@ -76,10 +77,10 @@ var egret;
                 }
             };
         };
-        HTML5WebSocket.prototype.send = function (message) {
+        __egretProto__.send = function (message) {
             this.socket.send(message);
         };
-        HTML5WebSocket.prototype.close = function () {
+        __egretProto__.close = function () {
             this.socket.close();
         };
         return HTML5WebSocket;

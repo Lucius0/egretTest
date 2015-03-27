@@ -15,15 +15,15 @@
 		},
 		{
 			"name": "particle",
-		  	"path": "."
+			"path": "."
 		},
 		{
-		  	"name": "protobuf",
-		  	"path": "."
+			"name": "protobuf",
+			"path": "."
 		}
 	],
 	"native": {
 		"path_ignore": []
 	},
-	"egret_version": "1.6.0"
+	"egret_version": "1.6.1"
 }

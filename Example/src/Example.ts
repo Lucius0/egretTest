@@ -96,7 +96,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.callExternalFunction();
         //
-        this.createProtobuf();
+        //this.createProtobuf();
+        //
+        this.createTicker();
     }
 
     /**
@@ -597,5 +599,34 @@ class Example extends egret.DisplayObjectContainer
 
         var new_user_login = user_login_class.decode(bytes);
         console.log("反序列化数据：", new_user_login);
+    }
+
+    private createTicker():void
+    {
+        var label:egret.TextField = new egret.TextField();
+        this.addChild(label);
+
+        label.x = 0;
+        label.y = 150;
+        label.text = "setTimeout实现，3秒后文字会改变";
+        egret.setTimeout(function():void {
+            label.text = "setTimeOut";
+        }, this, 3000);
+
+        var label2 = new egret.TextField();
+        this.addChild(label2);
+        label2.x = 0;
+        label2.y = 300;
+        label2.text = "Ticker实现，3秒后文字会改变";
+
+        var time:number = 0;
+        var func = function (dt:number) {
+            time += dt;
+            if(time >= 3000) {
+                egret.Ticker.getInstance().unregister(this, this);
+                label2.text = "Ticker";
+            }
+        };
+        egret.Ticker.getInstance().register(func, func);
     }
 }

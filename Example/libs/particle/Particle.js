@@ -21,7 +21,8 @@ var particle;
         function Particle() {
             this.reset();
         }
-        Particle.prototype.reset = function () {
+        var __egretProto__ = Particle.prototype;
+        __egretProto__.reset = function () {
             this.x = 0;
             this.y = 0;
             this.scale = 1;

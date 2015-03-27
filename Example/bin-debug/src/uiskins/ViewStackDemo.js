@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by lucius on 2015/3/1.
  */
@@ -14,7 +8,8 @@ var uiskins;
         function ViewStackDemo() {
             _super.call(this);
         }
-        ViewStackDemo.prototype.createChildren = function () {
+        var __egretProto__ = ViewStackDemo.prototype;
+        __egretProto__.createChildren = function () {
             _super.prototype.createChildren.call(this);
             this.viewStack1 = new egret.gui.ViewStack();
             var btn1 = new egret.gui.Button();
@@ -29,7 +24,7 @@ var uiskins;
             timer.start();
             this.addElement(this.viewStack1);
         };
-        ViewStackDemo.prototype.changeIndexByTimer = function (e) {
+        __egretProto__.changeIndexByTimer = function (e) {
             this.viewStack1.selectedIndex = this.viewStack1.selectedIndex == 0 ? 1 : 0;
         };
         return ViewStackDemo;

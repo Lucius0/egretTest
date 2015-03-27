@@ -15,12 +15,6 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var particle;
 (function (particle) {
     var GravityParticle = (function (_super) {
@@ -28,7 +22,8 @@ var particle;
         function GravityParticle() {
             _super.apply(this, arguments);
         }
-        GravityParticle.prototype.reset = function () {
+        var __egretProto__ = GravityParticle.prototype;
+        __egretProto__.reset = function () {
             _super.prototype.reset.call(this);
             this.startX = 0;
             this.startY = 0;

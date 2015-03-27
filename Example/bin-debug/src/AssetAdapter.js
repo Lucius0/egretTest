@@ -27,6 +27,7 @@
 var AssetAdapter = (function () {
     function AssetAdapter() {
     }
+    var __egretProto__ = AssetAdapter.prototype;
     /**
      * 解析素材
      * @method egret.gui.DefaultAssetAdapter#getAsset
@@ -37,7 +38,7 @@ var AssetAdapter = (function () {
      * @param oldContent any 旧的内容对象,传入值有可能为null。
      * 对于某些类型素材，例如MovieClip，可以重用传入的显示对象,只修改其数据再返回。
      */
-    AssetAdapter.prototype.getAsset = function (source, compFunc, thisObject, oldContent) {
+    __egretProto__.getAsset = function (source, compFunc, thisObject, oldContent) {
         function onGetRes(data) {
             compFunc.call(thisObject, data, source);
         }

@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by lucius on 2015/3/17.
  */
@@ -15,7 +9,8 @@ var ParticleDemo = (function (_super) {
         this.time = 30;
         this.init();
     }
-    ParticleDemo.prototype.init = function () {
+    var __egretProto__ = ParticleDemo.prototype;
+    __egretProto__.init = function () {
         var w = egret.MainContext.instance.stage.stageWidth;
         var h = egret.MainContext.instance.stage.stageHeight;
         var texture = RES.getRes("particle_png");
@@ -49,7 +44,7 @@ var ParticleDemo = (function (_super) {
         this.timer.start();
         egret.Profiler.getInstance().run();
     };
-    ParticleDemo.prototype.showStar = function (e) {
+    __egretProto__.showStar = function (e) {
         var x = Math.floor(Math.random() * egret.MainContext.instance.stage.stageWidth);
         var y = Math.floor(Math.random() * egret.MainContext.instance.stage.stageHeight);
         var star = this.createBitmapByName("particle_png");
@@ -65,7 +60,7 @@ var ParticleDemo = (function (_super) {
         tw.call(this.deleteStar, this, [{ star: star }]);
         this.addChild(star);
     };
-    ParticleDemo.prototype.clickStar = function (e) {
+    __egretProto__.clickStar = function (e) {
         if (e.target.parent) {
             egret.Tween.removeTweens(e.target);
             e.target.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickStar, this);
@@ -74,14 +69,14 @@ var ParticleDemo = (function (_super) {
             this.scoreText.text = "Star: " + this.score;
         }
     };
-    ParticleDemo.prototype.deleteStar = function (data) {
+    __egretProto__.deleteStar = function (data) {
         if (data.star.parent) {
             egret.Tween.removeTweens(data.star);
             data.star.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clickStar, this);
             data.star.parent.removeChild(data.star);
         }
     };
-    ParticleDemo.prototype.showText = function (e) {
+    __egretProto__.showText = function (e) {
         this.time--;
         this.timeText.text = "Time:  " + this.time;
         if (this.time <= 0) {
@@ -98,7 +93,7 @@ var ParticleDemo = (function (_super) {
             this.overText.addEventListener(egret.TouchEvent.TOUCH_TAP, this.stratGame, this);
         }
     };
-    ParticleDemo.prototype.stratGame = function (e) {
+    __egretProto__.stratGame = function (e) {
         this.removeChild(this.overText);
         this.score = 0;
         this.time = 30;
@@ -109,7 +104,7 @@ var ParticleDemo = (function (_super) {
         this.timer.addEventListener(egret.TimerEvent.TIMER, this.showText, this);
         this.timer.start();
     };
-    ParticleDemo.prototype.createBitmapByName = function (name) {
+    __egretProto__.createBitmapByName = function (name) {
         var result = new egret.Bitmap();
         var texture = RES.getRes(name);
         result.texture = texture;
