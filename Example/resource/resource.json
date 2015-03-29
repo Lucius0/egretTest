@@ -15,8 +15,22 @@
 	{
 		"keys":"btn_json",
 		"name":"btnSource"
+	},
+	{
+		"keys":"p2_rect,p2_circle",
+	  	"name":"p2"
 	}],
 	"resources":[
+	{
+	  "name":"p2_rect",
+	  "type":"image",
+	  "url":"assets/simple/p2/rect.png"
+	},
+	{
+	  "name":"p2_circle",
+	  "type":"image",
+	  "url":"assets/simple/p2/circle.png"
+	},
 	{
 	  "name":"simple_proto",
 	  "type":"text",

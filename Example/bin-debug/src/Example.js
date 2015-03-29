@@ -21,15 +21,16 @@ var Example = (function (_super) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
-        RES.loadGroup("preload");
+        //RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
+        RES.loadGroup("p2");
     };
     /**
      * preload资源组加载完成
      */
     __egretProto__.onResourceLoadComplete = function (event) {
-        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc") {
+        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc" || event.groupName == "p2") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -92,7 +93,9 @@ var Example = (function (_super) {
         //
         //this.createProtobuf();
         //
-        this.createTicker();
+        //this.createTicker();
+        //
+        this.createP2();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -489,6 +492,10 @@ var Example = (function (_super) {
             }
         };
         egret.Ticker.getInstance().register(func, func);
+    };
+    __egretProto__.createP2 = function () {
+        var pd = new PhysicsDemo();
+        this.addChild(pd);
     };
     return Example;
 })(egret.DisplayObjectContainer);

@@ -10,6 +10,7 @@ var game_file_list = [
 	"Light.js",
 	"PanelDemo.js",
 	"ParticleDemo.js",
+	"PhysicsDemo.js",
 	"skins/simple/DropDownListItemRendererSkin.js",
 	"skins/simple/DropDownListOpenButtonSkin.js",
 	"skins/simple/HScrollBarSkin.js",

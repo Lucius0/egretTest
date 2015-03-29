@@ -20,6 +20,10 @@
 		{
 			"name": "protobuf",
 			"path": "."
+		},
+		{
+		  "name": "physics",
+		  "path": "."
 		}
 	],
 	"native": {

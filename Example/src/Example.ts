@@ -22,15 +22,16 @@ class Example extends egret.DisplayObjectContainer
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
-        RES.loadGroup("preload");
+        //RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
+        RES.loadGroup("p2");
     }
     /**
      * preload资源组加载完成
      */
     private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc") {
+        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc" || event.groupName == "p2") {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -98,7 +99,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createProtobuf();
         //
-        this.createTicker();
+        //this.createTicker();
+        //
+        this.createP2();
     }
 
     /**
@@ -628,5 +631,11 @@ class Example extends egret.DisplayObjectContainer
             }
         };
         egret.Ticker.getInstance().register(func, func);
+    }
+
+    private createP2():void
+    {
+        var pd:PhysicsDemo = new PhysicsDemo();
+        this.addChild(pd);
     }
 }

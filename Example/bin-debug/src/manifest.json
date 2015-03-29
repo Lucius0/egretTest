@@ -11,6 +11,7 @@
 	"Light.ts",
 	"PanelDemo.ts",
 	"ParticleDemo.ts",
+	"PhysicsDemo.ts",
 	"skins\\simple\\DropDownListItemRendererSkin.exml",
 	"skins\\simple\\DropDownListOpenButtonSkin.exml",
 	"skins\\simple\\HScrollBarSkin.exml",
