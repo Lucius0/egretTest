@@ -26,6 +26,7 @@ var game_file_list = [
 	"uiskins/ToggleRenderer.js",
 	"uiskins/ViewStackDemo.js",
 	"utils/Dictionary.js",
+	"utils/Drag.js",
 	"Example.js",
 	"skins/simple/AlertSkin.js",
 	"skins/simple/ButtonSkin.js",

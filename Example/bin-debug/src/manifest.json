@@ -27,6 +27,7 @@
 	"uiskins\\ToggleRenderer.ts",
 	"uiskins\\ViewStackDemo.ts",
 	"utils\\Dictionary.ts",
+	"utils\\Drag.ts",
 	"Example.ts",
 	"skins\\simple\\AlertSkin.exml",
 	"skins\\simple\\ButtonSkin.exml",

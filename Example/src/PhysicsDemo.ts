@@ -126,8 +126,8 @@ class PhysicsDemo extends egret.DisplayObjectContainer
         ctx.lineWidth = 1;
 
         var rendererContext = egret.MainContext.instance.rendererContext;
-        var f = rendererContext.onRenderFinish;
-        rendererContext.onRenderFinish = function () {
+        var f = rendererContext["onRenderFinish"];
+        rendererContext["onRenderFinish"] = function () {
             ctx.clearRect(0, 0, stageWidth, stageHeight);
             var l:number = world.bodies.length;
             for (var i:number = 0; i < l; i++) {

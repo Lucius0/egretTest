@@ -95,7 +95,9 @@ var Example = (function (_super) {
         //
         //this.createTicker();
         //
-        this.createP2();
+        //this.createP2();
+        //
+        this.testDragUtil();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -496,6 +498,17 @@ var Example = (function (_super) {
     __egretProto__.createP2 = function () {
         var pd = new PhysicsDemo();
         this.addChild(pd);
+    };
+    __egretProto__.testDragUtil = function () {
+        var drag = new utils.Drag();
+        var sp = new egret.Sprite();
+        sp.graphics.lineStyle(2, 0xFFFFFF, 1); // 边框有条线
+        sp.graphics.beginFill(0x3476CD);
+        sp.graphics.drawRect(0, 0, 100, 100);
+        sp.graphics.endFill();
+        this.stage.addChild(sp);
+        sp.width *= sp.width;
+        drag.start(sp);
     };
     return Example;
 })(egret.DisplayObjectContainer);

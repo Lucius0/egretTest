@@ -101,7 +101,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createTicker();
         //
-        this.createP2();
+        //this.createP2();
+        //
+        this.testDragUtil();
     }
 
     /**
@@ -637,5 +639,18 @@ class Example extends egret.DisplayObjectContainer
     {
         var pd:PhysicsDemo = new PhysicsDemo();
         this.addChild(pd);
+    }
+
+    private testDragUtil():void
+    {
+        var drag:utils.Drag = new utils.Drag();
+        var sp:egret.Sprite = new egret.Sprite();
+        sp.graphics.lineStyle(2, 0xFFFFFF, 1); // 边框有条线
+        sp.graphics.beginFill(0x3476CD);
+        sp.graphics.drawRect(0, 0, 100, 100)
+        sp.graphics.endFill();
+        this.stage.addChild(sp);
+
+        drag.start(sp);
     }
 }
