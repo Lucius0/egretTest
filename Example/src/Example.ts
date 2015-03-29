@@ -103,7 +103,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createP2();
         //
-        this.testDragUtil();
+        //this.testDragUtil();
     }
 
     /**
