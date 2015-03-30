@@ -252,5 +252,6 @@ var egret_file_list = [
 	"protobuf/ByteBufferAB.min.js",
 	"protobuf/Long.min.js",
 	"protobuf/ProtoBuf.min.js",
-	"physics/p2.min.js"
+	"physics/p2.min.js",
+	"md5/md5.js"
 ];

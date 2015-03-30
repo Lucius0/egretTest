@@ -104,6 +104,8 @@ class Example extends egret.DisplayObjectContainer
         //this.createP2();
         //
         //this.testDragUtil();
+        //
+        this.testMd5();
     }
 
     /**
@@ -652,5 +654,26 @@ class Example extends egret.DisplayObjectContainer
         this.stage.addChild(sp);
 
         drag.start(sp);
+    }
+
+    private testMd5():void
+    {
+        var text1:egret.TextField = new egret.TextField();
+        this.addChild(text1);
+        text1.text = "原始字符: 23233dfa";
+        text1.x = 50;
+        text1.y = 300;
+        text1.size = 30;
+
+        var str:string = "23233dfa";
+        var md5Str:string = new md5().hex_md5(str);
+
+        var text2:egret.TextField = new egret.TextField();
+        this.addChild(text2);
+        text2.text = "md5后字符: " + md5Str;
+        text2.x = 50;
+        text2.y = 350;
+        text2.size = 30;
+        text2.width = 300;
     }
 }
