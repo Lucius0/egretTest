@@ -28,6 +28,10 @@
 		{
 		  "name": "md",
 		  "path": "."
+		},
+		{
+		  "name": "socket.io",
+		  "path": "."
 		}
 	],
 	"native": {

@@ -21,10 +21,10 @@ var Example = (function (_super) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
+        RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
-        RES.loadGroup("p2");
+        //RES.loadGroup("p2");
     };
     /**
      * preload资源组加载完成
@@ -99,7 +99,8 @@ var Example = (function (_super) {
         //
         //this.testDragUtil();
         //
-        this.testMd5();
+        //this.testMd5();
+        this.testSocketIO();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -527,6 +528,33 @@ var Example = (function (_super) {
         text2.y = 350;
         text2.size = 30;
         text2.width = 300;
+    };
+    __egretProto__.testSocketIO = function () {
+        var sky = this.createBitmapByName("bgImage");
+        this.addChild(sky);
+        var stageH = this.stage.stageHeight;
+        var stageW = this.stage.stageWidth;
+        sky.width = stageW;
+        sky.height = stageH;
+        this.txt = new egret.TextField();
+        this.txt.text = "点击屏幕发送消息";
+        this.addChild(this.txt);
+        var self = this;
+        this.socket = io.connect("http://localhost:3101/");
+        this.socket.on("news", function (data) {
+            self.trace("receive message: " + data);
+        });
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function () {
+            self.sendMessage("message content");
+        }, this);
+    };
+    __egretProto__.sendMessage = function (msg) {
+        this.trace("send message: " + msg);
+        this.socket.emit("message", msg);
+    };
+    __egretProto__.trace = function (msg) {
+        console.log(msg);
+        this.txt.text += "\n" + msg;
     };
     return Example;
 })(egret.DisplayObjectContainer);

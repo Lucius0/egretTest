@@ -249,5 +249,6 @@ var egret_file_list = [
 	"protobuf/Long.min.js",
 	"protobuf/ProtoBuf.min.js",
 	"physics/p2.min.js",
-	"md5/md5.js"
+	"md5/md5.js",
+	"socket.io/socket.io.js"
 ];

@@ -22,10 +22,10 @@ class Example extends egret.DisplayObjectContainer
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
+        RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
-        RES.loadGroup("p2");
+        //RES.loadGroup("p2");
     }
     /**
      * preload资源组加载完成
@@ -105,7 +105,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.testDragUtil();
         //
-        this.testMd5();
+        //this.testMd5();
+
+        this.testSocketIO();
     }
 
     /**
@@ -675,5 +677,43 @@ class Example extends egret.DisplayObjectContainer
         text2.y = 350;
         text2.size = 30;
         text2.width = 300;
+    }
+
+    private socket;
+    private txt;
+
+    private testSocketIO():void
+    {
+        var sky:egret.Bitmap = this.createBitmapByName("bgImage");
+        this.addChild(sky);
+
+        var stageH:number = this.stage.stageHeight;
+        var stageW:number = this.stage.stageWidth;
+        sky.width = stageW;
+        sky.height = stageH;
+
+        this.txt = new egret.TextField();
+        this.txt.text = "点击屏幕发送消息";
+        this.addChild(this.txt);
+
+        var self = this;
+        this.socket = io.connect("http://localhost:3101/");
+        this.socket.on("news", function(data):void {
+            self.trace("receive message: " + data);
+        });
+
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(){
+            self.sendMessage("message content");
+        }, this);
+    }
+
+    private sendMessage(msg:string):void {
+        this.trace("send message: " + msg);
+        this.socket.emit("message", msg);
+    }
+
+    private trace(msg:string):void {
+        console.log(msg);
+        this.txt.text += "\n" + msg;
     }
 }
