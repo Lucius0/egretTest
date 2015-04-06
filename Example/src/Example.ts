@@ -6,7 +6,8 @@ class Example extends egret.DisplayObjectContainer
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
-    private onAddToStage(event: egret.Event) {
+    private onAddToStage(event:egret.Event)
+    {
         //注入自定义的素材解析器
         egret.Injector.mapClass("egret.gui.IAssetAdapter", AssetAdapter);
         //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
@@ -15,10 +16,12 @@ class Example extends egret.DisplayObjectContainer
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/resource.json", "resource/");
     }
+
     /**
      * 配置文件加载完成,开始预加载preload资源组。
      */
-    private onConfigComplete(event: RES.ResourceEvent): void {
+    private onConfigComplete(event:RES.ResourceEvent):void
+    {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         //RES.loadGroup("rollMc");
@@ -27,11 +30,14 @@ class Example extends egret.DisplayObjectContainer
         //RES.loadGroup("btnSource");
         //RES.loadGroup("p2");
     }
+
     /**
      * preload资源组加载完成
      */
-    private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc" || event.groupName == "p2") {
+    private onResourceLoadComplete(event:RES.ResourceEvent):void
+    {
+        if (event.groupName == "preload" || event.groupName == "particle" || event.groupName == "btnSource" || event.groupName == "rollMc" || event.groupName == "p2")
+        {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -106,14 +112,19 @@ class Example extends egret.DisplayObjectContainer
         //this.testDragUtil();
         //
         //this.testMd5();
+        //
+        //this.testSocketIO();
 
-        this.testSocketIO();
+        //this.testJsonp(); // 还没完成测试 教程：http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=2460&extra=&page=2
+
+        this.testGesture();
     }
 
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
      */
-    private createBitmapByName(name:string):egret.Bitmap {
+    private createBitmapByName(name:string):egret.Bitmap
+    {
         var result:egret.Bitmap = new egret.Bitmap();
         var texture:egret.Texture = RES.getRes(name);
         result.texture = texture;
@@ -148,10 +159,11 @@ class Example extends egret.DisplayObjectContainer
     }
 
     private toggleBtns:egret.gui.ToggleButton[];
+
     private createToggleButton():void
     {
         this.toggleBtns = [];
-        for(var i:number = 0; i < 4; i++)
+        for (var i:number = 0; i < 4; i++)
         {
             var btn:egret.gui.ToggleButton = new egret.gui.ToggleButton();
             btn.label = i + 1 + "";
@@ -166,7 +178,7 @@ class Example extends egret.DisplayObjectContainer
 
     private toggleBtnChange(e:egret.Event):void
     {
-        for(var i:number = 0; i < this.toggleBtns.length; i++)
+        for (var i:number = 0; i < this.toggleBtns.length; i++)
         {
             var btn:egret.gui.ToggleButton = this.toggleBtns[i];
             btn.selected = (btn == e.target);
@@ -240,6 +252,7 @@ class Example extends egret.DisplayObjectContainer
     }
 
     private pBar:egret.gui.ProgressBar;
+
     private createProgressBar():void
     {
         this.pBar = new egret.gui.ProgressBar();
@@ -257,12 +270,13 @@ class Example extends egret.DisplayObjectContainer
         timer.start();
     }
 
-    private barLabelFunction(value:number,maximum:number):string
+    private barLabelFunction(value:number, maximum:number):string
     {
-        return "加载中... "+Math.ceil(value/maximum*100)+"%";
+        return "加载中... " + Math.ceil(value / maximum * 100) + "%";
     }
 
-    private progressBarChange(e:egret.TimerEvent):void {
+    private progressBarChange(e:egret.TimerEvent):void
+    {
         this.pBar.value += 1;
     }
 
@@ -285,7 +299,7 @@ class Example extends egret.DisplayObjectContainer
 
     private confirmHandle(e:egret.gui.CloseEvent):void
     {
-        if(e.detail == egret.gui.Alert.FIRST_BUTTON)
+        if (e.detail == egret.gui.Alert.FIRST_BUTTON)
         {
             console.log("用户点击了OK");
         }
@@ -304,9 +318,9 @@ class Example extends egret.DisplayObjectContainer
     private createDataGroup():void
     {
         var sourceArr:any[] = [];
-        for(var i:number = 1; i < 5; i++)
+        for (var i:number = 1; i < 5; i++)
         {
-            sourceArr.push({label:"item" + i});
+            sourceArr.push({label: "item" + i});
         }
 
         var myCollection:egret.gui.ArrayCollection = new egret.gui.ArrayCollection(sourceArr);
@@ -322,9 +336,9 @@ class Example extends egret.DisplayObjectContainer
     private createList():void
     {
         var sourceArr:any[] = [];
-        for(var i:number = 1; i < 50; i++)
+        for (var i:number = 1; i < 50; i++)
         {
-            sourceArr.push({name:"item" + i});
+            sourceArr.push({name: "item" + i});
         }
 
         var myCollection:egret.gui.ArrayCollection = new egret.gui.ArrayCollection(sourceArr);
@@ -342,7 +356,7 @@ class Example extends egret.DisplayObjectContainer
 
     private listClickhandler(e:egret.gui.ListEvent):void
     {
-        console.log(e.item.name+" clicked");
+        console.log(e.item.name + " clicked");
     }
 
     private createTitleWindow():void
@@ -360,7 +374,7 @@ class Example extends egret.DisplayObjectContainer
     private createTabWithViewStack():void
     {
         var viewStack:egret.gui.ViewStack = new egret.gui.ViewStack();
-        for(var i:number = 0; i < 3; i++)
+        for (var i:number = 0; i < 3; i++)
         {
             var group:egret.gui.Group = new egret.gui.Group();
             group.name = "Group_" + i;
@@ -393,6 +407,7 @@ class Example extends egret.DisplayObjectContainer
     }
 
     private mc:egret.MovieClip;
+
     private createRollMc():void
     {
         var data = RES.getRes("rollMc_json");
@@ -420,13 +435,14 @@ class Example extends egret.DisplayObjectContainer
     }
 
     private onTouchEnd(e:egret.TouchEvent):void
-    {e.stopPropagation()
+    {
+        e.stopPropagation()
         this.touchEndY = e.stageY;
 
-        if(this.touchEndY - this.touchBeginY < 0)
+        if (this.touchEndY - this.touchBeginY < 0)
         {
             this.curFrame--;
-            if(this.curFrame <= 0)
+            if (this.curFrame <= 0)
             {
                 this.curFrame = this.mc.totalFrames;
             }
@@ -435,7 +451,7 @@ class Example extends egret.DisplayObjectContainer
         else
         {
             this.curFrame++;
-            if(this.curFrame > this.mc.totalFrames)
+            if (this.curFrame > this.mc.totalFrames)
             {
                 this.curFrame = 1;
             }
@@ -446,7 +462,7 @@ class Example extends egret.DisplayObjectContainer
 
         var tw:egret.Tween = egret.Tween.get(this.mc);
         this.mc.touchEnabled = false;
-        tw.to({y:this.preHeight}, 1000);
+        tw.to({y: this.preHeight}, 1000);
         tw.call(this.onCall, this);
     }
 
@@ -455,7 +471,7 @@ class Example extends egret.DisplayObjectContainer
         this.mc.y = -this.preHeight;
         this.mc.gotoAndStop(this.curFrame);
         var tw:egret.Tween = egret.Tween.get(this.mc);
-        tw.to({y:0}, 1000);
+        tw.to({y: 0}, 1000);
         this.mc.touchEnabled = true;
     }
 
@@ -469,7 +485,7 @@ class Example extends egret.DisplayObjectContainer
     {
         var btn:egret.gui.Button = new egret.gui.Button();
         btn.label = "touch me";
-        btn.touchEnabled  = true;
+        btn.touchEnabled = true;
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickLocalStorage, this);
 
         this.guiLayer.addElement(btn);
@@ -478,15 +494,17 @@ class Example extends egret.DisplayObjectContainer
     private clickLocalStorage():void
     {
         var value:string;
-        if(egret.localStorage.getItem("pro")){
-            value =egret.localStorage.getItem("pro");
-        }else{
-            value="1";
+        if (egret.localStorage.getItem("pro"))
+        {
+            value = egret.localStorage.getItem("pro");
+        } else
+        {
+            value = "1";
         }
 
         console.log(value);
-        var v2:string = (parseInt(value)+1).toString();
-        egret.localStorage.setItem("pro",v2);
+        var v2:string = (parseInt(value) + 1).toString();
+        egret.localStorage.setItem("pro", v2);
     }
 
     private createMask():void
@@ -552,7 +570,7 @@ class Example extends egret.DisplayObjectContainer
     private playOver(e:egret.Event):void
     {
         this.mc.removeEventListener(egret.Event.COMPLETE, this.playOver, this);
-        if(e.target)
+        if (e.target)
         {
             e.target.parent.removeChild(e.target);
         }
@@ -571,7 +589,7 @@ class Example extends egret.DisplayObjectContainer
     private createDictionary():void
     {
         var s:string = "字符串";
-        var o:Object = {name : "对象"};
+        var o:Object = {name: "对象"};
         var a:string[] = ["数组"];
 
         var dic:utils.Dictionary = new utils.Dictionary(); //new Dictionary([{ key: "one", value: "1" }, { key: "two", value: { hitted: true } }]);
@@ -598,9 +616,9 @@ class Example extends egret.DisplayObjectContainer
         var user_login_class = message.build("user_login_c2s");
 
         var user_login = new user_login_class({
-           "accid":888,
+            "accid": 888,
             "tstamp": 999,
-            "ticket":"yongsong"
+            "ticket": "yongsong"
         });
 
         var bytes = user_login.toArrayBuffer();
@@ -618,7 +636,8 @@ class Example extends egret.DisplayObjectContainer
         label.x = 0;
         label.y = 150;
         label.text = "setTimeout实现，3秒后文字会改变";
-        egret.setTimeout(function():void {
+        egret.setTimeout(function ():void
+        {
             label.text = "setTimeOut";
         }, this, 3000);
 
@@ -629,9 +648,11 @@ class Example extends egret.DisplayObjectContainer
         label2.text = "Ticker实现，3秒后文字会改变";
 
         var time:number = 0;
-        var func = function (dt:number) {
+        var func = function (dt:number)
+        {
             time += dt;
-            if(time >= 3000) {
+            if (time >= 3000)
+            {
                 egret.Ticker.getInstance().unregister(this, this);
                 label2.text = "Ticker";
             }
@@ -698,22 +719,57 @@ class Example extends egret.DisplayObjectContainer
 
         var self = this;
         this.socket = io.connect("http://localhost:3101/");
-        this.socket.on("news", function(data):void {
+        this.socket.on("news", function (data):void
+        {
             self.trace("receive message: " + data);
         });
 
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function(){
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function ()
+        {
             self.sendMessage("message content");
         }, this);
     }
 
-    private sendMessage(msg:string):void {
+    private sendMessage(msg:string):void
+    {
         this.trace("send message: " + msg);
         this.socket.emit("message", msg);
     }
 
-    private trace(msg:string):void {
+    private trace(msg:string):void
+    {
         console.log(msg);
         this.txt.text += "\n" + msg;
+    }
+
+    private testJsonp():void
+    {
+        var url:String = "http://localhost:3000/launcher/index.html";
+        var para:String = "callback";
+        var loader:egret.URLLoader = new egret.URLLoader();
+        var req:egret.URLRequest = new egret.URLRequest(url + "?" + para + "=onGetComplete");
+        loader._request = req;
+        JsonpReq.process(loader);
+        loader.addEventListener(egret.Event.COMPLETE, this.onGetComplete, this);
+    }
+
+    private onGetComplete(e:egret.Event):void
+    {
+        var loader:egret.URLLoader = <egret.URLLoader>e.target;
+        var data:egret.URLVariables = loader.data;
+        console.log("---------------------------------------\n" + data.toString());
+    }
+
+    private testGesture():void
+    {
+        if(document.location.toString().indexOf("type=2") == -1) {
+            document.title = "普通手势测试";
+            var test1:GestureTest = new GestureTest();
+            this.addChild(test1);
+        } else {
+            document.title = "变换测试";
+            var test2:TransformTest = new TransformTest();
+            this.addChild(test2);
+        }
     }
 }

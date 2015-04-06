@@ -100,7 +100,10 @@ var Example = (function (_super) {
         //this.testDragUtil();
         //
         //this.testMd5();
-        this.testSocketIO();
+        //
+        //this.testSocketIO();
+        //this.testJsonp(); // 还没完成测试 教程：http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=2460&extra=&page=2
+        this.testGesture();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -555,6 +558,29 @@ var Example = (function (_super) {
     __egretProto__.trace = function (msg) {
         console.log(msg);
         this.txt.text += "\n" + msg;
+    };
+    __egretProto__.testJsonp = function () {
+        var url = "http://localhost:3000/launcher/index.html";
+        var para = "callback";
+        var loader = new egret.URLLoader();
+        var req = new egret.URLRequest(url + "?" + para + "=onGetComplete");
+        loader._request = req;
+        JsonpReq.process(loader);
+        loader.addEventListener(egret.Event.COMPLETE, this.onGetComplete, this);
+    };
+    __egretProto__.onGetComplete = function (e) {
+        var loader = e.target;
+        var data = loader.data;
+        console.log("---------------------------------------\n" + data.toString());
+    };
+    __egretProto__.testGesture = function () {
+        if (document.location.toString().indexOf("type=2") == -1) {
+            document.title = "普通手势测试";
+            var test1 = new GestureTest();
+            this.addChild(test1);
+        }
+        else {
+        }
     };
     return Example;
 })(egret.DisplayObjectContainer);
