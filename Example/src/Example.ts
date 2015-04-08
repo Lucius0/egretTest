@@ -67,7 +67,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createProgressBar();
         //
-        //this.createAlert();
+        this.createAlert();
         //
         //this.createPanel();
         //
@@ -117,7 +117,9 @@ class Example extends egret.DisplayObjectContainer
 
         //this.testJsonp(); // 还没完成测试 教程：http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=2460&extra=&page=2
 
-        this.testGesture();
+        //this.testGesture();
+
+        this.drawSector(100, 100, 50, 0, 270);
     }
 
     /**
@@ -771,5 +773,33 @@ class Example extends egret.DisplayObjectContainer
             var test2:TransformTest = new TransformTest();
             this.addChild(test2);
         }
+    }
+
+    private drawSector(x: number= 0, y: number= 0, r: number= 100, startFrom: number= 0,angle: number= 360, color: number= 0xff0000):void
+    {
+        var sp:egret.Sprite = new egret.Sprite();
+        sp.graphics.beginFill(color);
+        //this.graphics.lineStyle(0, 0xff0000);
+        sp.graphics.moveTo(x, y);
+        angle = (Math.abs(angle) > 360) ? 360 : angle;
+        var n: number = Math.ceil(Math.abs(angle) / 45);
+        var angleA: number = angle / n;
+        angleA = angleA * Math.PI / 180;
+        startFrom = startFrom * Math.PI / 180;
+        sp.graphics.lineTo(x + r * Math.cos(startFrom), y + r * Math.sin(startFrom));
+        for (var i = 1; i <= n; i++) {
+            startFrom += angleA;
+            var angleMid = startFrom - angleA / 2;
+            var bx = x + r / Math.cos(angleA / 2) * Math.cos(angleMid);
+            var by = y + r / Math.cos(angleA / 2) * Math.sin(angleMid);
+            var cx = x + r * Math.cos(startFrom);
+            var cy = y + r * Math.sin(startFrom);
+            sp.graphics.curveTo(bx, by, cx, cy);
+        }
+        if (angle != 360) {
+            sp.graphics.lineTo(x, y);
+        }
+        sp.graphics.endFill();// if you want a sector without filling color , please remove this line.
+        this.addChild(sp);
     }
 }

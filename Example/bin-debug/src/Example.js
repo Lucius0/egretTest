@@ -55,7 +55,7 @@ var Example = (function (_super) {
         //
         //this.createProgressBar();
         //
-        //this.createAlert();
+        this.createAlert();
         //
         //this.createPanel();
         //
@@ -103,7 +103,8 @@ var Example = (function (_super) {
         //
         //this.testSocketIO();
         //this.testJsonp(); // 还没完成测试 教程：http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=2460&extra=&page=2
-        this.testGesture();
+        //this.testGesture();
+        this.drawSector(100, 100, 50, 0, 270);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -580,7 +581,42 @@ var Example = (function (_super) {
             this.addChild(test1);
         }
         else {
+            document.title = "变换测试";
+            var test2 = new TransformTest();
+            this.addChild(test2);
         }
+    };
+    __egretProto__.drawSector = function (x, y, r, startFrom, angle, color) {
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
+        if (r === void 0) { r = 100; }
+        if (startFrom === void 0) { startFrom = 0; }
+        if (angle === void 0) { angle = 360; }
+        if (color === void 0) { color = 0xff0000; }
+        var sp = new egret.Sprite();
+        sp.graphics.beginFill(color);
+        //this.graphics.lineStyle(0, 0xff0000);
+        sp.graphics.moveTo(x, y);
+        angle = (Math.abs(angle) > 360) ? 360 : angle;
+        var n = Math.ceil(Math.abs(angle) / 45);
+        var angleA = angle / n;
+        angleA = angleA * Math.PI / 180;
+        startFrom = startFrom * Math.PI / 180;
+        sp.graphics.lineTo(x + r * Math.cos(startFrom), y + r * Math.sin(startFrom));
+        for (var i = 1; i <= n; i++) {
+            startFrom += angleA;
+            var angleMid = startFrom - angleA / 2;
+            var bx = x + r / Math.cos(angleA / 2) * Math.cos(angleMid);
+            var by = y + r / Math.cos(angleA / 2) * Math.sin(angleMid);
+            var cx = x + r * Math.cos(startFrom);
+            var cy = y + r * Math.sin(startFrom);
+            sp.graphics.curveTo(bx, by, cx, cy);
+        }
+        if (angle != 360) {
+            sp.graphics.lineTo(x, y);
+        }
+        sp.graphics.endFill(); // if you want a sector without filling color , please remove this line.
+        this.addChild(sp);
     };
     return Example;
 })(egret.DisplayObjectContainer);
