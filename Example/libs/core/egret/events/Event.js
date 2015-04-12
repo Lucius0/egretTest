@@ -240,7 +240,7 @@ var egret;
             if (bubbles === void 0) { bubbles = false; }
             var eventClass = Event;
             var props = Event._getPropertyData(eventClass);
-            if (data) {
+            if (data != undefined) {
                 props.data = data;
             }
             Event._dispatchByTarget(eventClass, target, type, props, bubbles);

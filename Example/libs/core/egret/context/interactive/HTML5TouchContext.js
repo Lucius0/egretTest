@@ -36,11 +36,17 @@ var egret;
             this._isTouchDown = false;
             this.rootDiv = null;
             this.rootDiv = document.getElementById(egret.StageDelegate.canvas_div_name);
+            if (!this.rootDiv) {
+                var container = document.getElementById(egret.StageDelegate.egret_root_div);
+                this.rootDiv = egret.Browser.getInstance().$new("div");
+                this.rootDiv.id = egret.StageDelegate.canvas_div_name;
+                container.appendChild(this.rootDiv);
+            }
         }
         var __egretProto__ = HTML5TouchContext.prototype;
         __egretProto__.prevent = function (event) {
             event.stopPropagation();
-            if (event["isScroll"] != true) {
+            if (event["isScroll"] != true && !egret.HTMLInput.getInstance().isInputOn()) {
                 event.preventDefault();
             }
         };

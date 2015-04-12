@@ -70,21 +70,6 @@ var egret;
                 this.target = target;
             }
             var __egretProto__ = Effect.prototype;
-            Object.defineProperty(__egretProto__, "className", {
-                /**
-                 * 效果类的短名
-                 * @member egret.gui.Effect#className
-                 */
-                get: function () {
-                    var name = egret.getQualifiedClassName(this);
-                    var index = name.indexOf("::");
-                    if (index != -1)
-                        name = name.substr(index + 2);
-                    return name;
-                },
-                enumerable: true,
-                configurable: true
-            });
             Object.defineProperty(__egretProto__, "duration", {
                 /**
                  * 效果的持续时间（以毫秒为单位）。

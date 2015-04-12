@@ -120,7 +120,7 @@ var egret;
             event._type = egret.Event.FINISH_RENDER;
             this.dispatchEvent(event);
             if (this._profileInstance._isRunning) {
-                this._profileInstance._drawProfiler();
+                this._profileInstance._drawProfiler(context);
             }
             context.onRenderFinish();
         };

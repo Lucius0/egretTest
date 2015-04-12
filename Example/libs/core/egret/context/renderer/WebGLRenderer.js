@@ -90,7 +90,7 @@ var egret;
         }
         var __egretProto__ = WebGLRenderer.prototype;
         __egretProto__.onRenderFinish = function () {
-            this._draw();
+            this._drawWebGL();
         };
         __egretProto__.initAll = function () {
             if (WebGLRenderer.isInit) {
@@ -278,7 +278,7 @@ var egret;
                     this.renderContext.pushMask(mask);
                 }
                 displayObject._render(this.renderContext);
-                this.renderContext["_draw"]();
+                this.renderContext["_drawWebGL"]();
                 egret.MainContext.__use_new_draw = __use_new_draw;
                 if (mask) {
                     this.renderContext.popMask();
@@ -466,7 +466,7 @@ var egret;
             if (this.currentBlendMode != blendMode) {
                 var blendModeWebGL = egret.RendererContext.blendModesForGL[blendMode];
                 if (blendModeWebGL) {
-                    this._draw();
+                    this._drawWebGL();
                     this.gl.blendFunc(blendModeWebGL[0], blendModeWebGL[1]);
                     this.currentBlendMode = blendMode;
                 }
@@ -496,7 +496,7 @@ var egret;
             this.createWebGLTexture(texture);
             var webGLTexture = texture._bitmapData.webGLTexture[this.glID];
             if (webGLTexture !== this.currentBaseTexture || this.currentBatchSize >= this.size - 1) {
-                this._draw();
+                this._drawWebGL();
                 this.currentBaseTexture = webGLTexture;
             }
             //计算出绘制矩阵，之后把矩阵还原回之前的
@@ -570,7 +570,7 @@ var egret;
             vertices[index++] = alpha;
             this.currentBatchSize++;
         };
-        __egretProto__._draw = function () {
+        __egretProto__._drawWebGL = function () {
             if (this.currentBatchSize == 0 || this.contextLost) {
                 return;
             }
@@ -617,7 +617,7 @@ var egret;
             }
         };
         __egretProto__.pushMask = function (mask) {
-            this._draw();
+            this._drawWebGL();
             var gl = this.gl;
             if (this.maskList.length == 0) {
                 gl.enable(gl.SCISSOR_TEST);
@@ -665,7 +665,7 @@ var egret;
             return maskData;
         };
         __egretProto__.popMask = function () {
-            this._draw();
+            this._drawWebGL();
             var gl = this.gl;
             var maskData = this.maskList.pop();
             this.maskDataFreeList.push(maskData);
@@ -692,7 +692,7 @@ var egret;
         };
         __egretProto__.setGlobalColorTransform = function (colorTransformMatrix) {
             if (this.colorTransformMatrix != colorTransformMatrix) {
-                this._draw();
+                this._drawWebGL();
                 this.colorTransformMatrix = colorTransformMatrix;
                 if (colorTransformMatrix) {
                     var colorTransformMatrix = colorTransformMatrix.concat();
@@ -706,7 +706,7 @@ var egret;
             }
         };
         __egretProto__.setGlobalFilter = function (filterData) {
-            this._draw();
+            this._drawWebGL();
             this.setFilterProperties(filterData);
         };
         __egretProto__.setFilterProperties = function (filterData) {
@@ -732,7 +732,7 @@ var egret;
             return this.canvasContext.measureText(text);
         };
         __egretProto__.renderGraphics = function (graphics) {
-            this._draw();
+            this._drawWebGL();
             var gl = this.gl;
             var shader = this.shaderManager.primitiveShader;
             if (!this.graphicsPoints) {

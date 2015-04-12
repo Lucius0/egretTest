@@ -115,10 +115,6 @@ var egret;
         __egretProto__._getTextType = function () {
             return this.textType;
         };
-        __egretProto__._open = function (x, y, width, height) {
-            if (width === void 0) { width = 160; }
-            if (height === void 0) { height = 21; }
-        };
         __egretProto__.resetText = function () {
             if (this.textType == "password") {
                 var passwordStr = "";
@@ -167,6 +163,7 @@ var egret;
             };
             //点击完成
             egret_native.EGT_keyboardFinish = function () {
+                self.dispatchEvent(new egret.Event("blur"));
                 if (self._multiline) {
                     self.isFinishDown = true;
                 }
@@ -184,6 +181,7 @@ var egret;
                 else {
                     if (appendText == "\n") {
                         if (container && container.parent) {
+                            self.dispatchEvent(new egret.Event("blur"));
                             container.parent.removeChild(container);
                         }
                         egret_native.TextInputOp.setKeybordOpen(false);
@@ -204,11 +202,12 @@ var egret;
             //系统关闭键盘
             egret_native.EGT_keyboardDidHide = function () {
                 if (container && container.parent) {
+                    self.dispatchEvent(new egret.Event("blur"));
                     container.parent.removeChild(container);
                 }
             };
         };
-        __egretProto__._show = function () {
+        __egretProto__._show = function (multiline, size, width, height) {
             var self = this;
             egret_native.EGT_getTextEditerContentText = function () {
                 return self._getText();
@@ -234,6 +233,7 @@ var egret;
         };
         __egretProto__._hide = function () {
             this._remove();
+            this.dispatchEvent(new egret.Event("blur"));
             egret_native.TextInputOp.setKeybordOpen(false);
         };
         return NativeStageText;

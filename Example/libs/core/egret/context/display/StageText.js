@@ -43,11 +43,17 @@ var egret;
             this._bold = false;
             this._italic = false;
             this._textAlign = "left";
+            this._verticalAlign = "top";
             this._visible = false;
+            this._width = 0;
+            this._height = 0;
             this._multiline = false;
             this._maxChars = 0;
         }
         var __egretProto__ = StageText.prototype;
+        __egretProto__._setTextField = function (textfield) {
+            this._textfield = textfield;
+        };
         /**
          * @returns {string}
          */
@@ -70,17 +76,7 @@ var egret;
         __egretProto__._getTextType = function () {
             return null;
         };
-        /**
-         * @param x {number}
-         * @param y {number}
-         * @param width {number}
-         * @param height {number}
-         */
-        __egretProto__._open = function (x, y, width, height) {
-            if (width === void 0) { width = 160; }
-            if (height === void 0) { height = 21; }
-        };
-        __egretProto__._show = function () {
+        __egretProto__._show = function (multiline, size, width, height) {
         };
         __egretProto__._add = function () {
         };
@@ -116,12 +112,17 @@ var egret;
         __egretProto__._setTextAlign = function (value) {
             this._textAlign = value;
         };
+        __egretProto__._setVerticalAlign = function (value) {
+            this._verticalAlign = value;
+        };
         __egretProto__._setVisible = function (value) {
             this._visible = value;
         };
         __egretProto__._setWidth = function (value) {
+            this._width = value;
         };
         __egretProto__._setHeight = function (value) {
+            this._height = value;
         };
         __egretProto__._setMultiline = function (value) {
             this._multiline = value;
@@ -130,6 +131,10 @@ var egret;
             this._maxChars = value;
         };
         __egretProto__._resetStageText = function () {
+        };
+        __egretProto__._initElement = function (x, y, cX, cY) {
+        };
+        __egretProto__._removeInput = function () {
         };
         StageText.create = function () {
             return null;

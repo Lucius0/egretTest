@@ -117,6 +117,10 @@ var egret;
             configurable: true
         });
         Object.defineProperty(__egretProto__, "position", {
+            /**
+             * 将文件指针的当前位置（以字节为单位）移动或返回到 ByteArray 对象中。下一次调用读取方法时将在此位置开始读取，或者下一次调用写入方法时将在此位置开始写入。
+             * @member {number} egret.ByteArray#position
+             */
             get: function () {
                 return this._position;
             },
@@ -133,16 +137,27 @@ var egret;
             configurable: true
         });
         Object.defineProperty(__egretProto__, "length", {
+            /**
+             * ByteArray 对象的长度（以字节为单位）。
+             * 如果将长度设置为大于当前长度的值，则用零填充字节数组的右侧。
+             * 如果将长度设置为小于当前长度的值，将会截断该字节数组。
+             * @member {number} egret.ByteArray#length
+             */
             get: function () {
                 return this.write_position;
             },
             set: function (value) {
-                this.validateBuffer(value);
+                this.validateBuffer(value, true);
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(__egretProto__, "bytesAvailable", {
+            /**
+             * 可从字节数组的当前位置到数组末尾读取的数据的字节数。
+             * 每次访问 ByteArray 对象时，将 bytesAvailable 属性与读取方法结合使用，以确保读取有效的数据。
+             * @member {number} egret.ByteArray#bytesAvailable
+             */
             get: function () {
                 return this.data.byteLength - this._position;
             },
@@ -579,12 +594,14 @@ var egret;
         /**********************/
         /*  PRIVATE METHODS   */
         /**********************/
-        __egretProto__.validateBuffer = function (len) {
+        __egretProto__.validateBuffer = function (len, needReplace) {
+            if (needReplace === void 0) { needReplace = false; }
             this.write_position = len > this.write_position ? len : this.write_position;
             len += this._position;
-            if (this.data.byteLength < len) {
+            if (this.data.byteLength < len || needReplace) {
                 var tmp = new Uint8Array(new ArrayBuffer(len + this.BUFFER_EXT_SIZE));
-                tmp.set(new Uint8Array(this.data.buffer));
+                var length = Math.min(this.data.buffer.byteLength, len + this.BUFFER_EXT_SIZE);
+                tmp.set(new Uint8Array(this.data.buffer, 0, length));
                 this.buffer = tmp.buffer;
             }
         };

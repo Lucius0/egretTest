@@ -191,10 +191,11 @@ var egret;
         __egretProto__.setupFont = function (textField, style) {
             if (style === void 0) { style = null; }
             style = style || {};
-            var italic = style["italic"] == null ? textField._italic : style["italic"];
-            var bold = style["bold"] == null ? textField._bold : style["bold"];
-            var size = style["size"] == null ? textField._size : style["size"];
-            var fontFamily = style["fontFamily"] == null ? textField._fontFamily : style["fontFamily"];
+            var properties = textField._properties;
+            var italic = style["italic"] == null ? properties._italic : style["italic"];
+            var bold = style["bold"] == null ? properties._bold : style["bold"];
+            var size = style["size"] == null ? properties._size : style["size"];
+            var fontFamily = style["fontFamily"] == null ? properties._fontFamily : style["fontFamily"];
             var ctx = this.drawCanvasContext;
             var font = italic ? "italic " : "normal ";
             font += bold ? "bold " : "normal ";
@@ -211,26 +212,27 @@ var egret;
             if (style === void 0) { style = null; }
             this.setupFont(textField, style);
             style = style || {};
+            var properties = textField._properties;
             var textColor;
             if (style.textColor != null) {
                 textColor = egret.toColorString(style.textColor);
             }
             else {
-                textColor = textField._textColorString;
+                textColor = properties._textColorString;
             }
             var strokeColor;
             if (style.strokeColor != null) {
                 strokeColor = egret.toColorString(style.strokeColor);
             }
             else {
-                strokeColor = textField._strokeColorString;
+                strokeColor = properties._strokeColorString;
             }
             var outline;
             if (style.stroke != null) {
                 outline = style.stroke;
             }
             else {
-                outline = textField._stroke;
+                outline = properties._stroke;
             }
             var renderContext = this.drawCanvasContext;
             renderContext.fillStyle = textColor;
@@ -284,6 +286,15 @@ var egret;
                     }
                 }
             }
+        };
+        __egretProto__.drawCursor = function (x1, y1, x2, y2) {
+            this.drawCanvasContext.strokeStyle = "#40a5ff";
+            this.drawCanvasContext.lineWidth = 2;
+            this.drawCanvasContext.beginPath();
+            this.drawCanvasContext.moveTo(Math.round(x1 + this._transformTx), Math.round(y1 + this._transformTy));
+            this.drawCanvasContext.lineTo(Math.round(x2 + this._transformTx), Math.round(y2 + this._transformTy));
+            this.drawCanvasContext.closePath();
+            this.drawCanvasContext.stroke();
         };
         return HTML5CanvasRenderer;
     })(egret.RendererContext);
@@ -469,6 +480,10 @@ var egret_h5_graphics;
             this.createEndFillCommand();
             this._pushCommand(this.endFillCommand);
             this.fillStyleColor = null;
+        }
+        if (this.strokeStyleColor) {
+            this.createEndLineCommand();
+            this._pushCommand(this.endLineCommand);
         }
     }
     egret_h5_graphics._fill = _fill;

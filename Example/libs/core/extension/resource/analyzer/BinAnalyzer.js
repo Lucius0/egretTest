@@ -108,10 +108,13 @@ var RES;
          */
         __egretProto__.destroyRes = function (name) {
             if (this.fileDic[name]) {
+                this.onResourceDestroy(this.fileDic[name]);
                 delete this.fileDic[name];
                 return true;
             }
             return false;
+        };
+        __egretProto__.onResourceDestroy = function (resource) {
         };
         return BinAnalyzer;
     })(RES.AnalyzerBase);

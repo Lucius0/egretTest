@@ -22,20 +22,20 @@
 			"path": "."
 		},
 		{
-		  "name": "physics",
-		  "path": "."
+			"name": "physics",
+			"path": "."
 		},
 		{
-		  "name": "md",
-		  "path": "."
+			"name": "md",
+			"path": "."
 		},
 		{
-		  "name": "socket.io",
-		  "path": "."
+			"name": "socket.io",
+			"path": "."
 		}
 	],
 	"native": {
 		"path_ignore": []
 	},
-	"egret_version": "1.6.1"
+	"egret_version": "1.6.2"
 }

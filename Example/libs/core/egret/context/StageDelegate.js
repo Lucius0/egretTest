@@ -107,7 +107,8 @@ var egret;
         StageDelegate.canvas_name = "egretCanvas";
         /**
          */
-        StageDelegate.canvas_div_name = "gameDiv";
+        StageDelegate.egret_root_div = "gameDiv";
+        StageDelegate.canvas_div_name = "canvasDiv";
         return StageDelegate;
     })(egret.HashObject);
     egret.StageDelegate = StageDelegate;
@@ -235,7 +236,15 @@ var egret;
             if (top === void 0) { top = 0; }
             egret.StageDelegate.getInstance()._stageWidth = Math.round(w);
             egret.StageDelegate.getInstance()._stageHeight = Math.round(h);
-            var container = document.getElementById(StageDelegate.canvas_div_name);
+            var canvasDiv = document.getElementById(StageDelegate.canvas_div_name);
+            var container = document.getElementById(StageDelegate.egret_root_div);
+            if (!canvasDiv) {
+                canvasDiv = egret.Browser.getInstance().$new("div");
+                canvasDiv.id = StageDelegate.canvas_div_name;
+                container.appendChild(canvasDiv);
+            }
+            canvasDiv.style.width = styleW + "px";
+            canvasDiv.style.height = styleH + "px";
             container.style.width = styleW + "px";
             container.style.height = styleH + "px";
             container.style.top = top + "px";

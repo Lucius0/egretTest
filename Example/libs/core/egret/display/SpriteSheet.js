@@ -60,17 +60,12 @@ var egret;
              */
             this._bitmapY = 0;
             /**
-             * 共享的位图数据
-             */
-            this.bitmapData = 0;
-            /**
              * 纹理缓存字典
              */
             this._textureMap = {};
-            var bitmapData = texture.bitmapData;
-            this.bitmapData = bitmapData;
-            this._sourceWidth = bitmapData.width;
-            this._sourceHeight = bitmapData.height;
+            this.texture = texture;
+            this._sourceWidth = texture._sourceWidth;
+            this._sourceHeight = texture._sourceHeight;
             this._bitmapX = texture._bitmapX - texture._offsetX;
             this._bitmapY = texture._bitmapY - texture._offsetY;
         }
@@ -107,9 +102,8 @@ var egret;
             if (typeof textureHeight === "undefined") {
                 textureHeight = offsetY + bitmapHeight;
             }
-            var texture = new egret.Texture();
+            var texture = this.texture._clone();
             var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
-            texture._bitmapData = this.bitmapData;
             texture._bitmapX = this._bitmapX + bitmapX;
             texture._bitmapY = this._bitmapY + bitmapY;
             texture._bitmapWidth = bitmapWidth * scale;

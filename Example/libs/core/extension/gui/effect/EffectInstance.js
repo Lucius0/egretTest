@@ -82,21 +82,6 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(__egretProto__, "className", {
-                /**
-                 * 效果实例类的短名
-                 * @member egret.gui.EffectInstance#className
-                 */
-                get: function () {
-                    var name = egret.getQualifiedClassName(this);
-                    var index = name.indexOf("::");
-                    if (index != -1)
-                        name = name.substr(index + 2);
-                    return name;
-                },
-                enumerable: true,
-                configurable: true
-            });
             Object.defineProperty(__egretProto__, "duration", {
                 /**
                  * 效果的持续时间（以毫秒为单位）。

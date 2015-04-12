@@ -39,6 +39,7 @@ var egret;
             this._renderPerformanceCost = 0;
             this._updateTransformPerformanceCost = 0;
             this._preDrawCount = 0;
+            this._calculatePreDrawCount = true;
             this._txt = null;
             this._tick = 0;
             this._maxDeltaTime = 500;
@@ -91,9 +92,13 @@ var egret;
             context.addEventListener(egret.Event.FINISH_RENDER, this.onFinishRender, this);
             context.addEventListener(egret.Event.FINISH_UPDATE_TRANSFORM, this.onFinishUpdateTransform, this);
         };
-        __egretProto__._drawProfiler = function () {
+        __egretProto__._drawProfiler = function (context) {
+            if ("_drawWebGL" in context) {
+                context["_drawWebGL"]();
+            }
+            this._calculatePreDrawCount = false;
             this._txt._updateTransform();
-            this._txt._draw(egret.MainContext.instance.rendererContext);
+            this._txt._draw(context);
         };
         __egretProto__._setTxtFontSize = function (fontSize) {
             this._txt.size = fontSize;
@@ -132,7 +137,7 @@ var egret;
             this._tick++;
             this._totalDeltaTime += frameTime;
             if (this._totalDeltaTime >= this._maxDeltaTime) {
-                var drawStr = (this._preDrawCount - 3).toString();
+                var drawStr = (this._preDrawCount).toString();
                 var timeStr = Math.ceil(this._logicPerformanceCost).toString() + "," + Math.ceil(this._updateTransformPerformanceCost).toString() + "," + Math.ceil(this._renderPerformanceCost).toString() + "," + Math.ceil(egret.MainContext.instance.rendererContext.renderCost).toString();
                 var frameStr = Math.floor(this._tick * 1000 / this._totalDeltaTime).toString();
                 this._txt.text = "draw:" + drawStr + "\n" + "cost:" + timeStr + "\n" + "FPS:" + frameStr;
@@ -140,13 +145,16 @@ var egret;
                 this._tick = 0;
             }
             this._preDrawCount = 0;
+            this._calculatePreDrawCount = true;
         };
         /**
          * @method egret.Profiler#onDrawImage
          * @private
          */
         __egretProto__.onDrawImage = function () {
-            this._preDrawCount++;
+            if (this._calculatePreDrawCount) {
+                this._preDrawCount++;
+            }
         };
         return Profiler;
     })();

@@ -87,9 +87,10 @@ var egret;
              * @param secondButtonLabel {string} 第二个按钮上显示的文本，若为null，则不显示第二个按钮。
              * @param modal {boolean} 是否启用模态。即禁用弹出框以下的鼠标事件。默认true。
              * @param center {boolean} 是否居中。默认true。
+             * @param thisObject {any} 回掉函数绑定的this对象
              * @returns {Alert}
              */
-            Alert.show = function (text, title, closeHandler, firstButtonLabel, secondButtonLabel, modal, center) {
+            Alert.show = function (text, title, closeHandler, firstButtonLabel, secondButtonLabel, modal, center, thisObject) {
                 if (text === void 0) { text = ""; }
                 if (title === void 0) { title = ""; }
                 if (closeHandler === void 0) { closeHandler = null; }
@@ -103,6 +104,7 @@ var egret;
                 alert._firstButtonLabel = firstButtonLabel;
                 alert._secondButtonLabel = secondButtonLabel;
                 alert.closeHandler = closeHandler;
+                alert.thisObject = thisObject;
                 gui.PopUpManager.addPopUp(alert, modal, center);
                 return alert;
             };
@@ -177,7 +179,7 @@ var egret;
                             closeEvent.detail = Alert.SECOND_BUTTON;
                             break;
                     }
-                    this.closeHandler(closeEvent);
+                    this.callCloseHandler(closeEvent);
                 }
             };
             /**
@@ -188,8 +190,13 @@ var egret;
                 _super.prototype.closeButton_clickHandler.call(this, event);
                 gui.PopUpManager.removePopUp(this);
                 var closeEvent = new gui.CloseEvent(gui.CloseEvent.CLOSE, false, false, Alert.CLOSE_BUTTON);
-                if (this.closeHandler != null)
-                    this.closeHandler(closeEvent);
+                this.callCloseHandler(closeEvent);
+            };
+            __egretProto__.callCloseHandler = function (closeEvent) {
+                if (this.closeHandler == null)
+                    return;
+                var target = this.thisObject || this;
+                this.closeHandler.call(target, closeEvent);
             };
             /**
              * 添加外观部件时调用

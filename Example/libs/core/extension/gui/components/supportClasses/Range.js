@@ -264,6 +264,7 @@ var egret;
                 else
                     this._value = value;
                 this.valueChanged = false;
+                gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.VALUE_COMMIT);
             };
             /**
              * 按 stepSize增大或减小当前值

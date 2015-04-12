@@ -33,7 +33,7 @@ var egret;
      * 在OpenGL / WebGL中，资源是一个提交GPU后获取的纹理id
      * Texture类封装了这些底层实现的细节，开发者只需要关心接口即可
      * @link
-     * http://docs.egret-labs.org/post/manual/bitmap/textures.html 纹理集的使用
+        * http://docs.egret-labs.org/post/manual/bitmap/textures.html 纹理集的使用
      * http://docs.egret-labs.org/post/manual/loader/getres.html 获取资源的几种方式
      */
     var Texture = (function (_super) {
@@ -67,7 +67,13 @@ var egret;
              * 表示这个纹理显示了之后在 y 方向的渲染偏移量
              */
             this._offsetY = 0;
+            /**
+             * 纹理宽度
+             */
             this._textureWidth = 0;
+            /**
+             * 纹理高度
+             */
             this._textureHeight = 0;
             /**
              * 表示bitmapData.width
@@ -102,17 +108,6 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(__egretProto__, "bitmapData", {
-            /**
-             * 纹理对象中得位图数据
-             * @member {any} egret.Texture#bitmapData
-             */
-            get: function () {
-                return this._bitmapData;
-            },
-            enumerable: true,
-            configurable: true
-        });
         __egretProto__._setBitmapData = function (value) {
             var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
             this._bitmapData = value;
@@ -134,6 +129,17 @@ var egret;
         __egretProto__.getPixel32 = function (x, y) {
             var result = this._bitmapData.getContext("2d").getImageData(x, y, 1, 1);
             return result.data;
+        };
+        __egretProto__.dispose = function () {
+            var bitmapData = this._bitmapData;
+            if (bitmapData.dispose) {
+                bitmapData.dispose();
+            }
+        };
+        __egretProto__._clone = function () {
+            var texture = new Texture();
+            texture._bitmapData = this._bitmapData;
+            return texture;
         };
         return Texture;
     })(egret.HashObject);

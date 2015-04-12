@@ -35,8 +35,9 @@ var egret;
         function Browser() {
             _super.call(this);
             this.trans = null;
+            this.header = "";
             this.ua = navigator.userAgent.toLowerCase();
-            this.trans = this._getTrans();
+            this.trans = this.getTrans("transform");
         }
         var __egretProto__ = Browser.prototype;
         Browser.getInstance = function () {
@@ -57,26 +58,32 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        __egretProto__._getHeader = function (tempStyle) {
-            if ("transform" in tempStyle) {
-                return "";
+        __egretProto__.getUserAgent = function () {
+            return this.ua;
+        };
+        /**
+         * 获取当前浏览器对应style类型
+         * @type {string}
+         */
+        __egretProto__.getTrans = function (type) {
+            if (this.header == "") {
+                this.header = this.getHeader();
             }
-            var transArr = ["webkit", "ms", "Moz", "O"];
+            return this.header + type.substring(1, type.length);
+        };
+        /**
+         * 获取当前浏览器的类型
+         * @returns {string}
+         */
+        __egretProto__.getHeader = function () {
+            var tempStyle = document.createElement('div').style;
+            var transArr = ["t", "webkitT", "msT", "MozT", "OT"];
             for (var i = 0; i < transArr.length; i++) {
-                var transform = transArr[i] + 'Transform';
+                var transform = transArr[i] + 'ransform';
                 if (transform in tempStyle)
                     return transArr[i];
             }
-            return "";
-        };
-        __egretProto__._getTrans = function () {
-            var tempStyle = document.createElement('div').style;
-            var _header = this._getHeader(tempStyle);
-            var type = "transform";
-            if (_header == "") {
-                return type;
-            }
-            return _header + type.charAt(0).toUpperCase() + type.substr(1);
+            return transArr[0];
         };
         __egretProto__.$new = function (x) {
             return this.$(document.createElement(x));

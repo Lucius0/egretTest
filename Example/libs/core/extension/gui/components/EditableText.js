@@ -467,13 +467,14 @@ var egret;
                         //todo:没有文字时的测量
                         var hInLine = parseInt(this.heightInLines);
                         var lineHeight = 22;
-                        if (this._textField._text.length > 0) {
+                        var properties = this._textField._properties;
+                        if (properties._text.length > 0) {
                             lineHeight = this._textField._getLineHeight();
                         }
                         else {
-                            this._textField._text = "M";
+                            properties._text = "M";
                             lineHeight = this._textField._getLineHeight();
-                            this._textField._text = "";
+                            properties._text = "";
                         }
                         this.defaultHeight = hInLine * lineHeight + 4;
                     }

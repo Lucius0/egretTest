@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="300"></canvas><br/>
+    <button style="width: 80px; background-color: yellow;" onclick="lineStyle = 'yellow';">YELLOW</button>
+    <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 600, 300);
+        var onoff = false;
+        var oldX = -10;
+        var oldY = -10;
+
+        var lineStyle = "white";
+        var linw = 4;
+        canvas.addEventListener("mousemove", draw, true);
+        canvas.addEventListener("mousedown", down, false);
+        canvas.addEventListener("mouseup", up, false);
+
+        function down(event)
+        {
+            onoff = true;
+            oldX = event.pageX - 10;
+            oldY = event.pageY - 10;
+        }
+
+        function up(event)
+        {
+            onoff = false;
+        }
+
+        function draw(event)
+        {
+            if(onoff)
+            {
+                var newX = event.pageX - 10;
+                var newY = event.pageY - 10;
+                ctx.beginPath();
+                ctx.moveTo(oldX, oldY);
+                ctx.lineTo(newX, newY);
+                ctx.strokeStyle = lineStyle;
+                ctx.lineWidth = linw;
+                ctx.lineCap = "round";
+                ctx.stroke();
+
+                oldX = newX;
+                oldY = newY;
+            }
+        }
+    </script>
+</body>
+</html>

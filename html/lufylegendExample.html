@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/lufylegend-1.9.9.js"></script>
+    <title></title>
+</head>
+<body>
+    <div id = "canvas">loading</div>
+    <script type="text/javascript">
+        var loader;
+        init(50, "canvas", 500, 350, main);
+
+        function main()
+        {
+            loader = new LLoader();
+            loader.addEventListener(LEvent.COMPLETE, loadBitmapdata);
+            loader.load("imgs/face.jpg", "bitmapData");
+        }
+
+        function loadBitmapdata(event)
+        {
+            var bitmapdata = new LBitmapData(loader.content);
+            var bitmap = new LBitmap(bitmapdata);
+            var layer = new LSprite();
+            addChild(layer)
+
+//            bitmap.x = bitmap.y = 50;
+//            bitmap.rotate = 60;
+//            bitmap.alpha = 0.4;
+//            layer.addChild(bitmap);
+
+//            // 矩形
+//            layer.graphics.drawRect(1, "#000000", [50,50,100,100]);
+//            layer.graphics.drawRect(1, "#000000", [170,50,100,100], true, "#cccccc");
+//            // 圆形
+//            layer.graphics.drawArc(1, "#000000", [60, 150, 50, 0, 360 * Math.PI/180]);
+//            layer.graphics.drawArc(1, "#000000", [180, 150, 50, 0, 360 * Math.PI/180], true, "#cccccc");
+//            // 多边形
+//            layer.graphics.drawVertices(1, "#000000", [[50, 20], [80, 20], [100, 50], [80, 80], [50, 80], [30,50]]);
+//            layer.graphics.drawVertices(1, "#000000", [[150, 20], [180, 20], [200, 50], [180, 80], [150, 80], [130,50]], true, "#cccccc");
+
+//            // 圆形区域的图片
+//            layer.graphics.beginBitmapFill(bitmapdata);
+//            layer.graphics.drawArc(1, "#000", [110, 80, 50, 0, Math.PI * 2]);
+//            // 多边形区域的图片
+//            layer.graphics.beginBitmapFill(bitmapdata);
+//            layer.graphics.drawVertices(1, "#000", [[120, 50], [100, 200], [200, 150]]);
+//            // 扭曲的图片
+//            layer.x = 100;
+//            var vertices = new Array();
+//            vertices.push(0, 0);
+//            vertices.push(-50, 120);
+//            vertices.push(0, 240);
+//            vertices.push(120, 0);
+//            vertices.push(120, 120);
+//            vertices.push(120, 240);
+//            vertices.push(240, 0);
+//            vertices.push(290, 120);
+//            vertices.push(240, 240);
+//
+//            var indices = new Array();
+//            indices.push(0, 3, 1);
+//            indices.push(3, 1, 4);
+//            indices.push(1, 4, 2);
+//            indices.push(4, 2, 5);
+//            indices.push(3, 6, 4);
+//            indices.push(6, 4, 7);
+//            indices.push(4, 7, 5);
+//            indices.push(7, 5, 8);
+//
+//            var uvrData = new Array();
+//            uvrData.push(0, 0);
+//            uvrData.push(0, 0.5);
+//            uvrData.push(0, 1);
+//            uvrData.push(0.5, 0);
+//            uvrData.push(0.5, 0.5);
+//            uvrData.push(0.5, 1);
+//            uvrData.push(1, 0);
+//            uvrData.push(1, 0.5);
+//            uvrData.push(1, 1);
+//
+//            layer.graphics.beginBitmapFill(bitmapdata);
+//            layer.graphics.drawTriangles(vertices, indices, uvrData);
+
+        }
+    </script>
+</body>
+</html>

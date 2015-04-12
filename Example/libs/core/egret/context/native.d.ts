@@ -435,12 +435,11 @@ declare module egret {
         _setText(value: string): void;
         _setTextType(type: string): void;
         _getTextType(): string;
-        _open(x: number, y: number, width?: number, height?: number): void;
         private resetText();
         private isFinishDown;
         private showScreenKeyboard();
         private showPartKeyboard();
-        _show(): void;
+        _show(multiline: boolean, size: number, width: number, height: number): void;
         _remove(): void;
         _hide(): void;
     }

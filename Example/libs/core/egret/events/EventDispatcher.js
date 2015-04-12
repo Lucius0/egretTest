@@ -186,7 +186,7 @@ var egret;
          * @stable A
          */
         __egretProto__.hasEventListener = function (type) {
-            return (this._eventsMap && this._eventsMap[type] || this._captureEventsMap && this._captureEventsMap[type]);
+            return !!(this._eventsMap && this._eventsMap[type] || this._captureEventsMap && this._captureEventsMap[type]);
         };
         /**
          * 检查是否用此 EventDispatcher 对象或其任何始祖为指定事件类型注册了事件侦听器。将指定类型的事件调度给此

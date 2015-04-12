@@ -48,6 +48,8 @@ var egret_file_list = [
 	"core/egret/display/Graphics.js",
 	"core/egret/display/Shape.js",
 	"core/egret/display/Sprite.js",
+	"core/egret/text/TextFieldUtils.js",
+	"core/egret/text/TextFieldProperties.js",
 	"core/egret/text/TextField.js",
 	"core/egret/text/HtmlTextParser.js",
 	"core/egret/text/TextFieldType.js",

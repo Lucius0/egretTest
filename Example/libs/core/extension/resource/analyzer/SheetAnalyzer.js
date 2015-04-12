@@ -62,10 +62,12 @@ var RES;
                     resItem.loaded = false;
                     var imageUrl = this.analyzeConfig(resItem, loader.data);
                     if (imageUrl) {
+                        var tempUrl = resItem.url;
                         resItem.url = imageUrl;
                         this._dataFormat = egret.URLLoaderDataFormat.TEXTURE;
                         this.loadFile(resItem, compFunc, data.thisObject);
                         this._dataFormat = egret.URLLoaderDataFormat.TEXT;
+                        resItem.url = tempUrl;
                         return;
                     }
                 }
@@ -73,7 +75,6 @@ var RES;
                     this.analyzeBitmap(resItem, loader.data);
                 }
             }
-            resItem.url = resItem.data.url;
             this.recycler.push(loader);
             compFunc.call(data.thisObject, resItem);
         };

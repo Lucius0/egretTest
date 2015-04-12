@@ -40,6 +40,9 @@ var RES;
                 data["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
             }
         };
+        __egretProto__.onResourceDestroy = function (resource) {
+            //console.log (resource);
+        };
         return ImageAnalyzer;
     })(RES.BinAnalyzer);
     RES.ImageAnalyzer = ImageAnalyzer;

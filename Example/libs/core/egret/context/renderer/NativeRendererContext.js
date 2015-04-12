@@ -168,13 +168,14 @@ var egret;
         __egretProto__.setupFont = function (textField, style) {
             if (style === void 0) { style = null; }
             style = style || {};
-            var size = style["size"] == null ? textField._size : style["size"];
+            var properties = textField._properties;
+            var size = style["size"] == null ? properties._size : style["size"];
             var outline;
             if (style.stroke != null) {
                 outline = style.stroke;
             }
             else {
-                outline = textField._stroke;
+                outline = properties._stroke;
             }
             egret_native.Label.createLabel(egret.TextField.default_fontFamily, size, "", outline);
         };
@@ -200,19 +201,20 @@ var egret;
             if (style === void 0) { style = null; }
             this.setupFont(textField, style);
             style = style || {};
+            var properties = textField._properties;
             var textColor;
             if (style.textColor != null) {
                 textColor = style.textColor;
             }
             else {
-                textColor = textField._textColor;
+                textColor = properties._textColor;
             }
             var strokeColor;
             if (style.strokeColor != null) {
                 strokeColor = style.strokeColor;
             }
             else {
-                strokeColor = textField._strokeColor;
+                strokeColor = properties._strokeColor;
             }
             egret_native.Label.setTextColor(textColor);
             egret_native.Label.setStrokeColor(strokeColor);

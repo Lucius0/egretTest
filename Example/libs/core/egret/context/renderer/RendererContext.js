@@ -182,6 +182,8 @@ var egret;
         };
         __egretProto__.setGlobalFilter = function (filterData) {
         };
+        __egretProto__.drawCursor = function (x1, y1, x2, y2) {
+        };
         RendererContext.createRendererContext = function (canvas) {
             return null;
         };

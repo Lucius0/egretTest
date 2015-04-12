@@ -3783,10 +3783,6 @@ declare module egret.gui {
 declare module egret.gui {
     interface IEffect extends IEventDispatcher {
         /**
-         * 效果类的短名
-         */
-        className: string;
-        /**
          * 效果的持续时间（以毫秒为单位）。
          */
         duration: number;
@@ -3895,10 +3891,6 @@ declare module egret.gui {
  */
 declare module egret.gui {
     interface IEffectInstance {
-        /**
-         * 效果实例类的短名
-         */
-        className: string;
         /**
          * 效果的持续时间（以毫秒为单位）。
          */
@@ -4630,11 +4622,6 @@ declare module egret.gui {
          * 实际的持续时间包含startDelay，repeatDelay，repeatCount这些值
          */
         _actualDuration: number;
-        /**
-         * 效果实例类的短名
-         * @member egret.gui.EffectInstance#className
-         */
-        className: string;
         private _duration;
         /**
          * 效果的持续时间（以毫秒为单位）。
@@ -5415,11 +5402,6 @@ declare module egret.gui {
          * 效果所属的复杂效果
          */
         _parentCompositeEffect: Effect;
-        /**
-         * 效果类的短名
-         * @member egret.gui.Effect#className
-         */
-        className: string;
         private _duration;
         durationExplicitlySet: boolean;
         /**
@@ -11164,9 +11146,10 @@ declare module egret.gui {
          * @param secondButtonLabel {string} 第二个按钮上显示的文本，若为null，则不显示第二个按钮。
          * @param modal {boolean} 是否启用模态。即禁用弹出框以下的鼠标事件。默认true。
          * @param center {boolean} 是否居中。默认true。
+         * @param thisObject {any} 回掉函数绑定的this对象
          * @returns {Alert}
          */
-        static show(text?: string, title?: string, closeHandler?: Function, firstButtonLabel?: string, secondButtonLabel?: string, modal?: boolean, center?: boolean): Alert;
+        static show(text?: string, title?: string, closeHandler?: Function, firstButtonLabel?: string, secondButtonLabel?: string, modal?: boolean, center?: boolean, thisObject?: any): Alert;
         /**
          * 构造函数，请通过静态方法Alert.show()来创建对象实例。
          * @method egret.gui.Alert#constructor
@@ -11205,6 +11188,10 @@ declare module egret.gui {
          */
         private closeHandler;
         /**
+        * 对话框关闭回调函数对应的this对象
+        */
+        private thisObject;
+        /**
          * 关闭事件
          */
         private onClose(event);
@@ -11213,6 +11200,7 @@ declare module egret.gui {
          * @param event {TouchEvent}
          */
         closeButton_clickHandler(event: TouchEvent): void;
+        private callCloseHandler(closeEvent);
         /**
          * [SkinPart]文本内容显示对象
          * @member egret.gui.Alert#contentDisplay
