@@ -24,6 +24,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="lufylegend-1.9.9.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/lufylegend-1.9.9.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="34363" max-vertical-offset="203500">
+              <caret line="1375" column="31" selection-start-line="1375" selection-start-column="31" selection-end-line="1375" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="lufylegendExample.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lufylegendExample.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -34,11 +44,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="finger_guessing.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="finger_guessing.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/finger_guessing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8929336" vertical-offset="4758" max-vertical-offset="5800">
-              <caret line="207" column="61" selection-start-line="207" selection-start-column="61" selection-end-line="207" selection-end-column="61" />
+            <state vertical-scroll-proportion="3.6764705" vertical-offset="525" max-vertical-offset="5800">
+              <caret line="16" column="45" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="teris.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/teris.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.54229933" vertical-offset="275" max-vertical-offset="5850">
+              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -52,6 +72,7 @@
         <option value="$PROJECT_DIR$/drawPanel.html" />
         <option value="$PROJECT_DIR$/lufylegendExample.html" />
         <option value="$PROJECT_DIR$/finger_guessing.html" />
+        <option value="$PROJECT_DIR$/teris.html" />
       </list>
     </option>
   </component>
@@ -115,39 +136,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="imgs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imgs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finger-guessing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -167,6 +156,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\git workspace\egretTest\html\imgs\teris" />
       <recent name="H:\git workspace\egretTest\html\imgs\finger-guessing" />
       <recent name="H:\git workspace\egretTest\html" />
     </key>
@@ -175,7 +165,7 @@
       <recent name="H:\git workspace\egretTest\html\js" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.finger_guessing.html">
+  <component name="RunManager" selected="JavaScript Debug.teris.html">
     <configuration default="false" name="drawPanel.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/html/drawPanel.html">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
@@ -187,6 +177,11 @@
       <method />
     </configuration>
     <configuration default="false" name="finger_guessing.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/html/finger_guessing.html">
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="teris.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/html/teris.html">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
       <method />
@@ -228,16 +223,18 @@
       <envs />
       <method />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.drawPanel.html" />
       <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.lufylegendExample.html" />
       <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.finger_guessing.html" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.teris.html" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.finger_guessing.html" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.lufylegendExample.html" />
-        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.drawPanel.html" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.teris.html" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.finger_guessing.html" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.lufylegendExample.html" />
+        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.drawPanel.html" />
       </list>
     </recent_temporary>
   </component>
@@ -256,7 +253,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -264,7 +261,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14790997" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15755627" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -322,14 +319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/lufylegend-1.9.9.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37586206" vertical-offset="12582" max-vertical-offset="203500">
-          <caret line="512" column="13" selection-start-line="512" selection-start-column="13" selection-end-line="512" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lufylegendExample.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="40.558823" vertical-offset="1804" max-vertical-offset="2350">
@@ -338,10 +327,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/lufylegend-1.9.9.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="34363" max-vertical-offset="203500">
+          <caret line="1375" column="31" selection-start-line="1375" selection-start-column="31" selection-end-line="1375" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/finger_guessing.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8929336" vertical-offset="4758" max-vertical-offset="5800">
-          <caret line="207" column="61" selection-start-line="207" selection-start-column="61" selection-end-line="207" selection-end-column="61" />
+        <state vertical-scroll-proportion="3.6764705" vertical-offset="525" max-vertical-offset="5800">
+          <caret line="16" column="45" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/teris.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54229933" vertical-offset="275" max-vertical-offset="5850">
+          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
           <folding />
         </state>
       </provider>

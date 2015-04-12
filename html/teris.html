@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/lufylegend-1.9.9.js"></script>
+    <title></title>
+</head>
+<body>
+    <div id="mycanvas"></div>
+
+    <script>
+        init(50, "mycanvas", 320, 480, main);
+
+        var loadingLayer, backLayer, graphicsMap, nextLayer;
+        var imglist = {};
+        var map, nodeList;
+        //方块图片数组
+        var bitmapdataList;
+        //得分相关
+        var point=0,pointText;
+        //当前方块的位置
+        var pointBox={x:0,y:0};
+        //当前方块，预览方块
+        var nowBox,nextBox;
+        //消除层数相关
+        var del=0,delText;
+        //方块下落速度相关
+        var speed=15,speedMax=15,speedText,speedIndex = 0;
+        //方块区域起始位置
+        var START_X1=15,START_Y1=20,START_X2=228,START_Y2=65;
+
+        var imgData = new Array (
+                {name:"backImage", path:"imgs/teris/backImage.png"},
+                {name:"r1", path:"imgs/teris/r1.png"},
+                {name:"r2", path:"imgs/teris/r2.png"},
+                {name:"r3", path:"imgs/teris/r3.png"},
+                {name:"r4", path:"imgs/teris/r4.png"}
+        );
+        function main() {
+            map = [
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]
+            ];
+
+            backLayer = new LSprite();
+            backLayer.graphics.drawRect(1, "#000000", [0, 0, LGlobal.width, LGlobal.height], true, "#000000");
+            addChild(backLayer);
+
+            loadingLayer = new LoadingSample1();
+            backLayer.addChild(loadingLayer);
+            LLoadManage.load(
+                imgData,
+                function(progress) {
+                    loadingLayer.setProgress(progress);
+                },
+                gameInit
+            );
+        }
+
+        function gameInit(result) {
+            imglist = result;
+            backLayer.removeChild(loadingLayer);
+            loadingLayer = null;
+
+            var title = new LTextField();
+            title.x = (LGlobal.width - title.width) / 2;
+            title.y = 100;
+            title.size = 30;
+            title.color = "#ffffff";
+            title.text = "俄罗斯方块";
+            backLayer.addChild(title);
+
+            backLayer.graphics.drawRect(1, "#ffffff", [50, 240, 220, 40]);
+            var textClick = new LTextField();
+            textClick.size = 18;
+            textClick.color = "#ffffff";
+            textClick.text = "点击页面开始游戏";
+            textClick.x = (LGlobal.width - textClick.getWidth()) / 2;
+            textClick.y = 245;
+            backLayer.addChild(textClick);
+            backLayer.addEventListener(LMouseEvent.MOUSE_UP, gameToStart);
+        }
+
+        function gameToStart() {
+            backLayer.die();
+            backLayer.removeAllChild();
+            var bitmap = new LBitmap(new LBitmapData(imglist["backImage"]));
+            backLayer.addChild(bitmap);
+
+            //得分表示
+            pointText = new LTextField();
+            pointText.x = 240;
+            pointText.y = 200;
+            pointText.size = 20;
+            backLayer.addChild(pointText);
+            //消除层数表示
+            delText = new LTextField();
+            delText.x = 240;
+            delText.y = 290;
+            delText.size = 20;
+            backLayer.addChild(delText);
+            //速度表示
+            speedText = new LTextField();
+            speedText.x = 240;
+            speedText.y = 385;
+            speedText.size = 20;
+            backLayer.addChild(speedText);
+            //将游戏得分，消除层数以及游戏速度显示到画面上
+            showText();
+            //方块绘制层初始化
+            graphicsMap = new LSprite();
+            backLayer.addChild(graphicsMap);
+            //方块预览层初始化
+            nextLayer = new LSprite();
+            backLayer.addChild(nextLayer);
+            //将方块的图片数据保存到数组内
+            bitmapdataList = [
+                new LBitmapData(imglist["r1"]),
+                new LBitmapData(imglist["r2"]),
+                new LBitmapData(imglist["r3"]),
+                new LBitmapData(imglist["r4"])
+            ];
+            //方块数据数组初始化
+            nodeList = [];
+            var i,j,nArr,bitmap;
+            for(i=0;i<map.length;i++){
+                nArr = [];
+                for(j=0;j<map[0].length;j++){
+                    bitmap = new LBitmap(bitmapdataList[0]);
+                    bitmap.x = bitmap.getWidth()*j+START_X1;
+                    bitmap.y = bitmap.getHeight()*i+START_Y1;
+                    graphicsMap.addChild(bitmap);
+                    nArr[j] = {"index":-1,"value":0,"bitmap":bitmap};
+                }
+                nodeList[i] = nArr;
+            }
+            //预览层显示
+            getNewBox();
+        }
+
+        // 获取下一块
+        function getNewBox() {
+            if (nextBox == null) {
+                nextBox = Box.getBox();
+            }
+            nowBox = nextBox;
+            poi
+        }
+
+        //游戏得分，消除层数以及游戏速度显示
+        function showText(){
+            pointText.text = point;
+            delText.text = del;
+            speedText.text = speedMax - speed + 1;
+        }
+
+        function Box() {
+            var self = this;
+            self.box1 = [[0,0,0,0],
+                         [0,0,0,0],
+                         [1,1,1,1],
+                         [0,0,0,0]];
+            self.box2 = [[0,0,0,0],
+                         [0,1,1,0],
+                         [0,1,1,0],
+                         [0,0,0,0]];
+            self.box3 = [[0,0,0,0],
+                         [1,1,1,0],
+                         [0,1,0,0],
+                         [0,0,0,0]];
+            self.box4 = [[0,1,1,0],
+                         [0,1,0,0],
+                         [0,1,0,0],
+                         [0,0,0,0]];
+            self.box5 = [[0,1,1,0],
+                         [0,0,1,0],
+                         [0,0,1,0],
+                         [0,0,0,0]];
+            self.box6 = [[0,0,0,0],
+                         [0,1,0,0],
+                         [0,1,1,0],
+                         [0,0,1,0]];
+            self.box7 = [[0,0,0,0],
+                         [0,0,1,0],
+                         [0,1,1,0],
+                         [0,1,0,0]];
+            self.box = [self.box1, self.box2, self.box3, self.box4, self.box5, self.box6, self.box7];
+        }
+
+        Box.prototype = {
+            getBox:function () {
+                var self = this;
+                var num = 7 * Math.random();
+                var index = parseInt(num);
+                var result = [];
+                var colorIndex = 1 + Math.floor(Math.random() * 4);
+                var i, j;
+                for(i = 0; i < 4; i++) {
+                    var child = [];
+                    for(j = 0; j < 4; j++) {
+                        child[j] = self.box[index][i][j] * colorIndex;
+                    }
+                    result[i] = child;
+                }
+
+                return result;
+            }
+        }
+    </script>
+</body>
+</html>
