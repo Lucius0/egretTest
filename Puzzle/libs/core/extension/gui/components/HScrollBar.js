@@ -24,67 +24,90 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
     (function (gui) {
+        /**
+         *  @classdesc
+         * HScrollBar（水平 ScrollBar）控件可以在因数据太多而不能在显示区域中以水平方向完全显示时控制显示的数据部分。
+         尽管可以使用 HScrollBar 控件作为独立控件，但通常将其结合作为另一组组件的一部分来提供滚动功能
+         */
         var HScrollBar = (function (_super) {
             __extends(HScrollBar, _super);
             function HScrollBar() {
                 _super.apply(this, arguments);
                 this._thumbLengthRatio = 1;
             }
-            HScrollBar.prototype._setViewportMetric = function (width, contentWidth) {
+            var __egretProto__ = HScrollBar.prototype;
+            /**
+             *
+             * @param width
+             * @param contentWidth
+             * @private
+             */
+            __egretProto__._setViewportMetric = function (width, contentWidth) {
                 var max = Math.max(0, contentWidth - width);
                 this._setMaximun(max);
                 this._setMinimun(0);
                 this._thumbLengthRatio = (contentWidth > width) ? width / contentWidth : 1;
             };
-            Object.defineProperty(HScrollBar.prototype, "trackAlpha", {
+            Object.defineProperty(__egretProto__, "trackAlpha", {
                 get: function () {
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("HScrollBar.trackAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "HScrollBar.trackAlpha");
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(HScrollBar.prototype, "thumbAlpha", {
+            Object.defineProperty(__egretProto__, "thumbAlpha", {
                 get: function () {
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("HScrollBar.thumbAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "HScrollBar.thumbAlpha");
                 },
                 enumerable: true,
                 configurable: true
             });
-            HScrollBar.prototype.setPosition = function (value) {
+            __egretProto__.setPosition = function (value) {
                 this._setValue(value);
             };
-            HScrollBar.prototype.getPosition = function () {
+            __egretProto__.getPosition = function () {
                 return this._getValue();
             };
-            HScrollBar.prototype._setValue = function (value) {
+            /**
+             *
+             * @param value
+             * @private
+             */
+            __egretProto__._setValue = function (value) {
                 value = Math.max(0, value);
                 _super.prototype._setValue.call(this, value);
             };
-            HScrollBar.prototype.setValue = function (value) {
+            /**
+             * [覆盖] 更新 value 属性，并且如果 viewport 为非 null，则将其 horizontalScrollPosition 设置为 value
+             * @param value
+             */
+            __egretProto__.setValue = function (value) {
                 _super.prototype.setValue.call(this, value);
             };
-            HScrollBar.prototype._animationUpdateHandler = function (animation) {
+            /**
+             *
+             * @param animation
+             * @private
+             */
+            __egretProto__._animationUpdateHandler = function (animation) {
                 this.pendingValue = animation.currentValue["value"];
                 this.value = animation.currentValue["value"];
                 this.dispatchEventWith(egret.Event.CHANGE);
             };
-            HScrollBar.prototype.updateSkinDisplayList = function () {
+            /**
+             * 设置外观部件的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+             */
+            __egretProto__.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;
                 var thumbWidth = this.track.layoutBoundsWidth * this._thumbLengthRatio;

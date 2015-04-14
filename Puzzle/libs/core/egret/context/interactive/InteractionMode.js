@@ -26,9 +26,13 @@
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var InteractionMode = (function () {
         function InteractionMode() {
         }
+        var __egretProto__ = InteractionMode.prototype;
         /**
          * 使用鼠标交互模式。
          */

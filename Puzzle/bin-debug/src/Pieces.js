@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Created by lucius on 2015/2/3.
  */
@@ -19,7 +13,8 @@ var Pieces = (function (_super) {
         //this._bmp.texture._bitmapHeight = height;
         //this.addChild(this._bmp);
     }
-    Object.defineProperty(Pieces.prototype, "id", {
+    var __egretProto__ = Pieces.prototype;
+    Object.defineProperty(__egretProto__, "id", {
         get: function () {
             return this._id;
         },
@@ -29,7 +24,7 @@ var Pieces = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Pieces.prototype, "bmp", {
+    Object.defineProperty(__egretProto__, "bmp", {
         get: function () {
             return this._bmp;
         },
@@ -40,7 +35,7 @@ var Pieces = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Pieces.prototype, "dragale", {
+    Object.defineProperty(__egretProto__, "dragale", {
         get: function () {
             return this._dragale;
         },
@@ -50,7 +45,7 @@ var Pieces = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Pieces.prototype.getBitmap = function (_bitmapX, _bitmapY, width, height, name) {
+    __egretProto__.getBitmap = function (_bitmapX, _bitmapY, width, height, name) {
         var baseTexture = RES.getRes(name);
         var bd = baseTexture.bitmapData;
         var texture = new egret.Texture();

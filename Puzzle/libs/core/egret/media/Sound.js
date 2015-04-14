@@ -29,8 +29,12 @@ var egret;
     /**
      * @class egret.Sound
      * @classdesc Sound 类允许您在应用程序中使用声音。
+     * @link http://docs.egret-labs.org/post/manual/sound/playsound.html 播放音频
      */
     var Sound = (function () {
+        /**
+         * 创建 egret.Sound 对象
+         */
         function Sound() {
             this.path = "";
             /**
@@ -38,14 +42,20 @@ var egret;
              * @member {any} egret.Sound#audio
              */
             this.audio = null;
+            /**
+             * 类型，默认为 egret.Sound.EFFECT。
+             * 在 native 和 runtime 环境下，背景音乐同时只能播放一个，音效长度尽量不要太长。
+             * @member {any} egret.Sound#audio
+             */
             this.type = Sound.EFFECT;
         }
+        var __egretProto__ = Sound.prototype;
         /**
          * 播放声音
          * @method egret.Sound#play
          * @param loop {boolean} 是否循环播放，默认为false
          */
-        Sound.prototype.play = function (loop) {
+        __egretProto__.play = function (loop) {
             if (loop === void 0) { loop = false; }
             var sound = this.audio;
             if (!sound) {
@@ -61,7 +71,7 @@ var egret;
          * 暂停声音
          * @method egret.Sound#pause
          */
-        Sound.prototype.pause = function () {
+        __egretProto__.pause = function () {
             var sound = this.audio;
             if (!sound) {
                 return;
@@ -72,7 +82,7 @@ var egret;
          * 重新加载声音
          * @method egret.Sound#load
          */
-        Sound.prototype.load = function () {
+        __egretProto__.load = function () {
             var sound = this.audio;
             if (!sound) {
                 return;
@@ -84,7 +94,7 @@ var egret;
          * @param type 事件类型
          * @param listener 监听函数
          */
-        Sound.prototype.addEventListener = function (type, listener) {
+        __egretProto__.addEventListener = function (type, listener) {
             var sound = this.audio;
             if (!sound) {
                 return;
@@ -96,7 +106,7 @@ var egret;
          * @param type 事件类型
          * @param listener 监听函数
          */
-        Sound.prototype.removeEventListener = function (type, listener) {
+        __egretProto__.removeEventListener = function (type, listener) {
             var sound = this.audio;
             if (!sound) {
                 return;
@@ -107,7 +117,7 @@ var egret;
          * 设置音量
          * @param value 值需大于0 小于等于 1
          */
-        Sound.prototype.setVolume = function (value) {
+        __egretProto__.setVolume = function (value) {
             var sound = this.audio;
             if (!sound) {
                 return;
@@ -118,16 +128,24 @@ var egret;
          * 获取当前音量值
          * @returns number
          */
-        Sound.prototype.getVolume = function () {
+        __egretProto__.getVolume = function () {
             return this.audio ? this.audio.volume : 0;
         };
-        Sound.prototype.preload = function (type) {
+        __egretProto__.preload = function (type) {
             this.type = type;
         };
-        Sound.prototype._setAudio = function (value) {
+        __egretProto__._setAudio = function (value) {
             this.audio = value;
         };
+        /**
+         * 背景音乐
+         * @constant egret.Sound.MUSIC
+         */
         Sound.MUSIC = "music";
+        /**
+         * 音效
+         * @constant egret.Sound.EFFECT
+         */
         Sound.EFFECT = "effect";
         return Sound;
     })();

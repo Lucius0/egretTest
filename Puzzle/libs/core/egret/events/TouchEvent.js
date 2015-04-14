@@ -24,30 +24,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
+    /**
+     * @class egret.TouchEvent
+     * @classdesc
+     * 使用 TouchEvent 类，您可以处理设备上那些检测用户与设备之间的接触的事件。
+     * 当用户与带有触摸屏的移动电话或平板电脑等设备交互时，用户通常使用手指或指针设备接触屏幕。可使用 TouchEvent 类开发响应基本触摸事件（如单个手指点击）的应用程序。
+     * 使用此类中定义的事件类型创建事件侦听器。
+     * 注意：当对象嵌套在显示列表中时，触摸事件的目标将是显示列表中可见的最深的可能嵌套对象。此对象称为目标节点。要使目标节点的祖代（祖代是一个包含显示列表中所有目标节点的对象，从舞台到目标节点的父节点均包括在内）接收触摸事件的通知，请对祖代节点使用 EventDispatcher.addEventListener() 并将 type 参数设置为要检测的特定触摸事件。
+     * @link http://docs.egret-labs.org/post/manual/event/touchevent.html 触摸事件
+     */
     var TouchEvent = (function (_super) {
         __extends(TouchEvent, _super);
         /**
-         * 创建一个作为参数传递给事件侦听器的 Event 对象。
-         *
-         * @class egret.TouchEvent
-         * @classdesc
-         * TouchEvent事件类
-         * @extends egret.Event
+         * 创建一个 egret.TouchEvent 对象，其中包含有关Touch事件的信息
          * @constructor egret.TouchEvent
          * @param type {string} 事件的类型，可以作为 Event.type 访问。
          * @param bubbles {boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
          * @param cancelable {boolean} 确定是否可以取消 Event 对象。默认值为 false。
-         * @param touchPointID {number}
-         * @param stageX {number}
-         * @param stageY {number}
+         * @param touchPointID {number} 分配给触摸点的唯一标识号
+         * @param stageX {number} 事件发生点在全局舞台坐标中的水平坐标
+         * @param stageY {number} 事件发生点在全局舞台坐标中的垂直坐标
          * @param ctrlKey {boolean}
          * @param altKey {boolean}
          * @param shiftKey {boolean}
@@ -101,7 +99,8 @@ var egret;
             this.altKey = altKey;
             this.touchDown = touchDown;
         }
-        Object.defineProperty(TouchEvent.prototype, "stageX", {
+        var __egretProto__ = TouchEvent.prototype;
+        Object.defineProperty(__egretProto__, "stageX", {
             /**
              * 事件发生点在全局舞台坐标中的水平坐标。
              * @member {number} egret.TouchEvent#stageX
@@ -112,7 +111,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TouchEvent.prototype, "stageY", {
+        Object.defineProperty(__egretProto__, "stageY", {
             /**
              * 事件发生点在全局舞台坐标中的垂直坐标。
              * @member {number} egret.TouchEvent#stageY
@@ -123,7 +122,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TouchEvent.prototype, "localX", {
+        Object.defineProperty(__egretProto__, "localX", {
             /**
              * 事件发生点相对于currentTarget的水平坐标。
              * @member {number} egret.TouchEvent#localX
@@ -136,7 +135,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TouchEvent.prototype, "localY", {
+        Object.defineProperty(__egretProto__, "localY", {
             /**
              * 事件发生点相对于currentTarget的垂直坐标。
              * @member {number} egret.TouchEvent#localY
@@ -152,11 +151,11 @@ var egret;
         /**
          * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
          * @method egret.TouchEvent.dispatchTouchEvent
-         * @param target {egret.IEventDispatcher}
-         * @param type {string}
-         * @param touchPointID {number}
-         * @param stageX {number}
-         * @param stageY {number}
+         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param type {string} 事件类型
+         * @param touchPointID {number} 分配给触摸点的唯一标识号
+         * @param stageX {number} 事件发生点在全局舞台坐标中的水平坐标
+         * @param stageY {number} 事件发生点在全局舞台坐标中的垂直坐标
          * @param ctrlKey {boolean}
          * @param altKey {boolean}
          * @param shiftKey {boolean}

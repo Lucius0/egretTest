@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /**
  * Copyright (c) 2014,Egret-Labs.org
  * All rights reserved.
@@ -32,11 +26,18 @@ var __extends = this.__extends || function (d, b) {
  */
 var egret;
 (function (egret) {
+    /**
+     * @class egret.ProgressEvent
+     * @classdesc
+     * 当加载操作已开始或套接字已接收到数据时，将调度 ProgressEvent 对象。
+     * 有两种类型的进程事件：ProgressEvent.PROGRESS 和 ProgressEvent.SOCKET_DATA。
+     */
     var ProgressEvent = (function (_super) {
         __extends(ProgressEvent, _super);
         /**
+         * 创建一个 egret.ProgressEvent 对象
          * @method egret.ProgressEvent#constructor
-         * @param type {string}
+         * @param type {string} 事件类型
          * @param bubbles {boolean}
          * @param cancelable {boolean}
          * @param bytesLoaded {number}
@@ -48,15 +49,27 @@ var egret;
             if (bytesLoaded === void 0) { bytesLoaded = 0; }
             if (bytesTotal === void 0) { bytesTotal = 0; }
             _super.call(this, type, bubbles, cancelable);
+            /**
+             * 在侦听器处理事件时加载的项数或字节数。
+             * @member {number} egret.ProgressEvent#bytesLoaded
+             */
             this.bytesLoaded = 0;
+            /**
+             * 如果加载过程成功，将加载的总项数或总字节数。
+             * @member {number} egret.ProgressEvent#bytesTotal
+             */
             this.bytesTotal = 0;
             this.bytesLoaded = bytesLoaded;
             this.bytesTotal = bytesTotal;
         }
+        var __egretProto__ = ProgressEvent.prototype;
         /**
          * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
          * @method egret.ProgressEvent.dispatchIOErrorEvent
-         * @param target {egret.IEventDispatcher}
+         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param type {string} 事件类型
+         * @param bytesLoaded {number} 加载的项数或字节数
+         * @param bytesTotal {number} 加载的总项数或总字节数
          */
         ProgressEvent.dispatchProgressEvent = function (target, type, bytesLoaded, bytesTotal) {
             if (bytesLoaded === void 0) { bytesLoaded = 0; }

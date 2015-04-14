@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -55,7 +49,8 @@ var egret;
                 this.labelDisplay = null;
                 this._prompt = "";
             }
-            Object.defineProperty(DropDownList.prototype, "prompt", {
+            var __egretProto__ = DropDownList.prototype;
+            Object.defineProperty(__egretProto__, "prompt", {
                 /**
                  * 当没有选中项时在DropDownList上要显示的字符串。<p/>
                  * 它通常是一个类似于“请选择一项...”的文本。当下拉列表中的某个项目被选中后，会被替换为该选定项目中的文本。
@@ -75,18 +70,23 @@ var egret;
                 configurable: true
             });
             /**
+             * 添加外观部件时调用
              * @method egret.gui.DropDownList#partAdded
              * @param partName {string}
              * @param instance {any}
              */
-            DropDownList.prototype.partAdded = function (partName, instance) {
+            __egretProto__.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.labelDisplay) {
                     this._labelChanged = true;
                     this.invalidateProperties();
                 }
             };
-            DropDownList.prototype.updateLabelDisplay = function (displayItem) {
+            /**
+             * 绘制对象和/或设置其子项的大小和位置
+             * @param displayItem
+             */
+            __egretProto__.updateLabelDisplay = function (displayItem) {
                 if (displayItem === void 0) { displayItem = undefined; }
                 if (this.labelDisplay) {
                     if (displayItem == undefined)

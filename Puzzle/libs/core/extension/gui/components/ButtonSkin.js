@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -63,7 +57,8 @@ var egret;
                 this.stateMap = stateMap;
                 this._setStates(["up", "down", "disabled"]);
             }
-            Object.defineProperty(ButtonSkin.prototype, "skinParts", {
+            var __egretProto__ = ButtonSkin.prototype;
+            Object.defineProperty(__egretProto__, "skinParts", {
                 get: function () {
                     return ButtonSkin._skinParts;
                 },
@@ -71,9 +66,10 @@ var egret;
                 configurable: true
             });
             /**
+             * 创建容器的子对象
              * @inheritDoc
              */
-            ButtonSkin.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 var asset = new gui.UIAsset();
                 asset.left = asset.top = asset.bottom = asset.right = 0;
@@ -89,7 +85,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            ButtonSkin.prototype.commitCurrentState = function () {
+            __egretProto__.commitCurrentState = function () {
                 _super.prototype.commitCurrentState.call(this);
                 var state = this.currentState;
                 var source = this.stateMap[state];
@@ -97,7 +93,10 @@ var egret;
                     this.backgroundAsset.source = this.stateMap[state];
                 }
             };
-            ButtonSkin.prototype.measure = function () {
+            /**
+             * 计算 Panel 容器默认大小的最小值和最大值
+             */
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 var w = this.iconDisplay.preferredWidth + this.labelDisplay.preferredWidth + 20;
                 var h = Math.max(this.iconDisplay.preferredHeight, this.labelDisplay.preferredHeight) + 20;
@@ -120,7 +119,12 @@ var egret;
                     this.measuredHeight = h;
                 }
             };
-            ButtonSkin.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            /**
+             * 通过设置此容器子项的位置和大小来响应大小更改
+             * @param unscaledWidth
+             * @param unscaledHeight
+             */
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 var iconWidth = this.iconDisplay.layoutBoundsWidth;
                 var iconHeight = this.iconDisplay.layoutBoundsHeight;
@@ -133,6 +137,11 @@ var egret;
                 var labelY = (unscaledHeight - labelHeight) * 0.5;
                 this.labelDisplay.setLayoutBoundsPosition(labelX, labelY);
             };
+            /**
+             *
+             * @type {string[]}
+             * @private
+             */
             ButtonSkin._skinParts = ["labelDisplay", "iconDisplay"];
             return ButtonSkin;
         })(gui.Skin);

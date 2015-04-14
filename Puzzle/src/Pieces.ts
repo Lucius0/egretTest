@@ -52,6 +52,7 @@ class Pieces extends egret.Sprite
 
     public getBitmap(_bitmapX: number, _bitmapY, width:number, height:number, name: string):egret.Bitmap {
         var baseTexture = RES.getRes(name);
+        baseTexture.drawToTexture()
         var bd = baseTexture.bitmapData;
         var texture = new egret.Texture();
         var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
@@ -67,6 +68,17 @@ class Pieces extends egret.Sprite
         texture._textureHeight = height * scale;
         texture._sourceWidth = width;
         texture._sourceHeight = height;
+        var b = new egret.Bitmap;
+        b.texture = texture;
+        return b;
+    }
+
+    public getBitmap2(_bitmapX: number, _bitmapY, width:number, height:number, bmp: egret.Bitmap):egret.Bitmap
+    {
+        var texture:egret.RenderTexture = new egret.RenderTexture;
+        var rec:egret.Rectangle = new egret.Rectangle(_bitmapX, _bitmapY, width, height);
+        texture.drawToTexture(bmp, rec, 1);
+
         var b = new egret.Bitmap;
         b.texture = texture;
         return b;

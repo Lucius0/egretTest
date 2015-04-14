@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
@@ -41,8 +35,9 @@ var egret;
     var Recycler = (function (_super) {
         __extends(Recycler, _super);
         /**
+         * 创建一个 egret.Recycler 对象
          * @method egret.Recycler#constructor
-         * @param autoDisposeTime {number}
+         * @param autoDisposeTime {number} 多少帧后自动销毁对象，默认值300
          */
         function Recycler(autoDisposeTime) {
             if (autoDisposeTime === void 0) { autoDisposeTime = 300; }
@@ -54,13 +49,14 @@ var egret;
             this.autoDisposeTime = autoDisposeTime;
             this.frameCount = 0;
         }
-        Recycler.prototype._checkFrame = function () {
+        var __egretProto__ = Recycler.prototype;
+        __egretProto__._checkFrame = function () {
             this.frameCount--;
             if (this.frameCount <= 0) {
                 this.dispose();
             }
         };
-        Object.defineProperty(Recycler.prototype, "length", {
+        Object.defineProperty(__egretProto__, "length", {
             /**
              * 缓存的对象数量
              * @member {number} egret.Recycler#length
@@ -74,12 +70,15 @@ var egret;
         /**
          * 缓存一个对象以复用
          * @method egret.Recycler#push
-         * @param object {any}
+         * @param object {any} 需要缓存的对象
          */
-        Recycler.prototype.push = function (object) {
+        __egretProto__.push = function (object) {
             var pool = this.objectPool;
             if (pool.indexOf(object) == -1) {
                 pool.push(object);
+                if (object.__recycle) {
+                    object.__recycle();
+                }
                 this._length++;
                 if (this.frameCount == 0) {
                     this.frameCount = this.autoDisposeTime;
@@ -90,9 +89,9 @@ var egret;
         /**
          * 获取一个缓存的对象
          * @method egret.Recycler#pop
-         * @returns {any}
+         * @returns {any} 获得的缓存对象
          */
-        Recycler.prototype.pop = function () {
+        __egretProto__.pop = function () {
             if (this._length == 0)
                 return null;
             this._length--;
@@ -102,7 +101,7 @@ var egret;
          * 立即清空所有缓存的对象。
          * @method egret.Recycler#dispose
          */
-        Recycler.prototype.dispose = function () {
+        __egretProto__.dispose = function () {
             if (this._length > 0) {
                 this.objectPool = [];
                 this._length = 0;

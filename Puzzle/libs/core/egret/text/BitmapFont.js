@@ -24,22 +24,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
      * @classdesc
      * @class egret.BitmapFont
      * 位图字体,是一个字体的纹理集，通常作为BitmapText.font属性的值。
+     * @link
+     * http://bbs.egret-labs.org/thread-918-1-1.html TextureMerger
+     * http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=251 文本(含位图字体具体用法)
      * @extends egret.SpriteSheet
      */
     var BitmapFont = (function (_super) {
         __extends(BitmapFont, _super);
+        /**
+         * 创建一个 egret.BitmapFont 对象
+         * @param texture {egret.Texture} 纹理集
+         * @param config {any} 配置数据
+         */
         function BitmapFont(texture, config) {
             _super.call(this, texture);
             this.firstCharHeight = 0;
@@ -53,7 +55,14 @@ var egret;
                 this.charList = {};
             }
         }
-        BitmapFont.prototype.getTexture = function (name) {
+        var __egretProto__ = BitmapFont.prototype;
+        /**
+         * 通过 name 属性获取对应纹理
+         * @param name {string} name属性
+         * @method egret.BitmapFont#getTexture
+         * @returns {egret.Texture}
+         */
+        __egretProto__.getTexture = function (name) {
             var texture = this._textureMap[name];
             if (!texture) {
                 var c = this.charList[name];
@@ -65,7 +74,7 @@ var egret;
             }
             return texture;
         };
-        BitmapFont.prototype._getFirstCharHeight = function () {
+        __egretProto__._getFirstCharHeight = function () {
             if (this.firstCharHeight == 0) {
                 for (var str in this.charList) {
                     var c = this.charList[str];
@@ -92,7 +101,7 @@ var egret;
             }
             return this.firstCharHeight;
         };
-        BitmapFont.prototype.parseConfig = function (fntText) {
+        __egretProto__.parseConfig = function (fntText) {
             fntText = fntText.split("\r\n").join("\n");
             var lines = fntText.split("\n");
             var charsCount = this.getConfigByKey(lines[3], "count");
@@ -111,7 +120,7 @@ var egret;
             }
             return chars;
         };
-        BitmapFont.prototype.getConfigByKey = function (configText, key) {
+        __egretProto__.getConfigByKey = function (configText, key) {
             var itemConfigTextList = configText.split(" ");
             for (var i = 0, length = itemConfigTextList.length; i < length; i++) {
                 var itemConfigText = itemConfigTextList[i];

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -49,14 +43,24 @@ var egret;
             function HSlider() {
                 _super.call(this);
             }
-            HSlider.prototype.pointToValue = function (x, y) {
+            var __egretProto__ = HSlider.prototype;
+            /**
+             * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
+             * @param x
+             * @param y
+             * @returns {number}
+             */
+            __egretProto__.pointToValue = function (x, y) {
                 if (!this.thumb || !this.track)
                     return 0;
                 var range = this.maximum - this.minimum;
                 var thumbRange = this.track.layoutBoundsWidth - this.thumb.layoutBoundsWidth;
                 return this.minimum + ((thumbRange != 0) ? (x / thumbRange) * range : 0);
             };
-            HSlider.prototype.updateSkinDisplayList = function () {
+            /**
+             * 设置外观部件的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+             */
+            __egretProto__.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;
                 var thumbRange = this.track.layoutBoundsWidth - this.thumb.layoutBoundsWidth;

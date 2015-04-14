@@ -38,6 +38,7 @@ var egret;
                 this.delyList = [];
                 this.loadConfig(configURL);
             }
+            var __egretProto__ = Theme.prototype;
             Theme.load = function (configURL) {
                 if (this.initialized) {
                     return;
@@ -45,14 +46,14 @@ var egret;
                 this.initialized = true;
                 gui.SkinnableComponent._defaultTheme = new Theme(configURL);
             };
-            Theme.prototype.loadConfig = function (configURL) {
+            __egretProto__.loadConfig = function (configURL) {
                 var loader = new egret.URLLoader();
                 loader.addEventListener(egret.Event.COMPLETE, this.onLoadComplete, this);
                 loader.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadError, this);
                 loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
                 loader.load(new egret.URLRequest(configURL));
             };
-            Theme.prototype.onLoadComplete = function (event) {
+            __egretProto__.onLoadComplete = function (event) {
                 var loader = (event.target);
                 try {
                     var str = loader.data;
@@ -60,16 +61,16 @@ var egret;
                     this.skinMap = data.skins;
                 }
                 catch (e) {
-                    egret.Logger.warning("JSON文件格式不正确: " + loader._request.url + "\ndata:" + loader.data);
+                    egret.Logger.warningWithErrorId(1017, loader._request.url, loader.data);
                 }
                 this.handleDelyList();
             };
-            Theme.prototype.onLoadError = function (event) {
+            __egretProto__.onLoadError = function (event) {
                 var loader = (event.target);
-                egret.Logger.warning("主题配置文件加载失败: " + loader._request.url);
+                egret.Logger.warningWithErrorId(3000, loader._request.url);
                 this.handleDelyList();
             };
-            Theme.prototype.handleDelyList = function () {
+            __egretProto__.handleDelyList = function () {
                 if (!this.skinMap) {
                     this.skinMap = {};
                     this.delyList = [];
@@ -86,7 +87,7 @@ var egret;
                     }
                 }
             };
-            Theme.prototype.getDefaultSkin = function (client) {
+            __egretProto__.getDefaultSkin = function (client) {
                 var skinMap = this.skinMap;
                 if (!skinMap) {
                     if (this.delyList.indexOf(client) == -1) {
@@ -115,7 +116,7 @@ var egret;
                 }
                 var skinClass = egret.getDefinitionByName(skinName);
                 if (!skinClass) {
-                    egret.Logger.warning("找不到主题中所配置的皮肤类名: " + skinName);
+                    egret.Logger.warningWithErrorId(3001, skinName);
                     return null;
                 }
                 return new skinClass();

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin width="628" height="672" xmlns:e="http://ns.egret-labs.org/egret" xmlns:w="http://ns.egret-labs.org/wing">
+	<e:states>
+		<e:State name="close"/>
+		<e:State name="open"/>
+	</e:states>
+	<w:HostComponent name="egret.gui.Panel"/>
+	<w:Declarations/>
+	<e:Group id="group1" height="672" width="628" x="0" y="0">
+		<e:UIAsset source="end_background_png" x="0" y="0"/>
+		<e:Button label="按钮" x="524" y="46" skinName="skins.simple.Btn1Skin" includeIn="open"/>
+	</e:Group>
+	<e:transitions>
+		<e:Array>
+			<e:Transition toState="close" fromState="open">
+				<e:Parallel>
+					<e:Move target="{group1}" yFrom="-672"/>
+				</e:Parallel>
+			</e:Transition>
+			<e:Transition toState="open" fromState="close">
+				<e:Parallel>
+					<e:Fade target="{group1}" alphaFrom="0"/>
+				</e:Parallel>
+			</e:Transition>
+		</e:Array>
+	</e:transitions>
+</e:Skin>

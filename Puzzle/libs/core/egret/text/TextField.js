@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
@@ -38,154 +32,55 @@ var egret;
      * TextField是egret的文本渲染类，采用浏览器/设备的API进行渲染，在不同的浏览器/设备中由于字体渲染方式不一，可能会有渲染差异
      * 如果开发者希望所有平台完全无差异，请使用BitmapText
      * @extends egret.DisplayObject
+     * @link http://docs.egret-labs.org/post/manual/text/createtext.html 创建文本
      */
     var TextField = (function (_super) {
         __extends(TextField, _super);
         function TextField() {
             _super.call(this);
             this._inputEnabled = false;
+            this._inputUtils = null;
+            this._bgGraphics = null;
+            this._isFlow = false;
+            this._textArr = [];
+            this._isArrayChanged = false;
+            this._linesArr = [];
+            this._isTyping = false;
+            this.needDraw = true;
+            this._properties = new egret.TextFieldProperties();
+        }
+        var __egretProto__ = TextField.prototype;
+        __egretProto__.isInput = function () {
+            return this._properties._type == egret.TextFieldType.INPUT;
+        };
+        __egretProto__._setTouchEnabled = function (value) {
+            _super.prototype._setTouchEnabled.call(this, value);
+            if (this.isInput()) {
+                this._inputEnabled = true;
+            }
+        };
+        Object.defineProperty(__egretProto__, "type", {
+            get: function () {
+                return this._properties._type;
+            },
             /**
              * 文本字段的类型。
              * 以下 TextFieldType 常量中的任一个：TextFieldType.DYNAMIC（指定用户无法编辑的动态文本字段），或 TextFieldType.INPUT（指定用户可以编辑的输入文本字段）。
              * 默认值为 dynamic。
              * @member {string} egret.TextField#type
              */
-            this._type = "";
-            this._inputUtils = null;
-            /**
-             * 作为文本字段中当前文本的字符串
-             * @member {string} egret.TextField#text
-             */
-            this._text = "";
-            /**
-             * 指定文本字段是否是密码文本字段。
-             * 如果此属性的值为 true，则文本字段被视为密码文本字段，并使用星号而不是实际字符来隐藏输入的字符。如果为 false，则不会将文本字段视为密码文本字段。
-             * 默认值为 false。
-             * @member {boolean} egret.TextInput#displayAsPassword
-             */
-            this._displayAsPassword = false;
-            /**
-             * 使用此文本格式的文本的字体名称，以字符串形式表示。
-             * 默认值 Arial。
-             * @member {any} egret.TextField#fontFamily
-             */
-            this._fontFamily = TextField.default_fontFamily;
-            /**
-             * 使用此文本格式的文本的大小（以像素为单位）。
-             * 默认值为 30。
-             * @member {number} egret.TextField#size
-             */
-            this._size = 30;
-            /**
-             * 表示使用此文本格式的文本是否为斜体。
-             * 如果值为 true，则文本为斜体；false，则为不使用斜体。
-             * 默认值为 false。
-             * @member {boolean} egret.TextField#italic
-             */
-            this._italic = false;
-            /**
-             * 指定文本是否为粗体字。
-             * 如果值为 true，则文本为粗体字；false，则为非粗体字。
-             * 默认值为 false。
-             * @member {boolean} egret.TextField#bold
-             */
-            this._bold = false;
-            this._textColorString = "#FFFFFF";
-            /**
-             * 表示文本的颜色。
-             * 包含三个 8 位 RGB 颜色成分的数字；例如，0xFF0000 为红色，0x00FF00 为绿色。
-             * 默认值为 0xFFFFFF。
-             * @member {number} egret.TextField#textColor
-             */
-            this._textColor = 0xFFFFFF;
-            this._strokeColorString = "#000000";
-            /**
-             * 表示文本的描边颜色。
-             * 包含三个 8 位 RGB 颜色成分的数字；例如，0xFF0000 为红色，0x00FF00 为绿色。
-             * 默认值为 0x000000。
-             * @member {number} egret.TextField#strokeColor
-             */
-            this._strokeColor = 0x000000;
-            /**
-             * 表示描边宽度。
-             * 0为没有描边。
-             * 默认值为 0。
-             * @member {number} egret.TextField#stroke
-             */
-            this._stroke = 0;
-            /**
-             * 文本水平对齐方式
-             * 使用HorizontalAlign定义的常量。
-             * 默认值为 HorizontalAlign.LEFT。
-             * @member {string} egret.TextField#textAlign
-             */
-            this._textAlign = "left";
-            /**
-             * 文本垂直对齐方式。
-             * 使用VerticalAlign定义的常量。
-             * 默认值为 VerticalAlign.TOP。
-             * @member {string} egret.TextField#verticalAlign
-             */
-            this._verticalAlign = "top";
-            /**
-             * 文本字段中最多可包含的字符数（即用户输入的字符数）。
-             * 脚本可以插入比 maxChars 允许的字符数更多的文本；maxChars 属性仅表示用户可以输入多少文本。如果此属性的值为 0，则用户可以输入无限数量的文本。
-             * 默认值为 0。
-             * @type {number}
-             * @private
-             */
-            this._maxChars = 0;
-            this._scrollV = -1;
-            this._maxScrollV = 0;
-            /**
-             * 行间距
-             * 一个整数，表示行与行之间的垂直间距量。
-             * 默认值为 0。
-             * @member {number} egret.TextField#lineSpacing
-             */
-            this._lineSpacing = 0;
-            /**
-             * 文本行数。【只读】
-             * @member {number} egret.TextField#numLines
-             */
-            this._numLines = 0;
-            /**
-             * 表示字段是否为多行文本字段。注意，此属性仅在type为TextFieldType.INPUT时才有效。
-             * 如果值为 true，则文本字段为多行文本字段；如果值为 false，则文本字段为单行文本字段。在类型为 TextFieldType.INPUT 的字段中，multiline 值将确定 Enter 键是否创建新行（如果值为 false，则将忽略 Enter 键）。
-             * 默认值为 false。
-             * @member {boolean} egret.TextField#multiline
-             */
-            this._multiline = false;
-            this._isFlow = false;
-            this._textArr = [];
-            this._isArrayChanged = false;
-            this._textMaxWidth = 0; //文本全部显示时宽
-            this._textMaxHeight = 0; //文本全部显示时高（无行间距）
-            this._linesArr = [];
-        }
-        TextField.prototype.isInput = function () {
-            return this._type == egret.TextFieldType.INPUT;
-        };
-        TextField.prototype._setTouchEnabled = function (value) {
-            _super.prototype._setTouchEnabled.call(this, value);
-            if (this.isInput()) {
-                this._inputEnabled = true;
-            }
-        };
-        Object.defineProperty(TextField.prototype, "type", {
-            get: function () {
-                return this._type;
-            },
             set: function (value) {
                 this._setType(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setType = function (value) {
-            if (this._type != value) {
-                this._type = value;
-                if (this._type == egret.TextFieldType.INPUT) {
+        __egretProto__._setType = function (value) {
+            var self = this;
+            var properties = self._properties;
+            if (properties._type != value) {
+                properties._type = value;
+                if (properties._type == egret.TextFieldType.INPUT) {
                     if (!this._hasWidthSet) {
                         this._setWidth(100);
                     }
@@ -210,342 +105,547 @@ var egret;
                 }
             }
         };
-        Object.defineProperty(TextField.prototype, "text", {
+        Object.defineProperty(__egretProto__, "text", {
             get: function () {
                 return this._getText();
             },
+            /**
+             * 作为文本字段中当前文本的字符串
+             * @member {string} egret.TextField#text
+             */
             set: function (value) {
                 this._setText(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._getText = function () {
-            if (this._type == egret.TextFieldType.INPUT) {
+        __egretProto__._getText = function () {
+            if (this._properties._type == egret.TextFieldType.INPUT) {
                 return this._inputUtils._getText();
             }
-            return this._text;
+            return this._properties._text;
         };
-        TextField.prototype._setSizeDirty = function () {
+        __egretProto__._setSizeDirty = function () {
             _super.prototype._setSizeDirty.call(this);
             this._isArrayChanged = true;
         };
-        TextField.prototype._setTextDirty = function () {
+        __egretProto__._setTextDirty = function () {
             this._setSizeDirty();
         };
-        TextField.prototype._setBaseText = function (value) {
+        __egretProto__._setBaseText = function (value) {
             if (value == null) {
                 value = "";
             }
+            var self = this;
+            var properties = self._properties;
             this._isFlow = false;
-            if (this._text != value) {
+            if (properties._text != value) {
                 this._setTextDirty();
-                this._text = value;
+                properties._text = value;
                 var text = "";
-                if (this._displayAsPassword) {
-                    text = this.changeToPassText(this._text);
+                if (properties._displayAsPassword) {
+                    text = this.changeToPassText(properties._text);
                 }
                 else {
-                    text = this._text;
+                    text = properties._text;
                 }
                 this.setMiddleStyle([{ text: text }]);
             }
         };
-        TextField.prototype._setText = function (value) {
+        __egretProto__._setText = function (value) {
             if (value == null) {
                 value = "";
             }
             this._setBaseText(value);
             if (this._inputUtils) {
-                this._inputUtils._setText(this._text);
+                this._inputUtils._setText(this._properties._text);
             }
         };
-        Object.defineProperty(TextField.prototype, "displayAsPassword", {
+        Object.defineProperty(__egretProto__, "displayAsPassword", {
             get: function () {
-                return this._displayAsPassword;
+                return this._properties._displayAsPassword;
             },
+            /**
+             * 指定文本字段是否是密码文本字段。
+             * 如果此属性的值为 true，则文本字段被视为密码文本字段，并使用星号而不是实际字符来隐藏输入的字符。如果为 false，则不会将文本字段视为密码文本字段。
+             * 默认值为 false。
+             * @member {boolean} egret.TextInput#displayAsPassword
+             */
             set: function (value) {
                 this._setDisplayAsPassword(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setDisplayAsPassword = function (value) {
-            if (this._displayAsPassword != value) {
-                this._displayAsPassword = value;
+        __egretProto__._setDisplayAsPassword = function (value) {
+            var self = this;
+            var properties = self._properties;
+            if (properties._displayAsPassword != value) {
+                properties._displayAsPassword = value;
                 this._setTextDirty();
                 var text = "";
-                if (this._displayAsPassword) {
-                    text = this.changeToPassText(this._text);
+                if (properties._displayAsPassword) {
+                    text = this.changeToPassText(properties._text);
                 }
                 else {
-                    text = this._text;
+                    text = properties._text;
                 }
                 this.setMiddleStyle([{ text: text }]);
             }
         };
-        Object.defineProperty(TextField.prototype, "fontFamily", {
+        Object.defineProperty(__egretProto__, "fontFamily", {
             get: function () {
-                return this._fontFamily;
+                return this._properties._fontFamily;
             },
+            /**
+             * 使用此文本格式的文本的字体名称，以字符串形式表示。
+             * 默认值 Arial。
+             * @member {any} egret.TextField#fontFamily
+             */
             set: function (value) {
                 this._setFontFamily(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setFontFamily = function (value) {
-            if (this._fontFamily != value) {
+        __egretProto__._setFontFamily = function (value) {
+            if (this._properties._fontFamily != value) {
                 this._setTextDirty();
-                this._fontFamily = value;
+                this._properties._fontFamily = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "size", {
+        Object.defineProperty(__egretProto__, "size", {
             get: function () {
-                return this._size;
+                return this._properties._size;
             },
+            /**
+             * 使用此文本格式的文本的大小（以像素为单位）。
+             * 默认值为 30。
+             * @member {number} egret.TextField#size
+             */
             set: function (value) {
                 this._setSize(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setSize = function (value) {
-            if (this._size != value) {
+        __egretProto__._setSize = function (value) {
+            if (this._properties._size != value) {
                 this._setTextDirty();
-                this._size = value;
+                this._properties._size = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "italic", {
+        Object.defineProperty(__egretProto__, "italic", {
             get: function () {
-                return this._italic;
+                return this._properties._italic;
             },
+            /**
+             * 表示使用此文本格式的文本是否为斜体。
+             * 如果值为 true，则文本为斜体；false，则为不使用斜体。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#italic
+             */
             set: function (value) {
                 this._setItalic(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setItalic = function (value) {
-            if (this._italic != value) {
+        __egretProto__._setItalic = function (value) {
+            if (this._properties._italic != value) {
                 this._setTextDirty();
-                this._italic = value;
+                this._properties._italic = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "bold", {
+        Object.defineProperty(__egretProto__, "bold", {
             get: function () {
-                return this._bold;
+                return this._properties._bold;
             },
+            /**
+             * 指定文本是否为粗体字。
+             * 如果值为 true，则文本为粗体字；false，则为非粗体字。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#bold
+             */
             set: function (value) {
                 this._setBold(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setBold = function (value) {
-            if (this._bold != value) {
+        __egretProto__._setBold = function (value) {
+            if (this._properties._bold != value) {
                 this._setTextDirty();
-                this._bold = value;
+                this._properties._bold = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "textColor", {
+        Object.defineProperty(__egretProto__, "textColor", {
             get: function () {
-                return this._textColor;
+                return this._properties._textColor;
             },
+            /**
+             * 表示文本的颜色。
+             * 包含三个 8 位 RGB 颜色成分的数字；例如，0xFF0000 为红色，0x00FF00 为绿色。
+             * 默认值为 0xFFFFFF。
+             * @member {number} egret.TextField#textColor
+             */
             set: function (value) {
                 this._setTextColor(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setTextColor = function (value) {
-            if (this._textColor != value) {
+        __egretProto__._setTextColor = function (value) {
+            if (this._properties._textColor != value) {
                 this._setTextDirty();
-                this._textColor = value;
-                this._textColorString = egret.toColorString(value);
+                this._properties._textColor = value;
+                this._properties._textColorString = egret.toColorString(value);
             }
         };
-        Object.defineProperty(TextField.prototype, "strokeColor", {
+        Object.defineProperty(__egretProto__, "strokeColor", {
             get: function () {
-                return this._strokeColor;
+                return this._properties._strokeColor;
             },
+            /**
+             * 表示文本的描边颜色。
+             * 包含三个 8 位 RGB 颜色成分的数字；例如，0xFF0000 为红色，0x00FF00 为绿色。
+             * 默认值为 0x000000。
+             * @member {number} egret.TextField#strokeColor
+             */
             set: function (value) {
                 this._setStrokeColor(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setStrokeColor = function (value) {
-            if (this._strokeColor != value) {
+        __egretProto__._setStrokeColor = function (value) {
+            if (this._properties._strokeColor != value) {
                 this._setTextDirty();
-                this._strokeColor = value;
-                this._strokeColorString = egret.toColorString(value);
+                this._properties._strokeColor = value;
+                this._properties._strokeColorString = egret.toColorString(value);
             }
         };
-        Object.defineProperty(TextField.prototype, "stroke", {
+        Object.defineProperty(__egretProto__, "stroke", {
             get: function () {
-                return this._stroke;
+                return this._properties._stroke;
             },
+            /**
+             * 表示描边宽度。
+             * 0为没有描边。
+             * 默认值为 0。
+             * @member {number} egret.TextField#stroke
+             */
             set: function (value) {
                 this._setStroke(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setStroke = function (value) {
-            if (this._stroke != value) {
+        __egretProto__._setStroke = function (value) {
+            if (this._properties._stroke != value) {
                 this._setTextDirty();
-                this._stroke = value;
+                this._properties._stroke = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "textAlign", {
+        Object.defineProperty(__egretProto__, "textAlign", {
             get: function () {
-                return this._textAlign;
+                return this._properties._textAlign;
             },
+            /**
+             * 文本水平对齐方式
+             * 使用HorizontalAlign定义的常量。
+             * 默认值为 HorizontalAlign.LEFT。
+             * @member {string} egret.TextField#textAlign
+             */
             set: function (value) {
                 this._setTextAlign(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setTextAlign = function (value) {
-            if (this._textAlign != value) {
+        __egretProto__._setTextAlign = function (value) {
+            if (this._properties._textAlign != value) {
                 this._setTextDirty();
-                this._textAlign = value;
+                this._properties._textAlign = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "verticalAlign", {
+        Object.defineProperty(__egretProto__, "verticalAlign", {
             get: function () {
-                return this._verticalAlign;
+                return this._properties._verticalAlign;
             },
+            /**
+             * 文本垂直对齐方式。
+             * 使用VerticalAlign定义的常量。
+             * 默认值为 VerticalAlign.TOP。
+             * @member {string} egret.TextField#verticalAlign
+             */
             set: function (value) {
                 this._setVerticalAlign(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setVerticalAlign = function (value) {
-            if (this._verticalAlign != value) {
+        __egretProto__._setVerticalAlign = function (value) {
+            if (this._properties._verticalAlign != value) {
                 this._setTextDirty();
-                this._verticalAlign = value;
+                this._properties._verticalAlign = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "maxChars", {
+        Object.defineProperty(__egretProto__, "maxChars", {
             get: function () {
-                return this._maxChars;
+                return this._properties._maxChars;
             },
+            /**
+             * 文本字段中最多可包含的字符数（即用户输入的字符数）。
+             * 脚本可以插入比 maxChars 允许的字符数更多的文本；maxChars 属性仅表示用户可以输入多少文本。如果此属性的值为 0，则用户可以输入无限数量的文本。
+             * 默认值为 0。
+             */
             set: function (value) {
                 this._setMaxChars(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setMaxChars = function (value) {
-            if (this._maxChars != value) {
-                this._maxChars = value;
+        __egretProto__._setMaxChars = function (value) {
+            if (this._properties._maxChars != value) {
+                this._properties._maxChars = value;
             }
         };
-        Object.defineProperty(TextField.prototype, "scrollV", {
+        Object.defineProperty(__egretProto__, "scrollV", {
+            get: function () {
+                return Math.min(Math.max(this._properties._scrollV, 1), this.maxScrollV);
+            },
+            /**
+             * 文本在文本字段中的垂直位置。scrollV 属性可帮助用户定位到长篇文章的特定段落，还可用于创建滚动文本字段。
+             * 垂直滚动的单位是行，而水平滚动的单位是像素。
+             * 如果显示的第一行是文本字段中的第一行，则 scrollV 设置为 1（而非 0）。
+             * @param value
+             */
             set: function (value) {
-                this._scrollV = value;
+                this._properties._scrollV = Math.max(value, 1);
                 this._setDirty();
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TextField.prototype, "maxScrollV", {
+        Object.defineProperty(__egretProto__, "maxScrollV", {
+            /**
+             * scrollV 的最大值
+             * @returns {number}
+             */
             get: function () {
-                return this._maxScrollV;
+                this._getLinesArr();
+                return Math.max(this._properties._numLines - egret.TextFieldUtils._getScrollNum(this) + 1, 1);
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TextField.prototype, "selectionBeginIndex", {
-            get: function () {
-                return 0;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TextField.prototype, "selectionEndIndex", {
+        Object.defineProperty(__egretProto__, "selectionBeginIndex", {
             get: function () {
                 return 0;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TextField.prototype, "caretIndex", {
+        Object.defineProperty(__egretProto__, "selectionEndIndex", {
             get: function () {
                 return 0;
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setSelection = function (beginIndex, endIndex) {
+        Object.defineProperty(__egretProto__, "caretIndex", {
+            get: function () {
+                return 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        __egretProto__._setSelection = function (beginIndex, endIndex) {
         };
-        Object.defineProperty(TextField.prototype, "lineSpacing", {
+        Object.defineProperty(__egretProto__, "lineSpacing", {
             get: function () {
-                return this._lineSpacing;
+                return this._properties._lineSpacing;
             },
+            /**
+             * 行间距
+             * 一个整数，表示行与行之间的垂直间距量。
+             * 默认值为 0。
+             * @member {number} egret.TextField#lineSpacing
+             */
             set: function (value) {
                 this._setLineSpacing(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setLineSpacing = function (value) {
-            if (this._lineSpacing != value) {
+        __egretProto__._setLineSpacing = function (value) {
+            if (this._properties._lineSpacing != value) {
                 this._setTextDirty();
-                this._lineSpacing = value;
+                this._properties._lineSpacing = value;
             }
         };
-        TextField.prototype._getLineHeight = function () {
-            return this._lineSpacing + this._size;
+        __egretProto__._getLineHeight = function () {
+            return this._properties._lineSpacing + this._properties._size;
         };
-        Object.defineProperty(TextField.prototype, "numLines", {
+        Object.defineProperty(__egretProto__, "numLines", {
+            /**
+             * 文本行数。
+             * @member {number} egret.TextField#numLines
+             */
             get: function () {
-                return this._numLines;
+                return this._properties._numLines;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TextField.prototype, "multiline", {
+        Object.defineProperty(__egretProto__, "multiline", {
             get: function () {
-                return this._multiline;
+                return this._properties._multiline;
             },
+            /**
+             * 表示字段是否为多行文本字段。注意，此属性仅在type为TextFieldType.INPUT时才有效。
+             * 如果值为 true，则文本字段为多行文本字段；如果值为 false，则文本字段为单行文本字段。在类型为 TextFieldType.INPUT 的字段中，multiline 值将确定 Enter 键是否创建新行（如果值为 false，则将忽略 Enter 键）。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#multiline
+             */
             set: function (value) {
                 this._setMultiline(value);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype._setMultiline = function (value) {
-            this._multiline = value;
+        __egretProto__._setMultiline = function (value) {
+            this._properties._multiline = value;
             this._setDirty();
         };
-        TextField.prototype.setFocus = function () {
-            //todo:
-            egret.Logger.warning("TextField.setFocus 没有实现");
+        __egretProto__._setWidth = function (value) {
+            _super.prototype._setWidth.call(this, value);
+            this.fillBackground();
         };
-        TextField.prototype._onRemoveFromStage = function () {
+        __egretProto__._setHeight = function (value) {
+            _super.prototype._setHeight.call(this, value);
+            this.fillBackground();
+        };
+        Object.defineProperty(__egretProto__, "border", {
+            get: function () {
+                return this._properties._border;
+            },
+            /**
+             * 指定文本字段是否具有边框。
+             * 如果为 true，则文本字段具有边框。如果为 false，则文本字段没有边框。
+             * 使用 borderColor 属性来设置边框颜色。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#border
+             */
+            set: function (value) {
+                this._properties._border = value;
+                this.fillBackground();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(__egretProto__, "borderColor", {
+            get: function () {
+                return this._properties._borderColor;
+            },
+            /**
+             * 文本字段边框的颜色。默认值为 0x000000（黑色）。
+             * 即使当前没有边框，也可检索或设置此属性，但只有当文本字段已将 border 属性设置为 true 时，才可以看到颜色。
+             * @member {number} egret.TextField#borderColor
+             */
+            set: function (value) {
+                this._properties._borderColor = value;
+                this.fillBackground();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(__egretProto__, "background", {
+            get: function () {
+                return this._properties._background;
+            },
+            /**
+             * 指定文本字段是否具有背景填充。
+             * 如果为 true，则文本字段具有背景填充。如果为 false，则文本字段没有背景填充。
+             * 使用 backgroundColor 属性来设置文本字段的背景颜色。
+             * 默认值为 false。
+             * @member {boolean} egret.TextField#background
+             */
+            set: function (value) {
+                this._properties._background = value;
+                this.fillBackground();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(__egretProto__, "backgroundColor", {
+            get: function () {
+                return this._properties._backgroundColor;
+            },
+            /**
+             * 文本字段背景的颜色。默认值为 0xFFFFFF（白色）。
+             * 即使当前没有背景，也可检索或设置此属性，但只有当文本字段已将 background 属性设置为 true 时，才可以看到颜色。
+             * @member {number} egret.TextField#backgroundColor
+             */
+            set: function (value) {
+                this._properties._backgroundColor = value;
+                this.fillBackground();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        __egretProto__.fillBackground = function () {
+            var self = this;
+            var graphics = self._bgGraphics;
+            var properties = self._properties;
+            if (graphics) {
+                graphics.clear();
+            }
+            if (properties._background || properties._border) {
+                if (graphics == null) {
+                    graphics = self._bgGraphics = new egret.Graphics();
+                }
+                if (properties._background) {
+                    graphics.beginFill(properties._backgroundColor, 1);
+                }
+                if (properties._border) {
+                    graphics.lineStyle(1, properties._borderColor);
+                }
+                graphics.drawRect(0, 0, self._getWidth(), self._getHeight());
+                graphics.endFill();
+            }
+        };
+        __egretProto__.setFocus = function () {
+            //todo:
+            egret.Logger.warningWithErrorId(1013);
+        };
+        __egretProto__._onRemoveFromStage = function () {
             _super.prototype._onRemoveFromStage.call(this);
-            if (this._type == egret.TextFieldType.INPUT) {
+            this._removeEvent();
+            if (this._properties._type == egret.TextFieldType.INPUT) {
                 this._inputUtils._removeStageText();
             }
         };
-        TextField.prototype._onAddToStage = function () {
+        __egretProto__._onAddToStage = function () {
             _super.prototype._onAddToStage.call(this);
-            if (this._type == egret.TextFieldType.INPUT) {
+            this._addEvent();
+            if (this._properties._type == egret.TextFieldType.INPUT) {
                 this._inputUtils._addStageText();
             }
         };
-        TextField.prototype._updateBaseTransform = function () {
+        __egretProto__._updateBaseTransform = function () {
+            this._getLinesArr();
+            if (this._properties._textMaxWidth == 0 && this._properties._type != egret.TextFieldType.INPUT) {
+                return;
+            }
             _super.prototype._updateTransform.call(this);
+            var matrix = this._worldTransform;
         };
-        TextField.prototype._updateTransform = function () {
-            if (this._type == egret.TextFieldType.INPUT) {
+        __egretProto__._updateTransform = function () {
+            if (this._properties._type == egret.TextFieldType.INPUT) {
                 if (this._normalDirty) {
-                    this._clearDirty();
+                    //this._clearDirty();
                     this._inputUtils._updateProperties();
                 }
                 else {
@@ -556,32 +656,47 @@ var egret;
                 this._updateBaseTransform();
             }
         };
+        __egretProto__._draw = function (renderContext) {
+            var self = this;
+            var properties = self._properties;
+            if (properties._textMaxWidth == 0 && properties._type != egret.TextFieldType.INPUT) {
+                return;
+            }
+            _super.prototype._draw.call(this, renderContext);
+        };
         /**
          * @see egret.DisplayObject._render
          * @param renderContext
          */
-        TextField.prototype._render = function (renderContext) {
+        __egretProto__._render = function (renderContext) {
+            if (this._bgGraphics)
+                this._bgGraphics._draw(renderContext);
             this.drawText(renderContext);
             this._clearDirty();
         };
         /**
          * 测量显示对象坐标与大小
          */
-        TextField.prototype._measureBounds = function () {
-            var lines = this._getLinesArr();
-            if (!lines) {
+        __egretProto__._measureBounds = function () {
+            var self = this;
+            var properties = self._properties;
+            this._getLinesArr();
+            if (properties._textMaxWidth == 0) {
                 return egret.Rectangle.identity.initialize(0, 0, 0, 0);
             }
-            return egret.Rectangle.identity.initialize(0, 0, this._textMaxWidth, this._textMaxHeight + (this._numLines - 1) * this._lineSpacing);
+            return egret.Rectangle.identity.initialize(0, 0, properties._textMaxWidth, egret.TextFieldUtils._getTextHeight(self));
         };
-        Object.defineProperty(TextField.prototype, "textFlow", {
+        Object.defineProperty(__egretProto__, "textFlow", {
             get: function () {
                 return this._textArr;
             },
             /**
-             *
+             * 设置富文本
+             * @param textArr 富文本数据
              */
             set: function (textArr) {
+                var self = this;
+                var properties = self._properties;
                 this._isFlow = true;
                 var text = "";
                 if (textArr == null)
@@ -590,19 +705,19 @@ var egret;
                     var element = textArr[i];
                     text += element.text;
                 }
-                if (this._displayAsPassword) {
+                if (properties._displayAsPassword) {
                     this._setBaseText(text);
                 }
                 else {
-                    this._text = text;
+                    properties._text = text;
                     this.setMiddleStyle(textArr);
                 }
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype.changeToPassText = function (text) {
-            if (this._displayAsPassword) {
+        __egretProto__.changeToPassText = function (text) {
+            if (this._properties._displayAsPassword) {
                 var passText = "";
                 for (var i = 0, num = text.length; i < num; i++) {
                     switch (text.charAt(i)) {
@@ -619,129 +734,154 @@ var egret;
             }
             return text;
         };
-        TextField.prototype.setMiddleStyle = function (textArr) {
+        __egretProto__.setMiddleStyle = function (textArr) {
             this._isArrayChanged = true;
             this._textArr = textArr;
             this._setSizeDirty();
         };
-        Object.defineProperty(TextField.prototype, "textWidth", {
+        Object.defineProperty(__egretProto__, "textWidth", {
             get: function () {
-                return this._textMaxWidth;
+                return this._properties._textMaxWidth;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(TextField.prototype, "textHeight", {
+        Object.defineProperty(__egretProto__, "textHeight", {
             get: function () {
-                return this._textMaxHeight;
+                return egret.TextFieldUtils._getTextHeight(this);
             },
             enumerable: true,
             configurable: true
         });
-        TextField.prototype.appendText = function (text) {
+        __egretProto__.appendText = function (text) {
             this.appendElement({ text: text });
         };
-        TextField.prototype.appendElement = function (element) {
+        __egretProto__.appendElement = function (element) {
             this._textArr.push(element);
             this.setMiddleStyle(this._textArr);
         };
-        TextField.prototype._getLinesArr = function () {
-            if (!this._isArrayChanged) {
-                return this._linesArr;
+        __egretProto__._getLinesArr = function () {
+            var self = this;
+            var properties = self._properties;
+            if (!self._isArrayChanged) {
+                return self._linesArr;
             }
-            this._isArrayChanged = false;
-            var text2Arr = this._textArr;
+            self._isArrayChanged = false;
+            var text2Arr = self._textArr;
             var renderContext = egret.MainContext.instance.rendererContext;
-            this._linesArr = [];
-            this._textMaxHeight = 0;
-            this._textMaxWidth = 0;
+            self._linesArr = [];
+            properties._textMaxHeight = 0;
+            properties._textMaxWidth = 0;
             //宽度被设置为0
-            if (this._hasWidthSet && this._explicitWidth == 0) {
-                this._numLines = 0;
-                return [{ width: 0, height: 0, elements: [] }];
+            if (self._hasWidthSet && self._explicitWidth == 0) {
+                properties._numLines = 0;
+                return [{ width: 0, height: 0, charNum: 0, elements: [], hasNextLine: false }];
             }
-            var linesArr = this._linesArr;
+            if (!self._isFlow) {
+                renderContext.setupFont(self);
+            }
+            var linesArr = self._linesArr;
             var lineW = 0;
+            var lineCharNum = 0;
             var lineH = 0;
             var lineCount = 0;
             var lineElement;
-            if (!this._isFlow) {
-                renderContext.setupFont(this);
-            }
-            for (var i = 0; i < text2Arr.length; i++) {
+            for (var i = 0, text2ArrLength = text2Arr.length; i < text2ArrLength; i++) {
                 var element = text2Arr[i];
                 element.style = element.style || {};
                 var text = element.text.toString();
                 var textArr = text.split(/(?:\r\n|\r|\n)/);
-                for (var j = 0; j < textArr.length; j++) {
+                for (var j = 0, textArrLength = textArr.length; j < textArrLength; j++) {
                     if (linesArr[lineCount] == null) {
-                        lineElement = { width: 0, height: 0, elements: [] };
+                        lineElement = { width: 0, height: 0, elements: [], charNum: 0, hasNextLine: false };
                         linesArr[lineCount] = lineElement;
                         lineW = 0;
                         lineH = 0;
+                        lineCharNum = 0;
                     }
-                    if (this._type == egret.TextFieldType.INPUT) {
-                        lineH = this._size;
+                    if (properties._type == egret.TextFieldType.INPUT) {
+                        lineH = properties._size;
                     }
                     else {
-                        lineH = Math.max(lineH, element.style.size || this._size);
+                        lineH = Math.max(lineH, element.style.size || properties._size);
                     }
+                    var isNextLine = true;
                     if (textArr[j] == "") {
+                        if (j == textArrLength - 1) {
+                            isNextLine = false;
+                        }
                     }
                     else {
-                        if (this._isFlow) {
-                            renderContext.setupFont(this, element.style);
+                        if (self._isFlow) {
+                            renderContext.setupFont(self, element.style);
                         }
                         var w = renderContext.measureText(textArr[j]);
-                        if (!this._hasWidthSet) {
+                        if (!self._hasWidthSet) {
                             lineW += w;
+                            lineCharNum += textArr[j].length;
                             lineElement.elements.push({ width: w, text: textArr[j], style: element.style });
+                            if (j == textArrLength - 1) {
+                                isNextLine = false;
+                            }
                         }
                         else {
-                            if (lineW + w <= this._explicitWidth) {
+                            if (lineW + w <= self._explicitWidth) {
                                 lineElement.elements.push({ width: w, text: textArr[j], style: element.style });
                                 lineW += w;
+                                lineCharNum += textArr[j].length;
+                                if (j == textArrLength - 1) {
+                                    isNextLine = false;
+                                }
                             }
                             else {
                                 var k = 0;
                                 var ww = 0;
                                 var word = textArr[j];
-                                for (; k < word.length; k++) {
+                                var wl = word.length;
+                                for (; k < wl; k++) {
                                     w = renderContext.measureText(word.charAt(k));
-                                    if (lineW + w > this._explicitWidth) {
+                                    if (lineW + w > self._explicitWidth && lineW + k != 0) {
                                         break;
                                     }
                                     ww += w;
                                     lineW += w;
+                                    lineCharNum += 1;
                                 }
                                 if (k > 0) {
                                     lineElement.elements.push({ width: ww, text: word.substring(0, k), style: element.style });
                                     textArr[j] = word.substring(k);
                                 }
                                 j--;
+                                isNextLine = false;
                             }
                         }
+                    }
+                    if (isNextLine) {
+                        lineCharNum++;
+                        lineElement.hasNextLine = true;
                     }
                     if (j < textArr.length - 1) {
                         lineElement.width = lineW;
                         lineElement.height = lineH;
-                        this._textMaxWidth = Math.max(this._textMaxWidth, lineW);
-                        this._textMaxHeight += lineH;
-                        if (this._type == egret.TextFieldType.INPUT && !this._multiline) {
-                            this._numLines = linesArr.length;
-                            return linesArr;
-                        }
+                        lineElement.charNum = lineCharNum;
+                        properties._textMaxWidth = Math.max(properties._textMaxWidth, lineW);
+                        properties._textMaxHeight += lineH;
+                        //if (self._type == TextFieldType.INPUT && !self._multiline) {
+                        //    self._numLines = linesArr.length;
+                        //    return linesArr;
+                        //}
                         lineCount++;
                     }
                 }
                 if (i == text2Arr.length - 1 && lineElement) {
                     lineElement.width = lineW;
                     lineElement.height = lineH;
-                    this._textMaxWidth = Math.max(this._textMaxWidth, lineW);
-                    this._textMaxHeight += lineH;
+                    lineElement.charNum = lineCharNum;
+                    properties._textMaxWidth = Math.max(properties._textMaxWidth, lineW);
+                    properties._textMaxHeight += lineH;
                 }
             }
-            this._numLines = linesArr.length;
+            properties._numLines = linesArr.length;
             return linesArr;
         };
         /**
@@ -749,64 +889,77 @@ var egret;
          * @param renderContext
          * @returns {Rectangle}
          */
-        TextField.prototype.drawText = function (renderContext) {
-            var lines = this._getLinesArr();
-            if (!lines) {
+        __egretProto__.drawText = function (renderContext) {
+            var self = this;
+            var properties = self._properties;
+            if (properties._type == egret.TextFieldType.INPUT) {
+                if (self._isTyping) {
+                    return;
+                }
+            }
+            //先算出需要的数值
+            var lines = self._getLinesArr();
+            if (properties._textMaxWidth == 0) {
                 return;
             }
-            if (!this._isFlow) {
-                renderContext.setupFont(this);
-            }
-            var maxWidth = this._hasWidthSet ? this._explicitWidth : this._textMaxWidth;
-            var textHeight = this._textMaxHeight + (this._numLines - 1) * this._lineSpacing;
+            var maxWidth = self._hasWidthSet ? self._explicitWidth : properties._textMaxWidth;
+            var textHeight = egret.TextFieldUtils._getTextHeight(self);
             var drawY = 0;
-            var startLine = 0;
-            if (this._hasHeightSet) {
-                if (textHeight < this._explicitHeight) {
-                    var valign = 0;
-                    if (this._verticalAlign == egret.VerticalAlign.MIDDLE)
-                        valign = 0.5;
-                    else if (this._verticalAlign == egret.VerticalAlign.BOTTOM)
-                        valign = 1;
-                    drawY += valign * (this._explicitHeight - textHeight);
-                }
-                else if (textHeight > this._explicitHeight) {
-                    startLine = Math.max(this._scrollV - 1, 0);
-                    startLine = Math.min(this._numLines - 1, startLine);
-                }
+            var startLine = egret.TextFieldUtils._getStartLine(self);
+            if (self._hasHeightSet && self._explicitHeight > textHeight) {
+                var valign = egret.TextFieldUtils._getValign(self);
+                drawY += valign * (self._explicitHeight - textHeight);
             }
             drawY = Math.round(drawY);
-            var halign = 0;
-            if (this._textAlign == egret.HorizontalAlign.CENTER) {
-                halign = 0.5;
-            }
-            else if (this._textAlign == egret.HorizontalAlign.RIGHT) {
-                halign = 1;
-            }
+            var halign = egret.TextFieldUtils._getHalign(self);
             var drawX = 0;
-            for (var i = startLine; i < this._numLines; i++) {
+            for (var i = startLine, numLinesLength = properties._numLines; i < numLinesLength; i++) {
                 var line = lines[i];
                 var h = line.height;
                 drawY += h / 2;
-                if (i != 0 && this._hasHeightSet && drawY > this._explicitHeight) {
-                    break;
+                if (i != startLine) {
+                    if (properties._type == egret.TextFieldType.INPUT && !properties._multiline) {
+                        break;
+                    }
+                    if (self._hasHeightSet && drawY > self._explicitHeight) {
+                        break;
+                    }
                 }
                 drawX = Math.round((maxWidth - line.width) * halign);
-                for (var j = 0; j < line.elements.length; j++) {
+                for (var j = 0, elementsLength = line.elements.length; j < elementsLength; j++) {
                     var element = line.elements[j];
-                    var size = element.style.size || this._size;
-                    if (this._type == egret.TextFieldType.INPUT) {
-                        renderContext.drawText(this, element.text, drawX, drawY + (h - size) / 2, element.width);
-                    }
-                    else {
-                        if (this._isFlow) {
-                            renderContext.setupFont(this, element.style);
-                        }
-                        renderContext.drawText(this, element.text, drawX, drawY + (h - size) / 2, element.width, element.style);
-                    }
+                    var size = element.style.size || properties._size;
+                    renderContext.drawText(self, element.text, drawX, drawY + (h - size) / 2, element.width, element.style);
                     drawX += element.width;
                 }
-                drawY += h / 2 + this._lineSpacing;
+                drawY += h / 2 + properties._lineSpacing;
+            }
+        };
+        //增加点击事件
+        __egretProto__._addEvent = function () {
+            this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTapHandler, this);
+        };
+        //释放点击事件
+        __egretProto__._removeEvent = function () {
+            this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTapHandler, this);
+        };
+        //处理富文本中有href的
+        __egretProto__.onTapHandler = function (e) {
+            if (this._properties._type == egret.TextFieldType.INPUT) {
+                return;
+            }
+            var ele = egret.TextFieldUtils._getTextElement(this, e.localX, e.localY);
+            if (ele == null) {
+                return;
+            }
+            var style = ele.style;
+            if (style && style.href) {
+                if (style.href.match(/^event:/)) {
+                    var type = style.href.match(/^event:/)[0];
+                    egret.TextEvent.dispatchTextEvent(this, egret.TextEvent.LINK, style.href.substring(type.length));
+                }
+                else {
+                }
             }
         };
         TextField.default_fontFamily = "Arial";

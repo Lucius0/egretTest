@@ -43,6 +43,7 @@ var egret;
              */
             function PopUpManager() {
             }
+            var __egretProto__ = PopUpManager.prototype;
             /**
              * 获取单例
              */
@@ -147,7 +148,7 @@ var egret;
             PopUpManager.addEventListener = function (type, listener, thisObject, useCapture, priority) {
                 if (useCapture === void 0) { useCapture = false; }
                 if (priority === void 0) { priority = 0; }
-                PopUpManager.getImpl().addEventListener(type, listener, this, useCapture, priority);
+                PopUpManager.getImpl().addEventListener(type, listener, thisObject, useCapture, priority);
             };
             /**
              * 移除事件监听,参考PopUpEvent定义的常量。

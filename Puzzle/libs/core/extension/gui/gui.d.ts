@@ -97,7 +97,10 @@ declare module egret.gui {
          * @method egret.gui.ArrayCollection#constructor
          * @param source {Array<any>} 数据源
          */
-        constructor(source?: any[]);
+        constructor(source?: Array<any>);
+        /**
+         *
+         */
         private _source;
         /**
          * 数据源
@@ -105,7 +108,7 @@ declare module egret.gui {
          * 若对数据源进行了排序或过滤等操作，请手动调用refresh()方法刷新数据。<br/>
          * @member egret.gui.ArrayCollection#source
          */
-        source: any[];
+        source: Array<any>;
         /**
          * 在对数据源进行排序或过滤操作后可以手动调用此方法刷新所有数据,以更新视图。
          * @method egret.gui.ArrayCollection#refresh
@@ -142,12 +145,14 @@ declare module egret.gui {
          */
         addItemAt(item: any, index: number): void;
         /**
+         * 获取指定索引处的项目
          * @method egret.gui.ArrayCollection#getItemAt
          * @param index {number}
          * @returns {any}
          */
         getItemAt(index: number): any;
         /**
+         * 如果项目位于列表中,返回该项目的索引。否则返回-1。
          * @method egret.gui.ArrayCollection#getItemIndex
          * @param item {any}
          * @returns {number}
@@ -186,7 +191,7 @@ declare module egret.gui {
          * @method egret.gui.ArrayCollection#replaceAll
          * @param newSource {Array<any>} 新的数据源
          */
-        replaceAll(newSource: any[]): void;
+        replaceAll(newSource: Array<any>): void;
         /**
          * 移动一个项目
          * 在oldIndex和newIndex之间的项目，
@@ -336,7 +341,7 @@ declare module egret.gui {
          * 处于展开状态的节点列表
          * @member egret.gui.ObjectCollection#openNodes
          */
-        openNodes: any[];
+        openNodes: Array<any>;
         /**
          * @member egret.gui.ObjectCollection#length
          */
@@ -1458,7 +1463,7 @@ declare module egret.gui {
          * 为此组件定义的视图状态。
          * @member egret.gui.IStateClient#states
          */
-        states: any[];
+        states: Array<any>;
         /**
          * 返回是否含有指定名称的视图状态
          * @method egret.gui.IStateClient#hasState
@@ -2080,7 +2085,7 @@ declare module egret.gui {
          * 已经弹出的窗口列表
          * @member egret.gui.IPopUpManager#popUpList
          */
-        popUpList: any[];
+        popUpList: Array<any>;
     }
 }
 /**
@@ -3278,7 +3283,7 @@ declare module egret.gui {
          * @method egret.gui.State#constructor
          * @param properties {any}
          */
-        constructor(name: string, overrides: IOverride[]);
+        constructor(name: string, overrides: Array<IOverride>);
         /**
          * 已经初始化标志
          */
@@ -3293,12 +3298,12 @@ declare module egret.gui {
          * 这些覆盖在进入状态时按顺序应用，在退出状态时按相反的顺序删除。
          * @member egret.gui.State#overrides
          */
-        overrides: IOverride[];
+        overrides: Array<IOverride>;
         /**
          * 此视图状态作为 String 数组所属的状态组。
          * @member egret.gui.State#stateGroups
          */
-        stateGroups: any[];
+        stateGroups: Array<any>;
         /**
          * 初始化视图
          * @method egret.gui.State#initialize
@@ -3414,7 +3419,2750 @@ declare module egret.gui {
     /**
      * 设置键值对的简便方法。此方法仅供exmlc编译器内部使用。
      */
-    function setProperties(target: any, keys: string[], values: string[]): any;
+    function setProperties(target: any, keys: Array<string>, values: Array<string>): any;
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    interface IEaser {
+        /**
+         * 输入动画播放的当前时刻点，返回转换过后映射的时刻点。
+         * @param fraction 动画播放的当前时刻点，从 0.0 到 1.0。
+         */
+        ease(fraction: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.EaseInOutBase
+     * @classdesc
+     * EaseInOutBase 类是提供缓动功能的基类。
+     * @implements egret.gui.IEaser
+     */
+    class EaseInOutBase implements IEaser {
+        /**
+         * @param easeInFraction 缓入过程所占动画播放时间的百分比。剩余即为缓出的时间。
+         * 默认值为 EasingFraction.IN_OUT，它会缓入前一半时间，并缓出剩余的一半时间。
+         * @method egret.gui.EaseInOutBase#constructor
+         */
+        constructor(easeInFraction?: number);
+        private _easeInFraction;
+        /**
+         * 缓入过程所占动画播放时间的百分比。剩余即为缓出的时间。
+         * 有效值为 0.0 到 1.0。
+         */
+        easeInFraction: number;
+        ease(fraction: number): number;
+        /**
+         * 在动画的缓入阶段期间计算已经缓动部分要映射到的值。
+         */
+        _easeIn(fraction: number): number;
+        /**
+         * 在动画的缓出阶段期间计算已经缓动部分要映射到的值。
+         */
+        _easeOut(fraction: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Bounce
+     * @classdesc
+     * Bounce 类实现缓动功能，该功能模拟目标对象上的重力牵引和回弹目标对象。
+     * @implements egret.gui.IEaser
+     */
+    class Bounce implements IEaser {
+        /**
+         * @method egret.gui.Bounce#constructor
+         */
+        constructor();
+        ease(fraction: number): number;
+        easeOut(t: number, b: number, c: number, d: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Elastic
+     * @classdesc
+     * Elastic 类实现缓动功能，此时目标对象移动是由一个指数衰减正弦波定义的。
+     * @implements egret.gui.IEaser
+     */
+    class Elastic implements IEaser {
+        /**
+         * @method egret.gui.Elastic#constructor
+         */
+        constructor();
+        ease(fraction: number): number;
+        easeOut(t: number, b: number, c: number, d: number, a?: number, p?: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Power
+     * @classdesc
+     * Linear 类使用三个阶段定义缓动：加速、匀速运动和减速。
+     * @implements egret.gui.IEaser
+     */
+    class Linear implements IEaser {
+        /**
+         * @param easeInFraction 在加速阶段中持续时间占总时间的百分比，在 0.0 和 1.0 之间。
+         * @param easeOutFraction 在减速阶段中持续时间占总时间的百分比，在 0.0 和 1.0 之间。
+         * @method egret.gui.Linear#constructor
+         */
+        constructor(easeInFraction?: number, easeOutFraction?: number);
+        private _easeInFraction;
+        /**
+         * 在加速阶段中持续时间占总时间的百分比，在 0.0 和 1.0 之间。
+         */
+        easeInFraction: number;
+        private _easeOutFraction;
+        /**
+         * 在减速阶段中持续时间占总时间的百分比，在 0.0 和 1.0 之间。
+         */
+        easeOutFraction: number;
+        ease(fraction: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Power
+     * @classdesc
+     * Power 类通过使用多项式表达式定义缓动功能。
+     * @extends egret.gui.EaseInOutBase
+     */
+    class Power extends EaseInOutBase {
+        /**
+         * @param easeInFraction 在加速阶段中整个持续时间的部分，在 0.0 和 1.0 之间。
+         * @param exponent 在缓动计算中使用的指数。exponent 属性的值越大，加速和减速的速率越快。
+         * @method egret.gui.Power#constructor
+         */
+        constructor(easeInFraction?: number, exponent?: number);
+        private _exponent;
+        /**
+         * 在缓动计算中使用的指数。exponent 属性的值越大，加速和减速的速率越快。
+         */
+        exponent: number;
+        /**
+         * @inheritDoc
+         */
+        _easeIn(fraction: number): number;
+        /**
+         * @inheritDoc
+         */
+        _easeOut(fraction: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Sine
+     * @classdesc
+     * Sine 类使用 Sine 函数定义缓动功能。
+     * @extends egret.gui.EaseInOutBase
+     */
+    class Sine extends EaseInOutBase {
+        /**
+         * @param easeInFraction 缓入过程所占动画播放时间的百分比。剩余即为缓出的时间。
+         * @method egret.gui.Sine#constructor
+         */
+        constructor(easeInFraction?: number);
+        /**
+         * @inheritDoc
+         */
+        _easeIn(fraction: number): number;
+        /**
+         * @inheritDoc
+         */
+        _easeOut(fraction: number): number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    interface IEffect extends IEventDispatcher {
+        /**
+         * 效果的持续时间（以毫秒为单位）。
+         */
+        duration: number;
+        /**
+         * 一个只读标志，如果当前正在播放效果的任一实例，则为 true；否则，则为 false。
+         */
+        isPlaying: boolean;
+        /**
+         * 在效果的第一个目标之后，其他效果目标的附加延迟（以毫秒为单位）。此值将添加到 startDelay 属性的值中。
+         */
+        perElementOffset: number;
+        /**
+         * 要应用此效果的对象。当效果触发器触发某个效果时，会自动将 target 属性设置为触发该效果的对象。
+         */
+        target: any;
+        /**
+         * 一个对象 Array，这些对象都是效果的目标。播放效果时，会对各个目标并行执行效果。
+         * 设置 target 属性将替换此 Array 中的所有对象。
+         * 设置 targets 属性后，target 属性将返回此 Array 中的第一个项目。
+         */
+        targets: Array<any>;
+        /**
+         * 效果的当前时间位置。此属性的值介于 0 和总持续时间（包括该效果的 startDelay、repeatCount 和 repeatDelay）之间。
+         */
+        playheadTime: number;
+        /**
+         * 获取一个目标对象 Array，并对每个目标调用 createInstance() 方法。
+         *  @param targets 要使用此效果设置动画的对象的数组。
+         *  @return 效果的效果实例对象的数组，一个目标一个数组。
+         */
+        createInstances(targets?: Array<any>): Array<any>;
+        /**
+         * 创建一个效果实例并对其进行初始化。在播放效果实例前，使用此方法（而非 play() 方法）处理效果实例属性。
+         *  <p>所创建的效果实例的类型由 instanceClass 属性指定。然后，使用 _initInstance() 方法初始化此实例。
+         * 如果该实例是 EffectManager 在效果触发器触发此效果时创建的，
+         * 则还需要调用 EffectInstance.initEffect() 方法进一步初始化此效果。</p>
+         *  <p>调用 createInstance() 方法不会播放效果。对返回的效果实例调用 startEffect() 方法。</p>
+         *  <p>Effect.play() 方法将自动调用此函数。 </p>
+         *  @param target 要使用此效果为其设置动画的对象。
+         *  @return 效果的效果实例对象。
+         */
+        createInstance(target?: any): IEffectInstance;
+        /**
+         * 删除实例中的事件侦听器，然后从实例列表中删除该实例。
+         */
+        deleteInstance(instance: IEffectInstance): void;
+        /**
+         * 开始播放效果。通常在调用 play() 方法之前先调用 end() 方法，以确保在开始播放新效果前已结束先前效果的所有实例。
+         * @param targets 播放此效果的目标对象的数组。如果已指定此参数，则不会使用效果的 targets 属性。
+         * @param playReversedFromEnd 如果为 true，则向后播放效果。
+         * @return 效果的 EffectInstance 对象的数组，一个目标一个数组。
+         */
+        play(targets?: Array<any>, playReversedFromEnd?: boolean): Array<any>;
+        /**
+         * 暂停效果，直到调用 resume() 方法。
+         */
+        pause(): void;
+        /**
+         * 停止播放效果，使效果目标保持当前状态。
+         * 与调用 pause() 方法不同，无法先调用 stop() 方法再调用 resume() 方法。
+         * 不过，您可以调用 play() 方法重新播放效果。
+         */
+        stop(): void;
+        /**
+         * 在效果由 pause() 方法暂停后继续播放效果。
+         */
+        resume(): void;
+        /**
+         * 逆序播放效果；如果当前正在播放效果，则从该效果的当前位置开始逆序播放。
+         */
+        reverse(): void;
+        /**
+         * 中断当前正在播放的效果，立即跳转到该效果的末尾。调用此方法将调用 EffectInstance.end() 方法。
+         * <p>如果调用此方法来结束播放效果，效果实例将分派 effectEnd 事件。</p>
+         * <p>如果将效果实例作为参数传递，则会中断此实例。
+         * 如果没有传入参数，则该效果当前生成的所有效果实例都将中断。</p>
+         */
+        end(effectInstance?: IEffectInstance): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    interface IEffectInstance {
+        /**
+         * 效果的持续时间（以毫秒为单位）。
+         */
+        duration: number;
+        /**
+         * 创建此 IEffectInstance 对象的 IEffect 对象。
+         */
+        effect: IEffect;
+        /**
+         * 效果的当前时间位置。
+         * 此属性的值介于 0 和总持续时间（包括该效果的 startDelay、repeatCount 和 repeatDelay）之间。
+         */
+        playheadTime: number;
+        /**
+         * 效果的重复次数。可能的值为任何大于等于 0 的整数。
+         */
+        repeatCount: number;
+        /**
+         * 重复播放效果前需要等待的时间（以毫秒为单位）。
+         */
+        repeatDelay: number;
+        /**
+         * 开始播放效果前需要等待的时间（以毫秒为单位）。
+         * 此值可以是任何大于或等于 0 的整数。
+         * 如果使用 repeatCount 属性重复播放效果，则只在首次播放该效果时应用 startDelay 属性。
+         */
+        startDelay: number;
+        /**
+         * 要应用此效果的对象。
+         */
+        target: any;
+        /**
+         * 经过 startDelay 所占用的这段时间后，在目标上播放效果实例。
+         * 由 Effect 类调用。在启动 EffectInstance 时，请使用此函数，而非 play() 方法。
+         */
+        startEffect(): void;
+        /**
+         * 在目标上播放效果实例。改为调用 startEffect() 方法，以在 EffectInstance 上开始播放效果。
+         * <p>在 EffectInstance 的子类中，必须覆盖此方法。
+         * 此覆盖必须调用 super.play() 方法，以便从目标中分派 effectStart 事件。</p>
+         */
+        play(): void;
+        /**
+         * 暂停效果，直到调用 resume() 方法。
+         */
+        pause(): void;
+        /**
+         * 停止播放效果，使目标保持当前状态。
+         * 您需要通过调用 Effect.stop() 方法来调用此方法。在实现过程中，它会调用 finishEffect() 方法。
+         * <p>如果调用此方法来结束播放效果，效果实例将分派 effectEnd 事件。</p>
+         */
+        stop(): void;
+        /**
+         * 在效果由 pause() 方法暂停后继续播放效果。
+         */
+        resume(): void;
+        /**
+         * 从效果的当前位置开始反向播放效果。
+         */
+        reverse(): void;
+        /**
+         * 中断当前播放的效果实例，立即跳转到效果的结束位置。
+         * 通过调用 Effect.end() 方法可调用此方法。在实现过程中，它会调用 finishEffect() 方法。
+         * <p>如果调用此方法来结束播放效果，效果实例将分派 effectEnd 事件。</p>
+         */
+        end(): void;
+        /**
+         * 在完成效果播放时由 end() 方法调用。此函数将为效果目标分派 endEffect 事件。
+         */
+        finishEffect(): void;
+        /**
+         * 每次完成重复效果的迭代播放后调用。
+         */
+        finishRepeat(): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    interface IInterpolator {
+        /**
+         * 如果有在 0.0 和 1.0 之间的某个动画的已过去部分，以及要插补的开始值和结束值，则返回内插值。
+         * @param fraction 动画的已过去部分，在 0.0 和 1.0 之间。
+         * @param startValue 插值的开始值。
+         * @param endValue 插值的结束值。
+         * @return 内插值。
+         */
+        interpolate(fraction: number, startValue: any, endValue: any): any;
+        /**
+         * 如果有一个基值和一个要添加到它的值，则返回该操作的结果。
+         * @param baseValue 插值的开始值。
+         * @param incrementValue  应用到 baseValue 的更改。
+         * @return 内插值。
+         */
+        increment(baseValue: any, incrementValue: any): any;
+        /**
+         * 如果有一个基值和一个从其减去的值，则返回该减量操作的结果。
+         * @param baseValue 插值的开始值。
+         * @param decrementValue  应用到 baseValue 的更改。
+         * @return  内插值。
+         */
+        decrement(baseValue: any, decrementValue: any): any;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.NumberInterpolator
+     * @classdesc
+     * NumberInterpolator 类在表示为 number 实例的开始值和结束值之间提供插值。
+     * @implements egret.gui.IInterpolator
+     */
+    class NumberInterpolator implements IInterpolator {
+        /**
+         * @method egret.gui.NumberInterpolator#constructor
+         */
+        constructor();
+        private static theInstance;
+        static getInstance(): NumberInterpolator;
+        interpolate(fraction: number, startValue: any, endValue: any): any;
+        increment(baseValue: any, incrementValue: any): any;
+        decrement(baseValue: any, decrementValue: any): any;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.RepeatBehavior
+     * @classdesc
+     * RepeatBehavior类用于定义效果的重复行为的常量
+     */
+    class RepeatBehavior {
+        /**
+         * 指定在每个迭代上重复的动画在前进方向上的进度。
+         */
+        static LOOP: string;
+        /**
+         * 指定重复动画应该在每个迭代上倒转方向。
+         * 例如，反向动画在偶数迭代上向前播放，而在奇数迭代上反向播放。
+         */
+        static REVERSE: string;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Keyframe
+     * @classdesc
+     * Keyframe 类用于定义位于效果过程中某个特定时间的属性的值。
+     */
+    class Keyframe {
+        /**
+         * @param time 以毫秒为单位的时间，此关键帧的效果目标应该在此时间处具有 value 参数指定的值。
+         * @param value 效果目标在给定的 time 处应该具有的值。
+         * @param valueBy 可选参数，如果提供该可选参数，
+         * 则可以通过将 valueBy 与 MotionPath 对象的关键帧集合中的前一个关键帧的 value 相加来动态地计算 value。
+         * 如果是序列中的第一个 Keyframe，则会忽略此值
+         * @method egret.gui.Keyframe#constructor
+         */
+        constructor(time?: number, value?: any, valueBy?: any);
+        /**
+         * 返回此 Keyframe 对象的副本。
+         */
+        clone(): Keyframe;
+        /**
+         * 效果目标的属性在 time 属性指定的时间处所应该具有的值。
+         */
+        value: any;
+        /**
+         * 以毫秒为单位的时间，此关键帧的效果目标应该在此时间处具有 value 属性指定的值。
+         * 此时间与用此关键帧定义的效果的起始时间相关。
+         */
+        time: number;
+        _timeFraction: number;
+        /**
+         * 对运动路径中前一个 Keyframe 对象与此 Keyframe 对象之间的运动所应用的缓动行为。
+         * 默认情况下，缓动是线性的，或者根本就没有缓动。
+         */
+        easer: IEaser;
+        /**
+         * 用于计算此关键帧或前一个关键帧中的 value 的可选参数（如果已指定）。
+         * 如果在前一个关键帧中未设置 value，但此关键帧中同时定义了 value 和 valueBy，
+         * 则前一个关键帧中的 value 可以通过以此关键帧中的 value 减去此关键帧中的 valueBy 来计算。
+         */
+        valueBy: any;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.MotionPath
+     * @classdesc
+     * MotionPath 类定义效果的 Keyframe 对象的集合，以及要设置动画的目标上属性的名称。
+     */
+    class MotionPath {
+        /**
+         * @param property 要设置动画的目标上属性的名称。
+         * @method egret.gui.MotionPath#constructor
+         */
+        constructor(property?: string);
+        /**
+         * 要设置动画的效果目标上属性的名称。
+         */
+        property: string;
+        interpolator: IInterpolator;
+        /**
+         * 表示属性在动画过程中所采用的时间/值对的 Keyframe 对象序列。
+         */
+        keyframes: Array<Keyframe>;
+        /**
+         * 返回此 MotionPath 对象的副本（包含每个关键帧的副本）。
+         */
+        clone(): MotionPath;
+        /**
+         * 计算每一个关键帧的timeFraction值
+         */
+        _scaleKeyframes(duration: number): void;
+        /**
+         * 给定已过去时间部分的情况下，计算并返回一个内插值。
+         * 该函数决定该部分所处于的关键帧时间间隔，
+         * 然后在该时间间隔内插补该时间间隔的定界关键帧值之间的值。
+         * @param fraction 效果的总体持续时间部分（从 0.0 到 1.0 之间的值）。
+         * @return 内插值
+         */
+        getValue(fraction: number): any;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.SimpleMotionPath
+     * @classdesc
+     * SimpleMotionPath 类是只有两个关键帧的MotionPath的简单实现
+     * @extends egret.gui.MotionPath
+     */
+    class SimpleMotionPath extends MotionPath {
+        /**
+         * 您可以同时指定 valueFrom 和 valueTo 参数，
+         * 也可以在指定 valueBy 参数的同时指定 valueFrom 或 valueTo 参数。
+         * 如果忽略这些参数，则会从效果目标计算它们。
+         * @param property 正在设置动画的属性的名称。
+         * @param valueFrom 属性的初始值。
+         * @param valueTo 属性的最终值。
+         * @param valueBy 用于指定 delta 的可选参数，该 delta 用于计算 from 或 to 值（如果其中一个值被忽略）。
+         * @method egret.gui.SimpleMotionPath#constructor
+         */
+        constructor(property?: string, valueFrom?: any, valueTo?: any, valueBy?: any);
+        /**
+         * 动画过程中属性的起始值。
+         */
+        valueFrom: any;
+        /**
+         * 已命名的属性将要设置动画的值。
+         */
+        valueTo: any;
+        /**
+         * 可指定用于计算 valueFrom 或 valueTo 值的 delta 的可选属性。
+         */
+        valueBy: any;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Animation
+     * @classdesc
+     * Animation 类定义在指定的时间段上在属性的开始值和结束值之间发生的动画。
+     */
+    class Animation {
+        private static TIMER_RESOLUTION;
+        /**
+         * @param updateFunction {Function} 动画更新时的回调函数,updateFunction(animation:Animation):void
+         * @param thisObject {an}
+         * @method egret.gui.Animation#constructor
+         */
+        constructor(updateFunction: (animation: Animation) => void, thisObject: any);
+        private static defaultEaser;
+        private _easer;
+        /**
+         * 此效果的缓动行为，默认为Sine(.5)
+         * @member egret.gui.Animation#easer
+         */
+        easer: IEaser;
+        private thisObject;
+        /**
+         * 动画开始播放时的回调函数,只会在首次延迟等待结束时触发一次,若有重复播放，之后将触发repeatFunction。
+         * startFunction(animation:Animation):void
+         * @member egret.gui.Animation#startFunction
+         */
+        startFunction: Function;
+        /**
+         * 动画播放结束时的回调函数,可以是正常播放结束，也可以是被调用了end()方法导致结束。注意：stop()方法被调用不会触发这个函数。
+         * endFunction(animation:Animation):void
+         * @member egret.gui.Animation#endFunction
+         */
+        endFunction: Function;
+        /**
+         * 动画更新时的回调函数,updateFunction(animation:Animation):void
+         * @member egret.gui.Animation#updateFunction
+         */
+        updateFunction: Function;
+        /**
+         * 动画被停止的回调函数，即stop()方法被调用。stopFunction(animation:Animation):void
+         * @member egret.gui.Animation#stopFunction
+         */
+        stopFunction: Function;
+        /**
+         * 动画重复的回调函数，repeatFunction(animation:Animation):void
+         * @member egret.gui.Animation#repeatFunction
+         */
+        repeatFunction: Function;
+        /**
+         * 用于计算当前帧的时间
+         */
+        private static intervalTime;
+        private static activeAnimations;
+        private static timer;
+        private id;
+        private _doSeek;
+        private _isPlaying;
+        private _doReverse;
+        private _invertValues;
+        private startTime;
+        private started;
+        private cycleStartTime;
+        private delayTime;
+        private static delayedStartAnims;
+        private delayedStartTime;
+        /**
+         * 直到 Animation 的当前帧，包含计算的值的对象。
+         * 会使用属性名作为键，将这些值存储为 map 值。
+         * @member egret.gui.Animation#currentValue
+         */
+        currentValue: any;
+        /**
+         * MotionPath 对象集，它定义随着时间的推移 Animation 将设置动画的属性和值。
+         * @member egret.gui.Animation#motionPaths
+         */
+        motionPaths: Array<MotionPath>;
+        private _playheadTime;
+        /**
+         * 动画的总计已过去时间，包括任何开始延迟和重复。
+         * 对于播放了第一个循环的动画，此值将等于 cycleTime 的值。
+         * @member egret.gui.Animation#playheadTime
+         */
+        playheadTime: number;
+        /**
+         * 如果为 true，则表示当前正在播放动画。
+         * 除非已播放动画且尚未停止（以编程方式或自动）或暂停它，否则该值为 false。
+         * @member egret.gui.Animation#isPlaying
+         */
+        isPlaying: boolean;
+        /**
+         * 动画的时长（以毫秒为单位），不计算由 repeatCount 属性定义的任何重复。
+         * @member egret.gui.Animation#duration
+         */
+        duration: number;
+        private _repeatBehavior;
+        /**
+         * 设置重复动画的行为。
+         * 重复动画已将 repeatCount 属性设置为 0 或某个大于 1 的值。
+         * 此值应该为 RepeatBehavior.LOOP（意味着每次动画按相同的顺序重复）
+         * 或 RepeatBehavior.REVERSE（意味着对于每个迭代，动画都倒转方向）。
+         * @member egret.gui.Animation#repeatBehavior
+         */
+        repeatBehavior: string;
+        private _repeatCount;
+        /**
+         * 此动画重复的次数。值为 0 意味着它会无限期地重复。默认值为1
+         * @member egret.gui.Animation#repeatCount
+         */
+        repeatCount: number;
+        private _repeatDelay;
+        /**
+         * 在每次重复循环开始之前延迟的时间数量（以毫秒为单位）。
+         * 将此值设置为一个非零数字会恰好在其结束值处结束上一个动画循环。
+         * 但是，不延迟的重复可能会完全跳过该值，因为动画会从在一个循环的结尾附近平滑地过渡到越过下一个循环的开始处。
+         * 必须将此属性设置为大于等于 0 的一个值。
+         * @member egret.gui.Animation#repeatDelay
+         */
+        repeatDelay: number;
+        private _startDelay;
+        /**
+         * 在动画开始之前等待的时间数量。必须将此属性设置为大于等于 0 的一个值。
+         * @member egret.gui.Animation#startDelay
+         */
+        startDelay: number;
+        /**
+         * Animation 实例所用的插补器，用于计算属性的开始值和结束值之间的值。
+         * @member egret.gui.Animation#interpolator
+         */
+        interpolator: IInterpolator;
+        private _cycleTime;
+        /**
+         * 在当前周期动画中的当前毫秒位置。该值介于 0 和 duration 之间。
+         * 动画的“周期”被定义为动画的单一重复，其中 repeatCount 属性用于定义将播放的周期数。
+         * 使用 seek() 方法更改动画的位置。
+         * @member egret.gui.Animation#cycleTime
+         */
+        cycleTime: number;
+        private _cycleFraction;
+        /**
+         * 在已应用缓动之后，在动画中已过去的当前部分。
+         * 此值在 0 和 1 之间。动画的“周期”被定义为动画的单一重复，其中 repeatCount 属性用于定义将播放的周期数。
+         * @member egret.gui.Animation#cycleFraction
+         */
+        cycleFraction: number;
+        private _playReversed;
+        /**
+         * 如果为 true，则反向播放动画。
+         * 如果当前播放动画的方向与 playReversed 的指定值相反，则动画将以动态方式更改方向。
+         * @member egret.gui.Animation#playReversed
+         */
+        playReversed: boolean;
+        /**
+         * 添加动画
+         */
+        private static addAnimation(animation);
+        private static removeAnimationAt(index?);
+        private static removeAnimation(animation);
+        private static timerHandler(event);
+        /**
+         * 计算插补值，派发更新事件。如果动画结束了则返回true
+         */
+        private doInterval();
+        /**
+         * 通知目标对象更新动画
+         */
+        private sendUpdateEvent();
+        /**
+         * 发送动画事件
+         */
+        private sendAnimationEvent(eventType);
+        /**
+         * 计算当前值
+         */
+        private calculateValue(currentTime);
+        private removeFromDelayedAnimations();
+        /**
+         * 中断动画，立即跳到动画的结尾，并对 animationTarget 调用 animationEnd() 函数。
+         * @method egret.gui.Animation#end
+         */
+        end(): void;
+        private static stopTimerIfDone();
+        private addToDelayedAnimations(timeToDelay);
+        /**
+         * 开始动画。如果动画已在播放，则会首先停止它，然后播放它。
+         * @method egret.gui.Animation#play
+         */
+        play(): void;
+        /**
+         * 前进到指定位置
+         */
+        private seek(playheadTime, includeStartDelay?);
+        /**
+         * 设置数组插补器
+         */
+        private setupInterpolation();
+        /**
+         * 从当前位置反向播放效果
+         * @method egret.gui.Animation#reverse
+         */
+        reverse(): void;
+        /**
+         * 在调用 resume() 方法之前暂停该效果。如果在 resume() 之前调用 stop()，则无法继续该动画。
+         * @method egret.gui.Animation#pause
+         */
+        pause(): void;
+        private stopAnimation();
+        /**
+         * 停止播放动画，且结束时不调用 end() 方法。将对 animationTarget 调用 animationStop() 函数。
+         * @method egret.gui.Animation#stop
+         */
+        stop(): void;
+        /**
+         * 在效果由 pause() 方法暂停后继续播放效果。
+         * @method egret.gui.Animation#resume
+         */
+        resume(): void;
+        private repeat(event?);
+        private start(event?);
+        private static startTime;
+        private static _currentTime;
+        private static pulse();
+        private static currentTime;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.EffectInstance
+     * @classdesc
+     * 定义所有效果实例的基类
+     * @extends egret.EventDispatcher
+     */
+    class EffectInstance extends EventDispatcher implements IEffectInstance {
+        /**
+         * @method egret.gui.EffectInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * startDelay和repeatDelay的计时器
+         */
+        _delayTimer: Timer;
+        /**
+         * delayTimer开始的时间
+         */
+        private delayStartTime;
+        /**
+         * 暂停时delayTimer经过的时间
+         */
+        private delayElapsedTime;
+        /**
+         * 是否显式设置了持续时间
+         */
+        durationExplicitlySet: boolean;
+        /**
+         * 实例对应效果的复杂效果的实例，如果不是复杂效果则为null
+         */
+        parentCompositeEffectInstance: EffectInstance;
+        /**
+         * 已播放实例的次数。
+         */
+        _playCount: number;
+        /**
+         * 调用end()方法结束时，防止效果重复的的标志
+         */
+        _stopRepeat: boolean;
+        /**
+         * 实际的持续时间包含startDelay，repeatDelay，repeatCount这些值
+         */
+        _actualDuration: number;
+        private _duration;
+        /**
+         * 效果的持续时间（以毫秒为单位）。
+         * @member egret.gui.EffectInstance#duration
+         */
+        duration: number;
+        private _effect;
+        /**
+         * 创建此 IEffectInstance 对象的 IEffect 对象。
+         * @member egret.gui.EffectInstance#effect
+         */
+        effect: IEffect;
+        /**
+         * 效果的当前时间位置。
+         * 此属性的值介于 0 和总持续时间（包括该效果的 startDelay、repeatCount 和 repeatDelay）之间。
+         * @member egret.gui.EffectInstance#playheadTime
+         */
+        playheadTime: number;
+        _setPlayheadTime(value: number): void;
+        private _playReversed;
+        /**
+         * 指定效果是否在反向播放，在播放之前设置此属性
+         * @member egret.gui.EffectInstance#playReversed
+         */
+        playReversed: boolean;
+        _setPlayReversed(value: boolean): void;
+        private _repeatCount;
+        /**
+         * 效果的重复次数。可能的值为任何大于等于 0 的整数。
+         * @member egret.gui.EffectInstance#repeatCount
+         */
+        repeatCount: number;
+        private _repeatDelay;
+        /**
+         * 重复播放效果前需要等待的时间（以毫秒为单位）。
+         * @member egret.gui.EffectInstance#repeatDelay
+         */
+        repeatDelay: number;
+        private _startDelay;
+        /**
+         * 开始播放效果前需要等待的时间（以毫秒为单位）。
+         * 此值可以是任何大于或等于 0 的整数。
+         * 如果使用 repeatCount 属性重复播放效果，则只在首次播放该效果时应用 startDelay 属性。
+         * @member egret.gui.EffectInstance#startDelay
+         */
+        startDelay: number;
+        private _target;
+        /**
+         * 要应用此效果的对象。
+         * @member egret.gui.EffectInstance#target
+         */
+        target: any;
+        /**
+         * 经过 startDelay 所占用的这段时间后，在目标上播放效果实例。
+         * 由 Effect 类调用。在启动 EffectInstance 时，请使用此函数，而非 play() 方法。
+         * @method egret.gui.EffectInstance#startEffect
+         */
+        startEffect(): void;
+        /**
+         * 在目标上播放效果实例。改为调用 startEffect() 方法，以在 EffectInstance 上开始播放效果。
+         * <p>在 EffectInstance 的子类中，必须覆盖此方法。
+         * 此覆盖必须调用 super.play() 方法，以便从目标中分派 effectStart 事件。</p>
+         * @method egret.gui.EffectInstance#play
+         */
+        play(): void;
+        /**
+         * 暂停效果，直到调用 resume() 方法。
+         * @method egret.gui.EffectInstance#pause
+         */
+        pause(): void;
+        /**
+         * 停止播放效果，使目标保持当前状态。
+         * 您需要通过调用 Effect.stop() 方法来调用此方法。在实现过程中，它会调用 finishEffect() 方法。
+         * <p>如果调用此方法来结束播放效果，效果实例将分派 effectEnd 事件。</p>
+         * @method egret.gui.EffectInstance#stop
+         */
+        stop(): void;
+        /**
+         * 在效果由 pause() 方法暂停后继续播放效果。
+         * @method egret.gui.EffectInstance#resume
+         */
+        resume(): void;
+        /**
+         * 从效果的当前位置开始反向播放效果。
+         * @method egret.gui.EffectInstance#reverse
+         */
+        reverse(): void;
+        /**
+         * 中断当前播放的效果实例，立即跳转到效果的结束位置。
+         * 通过调用 Effect.end() 方法可调用此方法。在实现过程中，它会调用 finishEffect() 方法。
+         * <p>如果调用此方法来结束播放效果，效果实例将分派 effectEnd 事件。</p>
+         * @method egret.gui.EffectInstance#end
+         */
+        end(): void;
+        /**
+         * 在完成效果播放时由 end() 方法调用。此函数将为效果目标分派 endEffect 事件。
+         * @method egret.gui.EffectInstance#finishEffect
+         */
+        finishEffect(): void;
+        /**
+         * 每次完成重复效果的迭代播放后调用。
+         * @method egret.gui.EffectInstance#finishRepeat
+         */
+        finishRepeat(): void;
+        _playWithNoDuration(): void;
+        private delayTimerHandler(event);
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.TransformUtil
+     */
+    class TransformUtil {
+        /**
+         * 将显示对象按照给定的转换中心调整位置
+         * @param obj 要转换的显示对象
+         * @param transformCenter 转换中心点，以显示对象为坐标系
+         * @param translation 新的转换中心的位置，以显示对象的父容器为坐标系
+         * @param scaleX 新的缩放值scaleX，如果为NaN则不设置
+         * @param scaleY 新的缩放值scaleY，如果为NaN则不设置
+         * @param rotation 新的旋转角度，如果为NaN则不设置
+         */
+        static transformAround(obj: egret.DisplayObject, transformCenter: egret.Point, translation?: egret.Point, scaleX?: number, scaleY?: number, rotation?: number): void;
+        static transformPointToParent(obj: egret.DisplayObject, localPosition?: egret.Point): egret.Point;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.CompositeEffectInstance
+     * @classdesc
+     * CompositeEffectInstance 类用于实现 CompositeEffect 类的实例类
+     * @extends egret.gui.EffectInstance
+     */
+    class CompositeEffectInstance extends EffectInstance {
+        /**
+         * @method egret.gui.CompositeEffectInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * 正在播放或者等待播放的EffectInstances
+         */
+        _activeEffectQueue: Array<any>;
+        /**
+         * @inheritDoc
+         */
+        _actualDuration: number;
+        private _playheadTime;
+        /**
+         * @inheritDoc
+         */
+        playheadTime: number;
+        _setPlayheadTime(value: number): void;
+        _childSets: Array<any>;
+        /**
+         * 不含重复次数的持续时间
+         */
+        _durationWithoutRepeat: number;
+        _endEffectCalled: boolean;
+        _timerAnimation: Animation;
+        /**
+         * @inheritDoc
+         */
+        play(): void;
+        /**
+         * @inheritDoc
+         */
+        pause(): void;
+        /**
+         * @inheritDoc
+         */
+        stop(): void;
+        /**
+         * @inheritDoc
+         */
+        end(): void;
+        /**
+         * @inheritDoc
+         */
+        resume(): void;
+        /**
+         * @inheritDoc
+         */
+        reverse(): void;
+        /**
+         * @inheritDoc
+         */
+        finishEffect(): void;
+        /**
+         * 向此 Composite 效果添加一组新的子效果。
+         * Sequence 效果将按子效果组的添加顺序一次播放一个子效果组。
+         * Parallel 效果将同时播放所有子效果组，而不考虑这些子效果组的添加顺序。
+         */
+        addChildSet(childSet: Array<any>): void;
+        /**
+         * @inheritDoc
+         */
+        _playWithNoDuration(): void;
+        animationUpdate(animation: Animation): void;
+        animationEnd(animation: Animation): void;
+        /**
+         * 在每个子效果完成播放时调用。子类必须实现此函数。
+         */
+        _onEffectEnd(childEffect: IEffectInstance): void;
+        _effectEndHandler(event: EffectEvent): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.ParallelInstance
+     * @classdesc
+     * ParallelInstance 类用于实现 Parallel 效果的实例类
+     * @extends egret.gui.CompositeEffectInstance
+     */
+    class ParallelInstance extends CompositeEffectInstance {
+        /**
+         * @method egret.gui.ParallelInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * 已经完成的效果实例
+         */
+        private doneEffectQueue;
+        /**
+         * 等待播放的效果实例
+         */
+        private replayEffectQueue;
+        private isReversed;
+        private timer;
+        /**
+         * @inheritDoc
+         */
+        _durationWithoutRepeat: number;
+        /**
+         * @inheritDoc
+         */
+        _setPlayheadTime(value: number): void;
+        /**
+         * @inheritDoc
+         */
+        play(): void;
+        /**
+         * @inheritDoc
+         */
+        pause(): void;
+        /**
+         * @inheritDoc
+         */
+        stop(): void;
+        /**
+         * @inheritDoc
+         */
+        resume(): void;
+        /**
+         * @inheritDoc
+         */
+        reverse(): void;
+        /**
+         * @inheritDoc
+         */
+        end(): void;
+        /**
+         * @inheritDoc
+         */
+        _onEffectEnd(childEffect: IEffectInstance): void;
+        private startTimer();
+        private stopTimer();
+        private timerHandler(event);
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.SequenceInstance
+     * @classdesc
+     * SequenceInstance 类用于实现 Sequence 效果的实例类
+     * @extends egret.gui.CompositeEffectInstance
+     */
+    class SequenceInstance extends CompositeEffectInstance {
+        /**
+         * @method egret.gui.SequenceInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * 已播放效果的持续时间
+         */
+        private currentInstanceDuration;
+        /**
+         * 当前播放的效果实例
+         */
+        private currentSet;
+        private currentSetIndex;
+        private isPaused;
+        /**
+         * @inheritDoc
+         */
+        _durationWithoutRepeat: number;
+        /**
+         * @inheritDoc
+         */
+        _setPlayheadTime(value: number): void;
+        /**
+         * @inheritDoc
+         */
+        play(): void;
+        /**
+         * @inheritDoc
+         */
+        pause(): void;
+        /**
+         * @inheritDoc
+         */
+        stop(): void;
+        /**
+         * @inheritDoc
+         */
+        resume(): void;
+        /**
+         * @inheritDoc
+         */
+        reverse(): void;
+        /**
+         * 中断当前正在播放的所有效果，跳过尚未开始播放的所有效果，并立即跳至最终的复合效果。
+         * @method egret.gui.SequenceInstance#end
+         */
+        end(): void;
+        /**
+         * @inheritDoc
+         */
+        _onEffectEnd(childEffect: IEffectInstance): void;
+        private playCurrentChildSet();
+        private playNextChildSet(offset?);
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.AnimateInstance
+     * @classdesc
+     * AnimateInstance 类用于实现 Animate 效果的实例类
+     * @extends egret.gui.EffectInstance
+     */
+    class AnimateInstance extends EffectInstance {
+        /**
+         * @method egret.gui.AnimateInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * animation实例
+         */
+        animation: Animation;
+        /**
+         * 样式属性的字典
+         */
+        private isStyleMap;
+        private _seekTime;
+        private reverseAnimation;
+        private numUpdateListeners;
+        private oldWidth;
+        private oldHeight;
+        private disabledConstraintsMap;
+        private _motionPaths;
+        /**
+         * MotionPath 对象集，它定义随着时间的推移 Animation 将设置动画的属性和值。
+         * @member egret.gui.AnimateInstance#motionPaths
+         */
+        motionPaths: Array<MotionPath>;
+        /**
+         * 如果为 true，则对目标对象禁用任何布局约束。效果完成时，将还原这些属性。
+         * @member egret.gui.AnimateInstance#disableLayout
+         */
+        disableLayout: boolean;
+        private _easer;
+        /**
+         * 此效果的缓动行为
+         * @member egret.gui.AnimateInstance#easer
+         */
+        easer: IEaser;
+        private _interpolator;
+        /**
+         * Animation 实例所用的插补器，用于计算属性的开始值和结束值之间的值。
+         * @member egret.gui.AnimateInstance#interpolator
+         */
+        interpolator: IInterpolator;
+        private _repeatBehavior;
+        /**
+         * 设置重复动画的行为。
+         * 重复动画已将 repeatCount 属性设置为 0 或某个大于 1 的值。
+         * 此值应该为 RepeatBehavior.LOOP（意味着每次动画按相同的顺序重复）
+         * 或 RepeatBehavior.REVERSE（意味着对于每个迭代，动画都倒转方向）。
+         * @member egret.gui.AnimateInstance#repeatBehavior
+         */
+        repeatBehavior: string;
+        _setPlayReversed(value: boolean): void;
+        /**
+         *  @inheritDoc
+         */
+        playheadTime: number;
+        /**
+         * @inheritDoc
+         */
+        pause(): void;
+        /**
+         * @inheritDoc
+         */
+        stop(): void;
+        /**
+         * @inheritDoc
+         */
+        resume(): void;
+        /**
+         * @inheritDoc
+         */
+        reverse(): void;
+        /**
+         * @inheritDoc
+         */
+        end(): void;
+        /**
+         * @inheritDoc
+         */
+        startEffect(): void;
+        /**
+         * @inheritDoc
+         */
+        play(): void;
+        /**
+         * 应用动画对应的属性值
+         * @method egret.gui.AnimateInstance#applyValues
+         */
+        applyValues(anim: Animation): void;
+        _isValidValue(value: any): boolean;
+        /**
+         * 遍历motionPaths，用计算的值替换null。
+         */
+        private finalizeValues();
+        animationStart(animation: Animation): void;
+        animationUpdate(animation: Animation): void;
+        animationRepeat(animation: Animation): void;
+        private animationCleanup();
+        animationEnd(animation: Animation): void;
+        animationStop(animation: Animation): void;
+        private noopAnimationHandler(event);
+        addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number): void;
+        removeEventListener(type: string, listener: Function, useCapture?: boolean): void;
+        private constraintsHolder;
+        /**
+         * 恢复布局属性
+         */
+        private reenableConstraint(name);
+        /**
+         * 恢复所有布局属性
+         */
+        private reenableConstraints();
+        /**
+         * 缓存布局属性
+         */
+        private cacheConstraint(name);
+        /**
+         * 缓存所有布局属性
+         */
+        private cacheConstraints();
+        _setupStyleMapEntry(property: string): void;
+        setValue(property: string, value: any): void;
+        getCurrentValue(property: string): any;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.AnimateTransformInstance
+     * @classdesc
+     * AnimateTransformInstance 类用于实现 AnimateTransform 效果的实例类
+     * @extends egret.gui.AnimateInstance
+     */
+    class AnimateTransformInstance extends AnimateInstance {
+        /**
+         * @method egret.gui.AnimateTransformInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * 变换效果开始的标志
+         */
+        private started;
+        private instanceStartTime;
+        /**
+         * 储存当前的属性值
+         */
+        private currentValues;
+        /**
+         * 如果为 true，则已经初始化与该转换相关的效果的此单一实例。
+         * 此属性供 AnimateTransform 使用，以防止在将多个转换效果集成到此单一实例中时重复初始化该实例。
+         */
+        initialized: boolean;
+        /**
+         * 中心，此效果中的转换是围绕其发生的。特别是，旋转会围绕此点旋转，平移会移动此点，而缩放会以此点为中心进行缩放。
+         * 如果 autoCenterTransform 为 true，则将忽略此属性。
+         * 如果 autoCenterTransform 为 false 且未提供 transformCenter，则会使用目标对象的转换中心。
+         * @member egret.gui.AnimateTransformInstance#transformCenter
+         */
+        transformCenter: Point;
+        autoCenterTransform: boolean;
+        startEffect(): void;
+        private insertKeyframe(keyframes, newKF, startDelay?, first?);
+        /**
+         * 使用相对于最外侧的 parent 效果的开始时间，将一个 MotionPath 对象添加到此实例中的 MotionPath 对象集中。
+         * 对于在与新的 MotionPath 对象相同的属性上起作用的此效果实例，
+         * 如果已经存在一个 MotionPath 对象，则只会将新 MotionPath 的关键帧添加到现有 MotionPath 中。
+         * @member egret.gui.AnimateTransformInstance#addMotionPath
+         */
+        addMotionPath(newMotionPath: MotionPath, newEffectStartTime?: number): void;
+        play(): void;
+        animationEnd(animation: Animation): void;
+        /**
+         * 更新转换中心
+         */
+        private updateTransformCenter();
+        getCurrentValue(property: string): any;
+        /**
+         * 记录上次中心点的位置，当当前计算的中心点和上次位置相差不大时为了防止误差，
+         * 就使用上次的值。
+         */
+        private lastTranslationPoint;
+        private static position;
+        applyValues(anim: Animation): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.FadeInstance
+     * @classdesc
+     * FadeInstance 类用于实现 Fade 效果的实例类
+     * @extends egret.gui.AnimateInstance
+     */
+    class FadeInstance extends AnimateInstance {
+        /**
+         * @method egret.gui.FadeInstance#constructor
+         */
+        constructor(target: any);
+        /**
+         * 介于 0.0 和 1.0 之间的 alpha 属性的初始值
+         * @member egret.gui.FadeInstance#alphaFrom
+         */
+        alphaFrom: number;
+        /**
+         * 介于 0.0 和 1.0 之间的 alpha 属性的最终值
+         * @member egret.gui.FadeInstance#alphaFrom
+         */
+        alphaTo: number;
+        play(): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Effect
+     * @classdesc
+     * 定义所有效果的基类
+     * @extends egret.EventDispatcher
+     */
+    class Effect extends EventDispatcher implements IEffect {
+        /**
+         * @method egret.gui.Effect#constructor
+         */
+        constructor(target?: any);
+        private _instances;
+        private _isPaused;
+        /**
+         * 是否在逆转播放
+         * @member egret.gui.Effect#playReversed
+         */
+        playReversed: boolean;
+        private effectStopped;
+        /**
+         * 效果所属的复杂效果
+         */
+        _parentCompositeEffect: Effect;
+        private _duration;
+        durationExplicitlySet: boolean;
+        /**
+         * 效果的持续时间（以毫秒为单位）。
+         * @member egret.gui.Effect#duration
+         */
+        duration: number;
+        /**
+         * 一个 Class 类型的对象，用于指定此效果类的效果实例类。
+         * <p>Effect 类的所有子类都必须在其构造函数中设置此属性。</p>
+         * @member egret.gui.Effect#instanceClass
+         */
+        instanceClass: any;
+        /**
+         * 如果当前正在播放效果的任一实例，则为 true；否则，则为 false。
+         * @member egret.gui.Effect#isPlaying
+         */
+        isPlaying: boolean;
+        /**
+         * 是否处于暂停状态，当调用了paused()方法后此属性为true
+         * @member egret.gui.Effect#isPaused
+         */
+        isPaused: Boolean;
+        private _perElementOffset;
+        /**
+         * 在效果的第一个目标之后，其他效果目标的附加延迟（以毫秒为单位）。
+         * 此值将添加到 startDelay 属性的值中。
+         * @member egret.gui.Effect#perElementOffset
+         */
+        perElementOffset: number;
+        /**
+         * 效果的重复次数。可能的值为任何大于等于 0 的整数。
+         * 值为 1 表示播放一次效果。值为 0 表示无限制地循环播放效果，直到通过调用 end() 方法停止播放。
+         * @member egret.gui.Effect#repeatCount
+         */
+        repeatCount: number;
+        /**
+         * 重复播放效果前需要等待的时间（以毫秒为单位）。可能的值为任何大于等于 0 的整数。
+         * @member egret.gui.Effect#repeatDelay
+         */
+        repeatDelay: number;
+        /**
+         * 开始播放效果前需要等待的时间（以毫秒为单位）。
+         * 此值可以是任何大于或等于 0 的整数。
+         * 如果使用 repeatCount 属性重复播放效果，则只在首次播放效果时应用 startDelay。
+         * @member egret.gui.Effect#startDelay
+         */
+        startDelay: number;
+        /**
+         * 要应用此效果的对象。当效果触发器触发某个效果时，会自动将 target 属性设置为触发该效果的对象。
+         * @member egret.gui.Effect#target
+         */
+        target: any;
+        private _targets;
+        /**
+         * 一个对象 Array，这些对象都是效果的目标。播放效果时，会对各个目标并行执行效果。
+         * 设置 target 属性将替换此 Array 中的所有对象。
+         * 设置 targets 属性后，target 属性将返回此 Array 中的第一个项目。
+         * @member egret.gui.Effect#targets
+         */
+        targets: Array<any>;
+        private _playheadTime;
+        /**
+         * 效果的当前时间位置。此属性的值介于 0 和总持续时间（包括该效果的 startDelay、repeatCount 和 repeatDelay）之间。
+         * @member egret.gui.Effect#playheadTime
+         */
+        playheadTime: number;
+        /**
+         * 获取一个目标对象 Array，并对每个目标调用 createInstance() 方法。
+         * @method egret.gui.Effect#createInstances
+         * @param targets 要使用此效果设置动画的对象的数组。
+         * @return 效果的效果实例对象的数组，一个目标一个数组。
+         */
+        createInstances(targets?: Array<any>): Array<any>;
+        /**
+         * 创建一个效果实例并对其进行初始化。在播放效果实例前，使用此方法（而非 play() 方法）处理效果实例属性。
+         *  <p>所创建的效果实例的类型由 instanceClass 属性指定。然后，使用 _initInstance() 方法初始化此实例。
+         * 如果该实例是 EffectManager 在效果触发器触发此效果时创建的，
+         * 则还需要调用 EffectInstance.initEffect() 方法进一步初始化此效果。</p>
+         *  <p>调用 createInstance() 方法不会播放效果。对返回的效果实例调用 startEffect() 方法。</p>
+         *  <p>Effect.play() 方法将自动调用此函数。 </p>
+         * @method egret.gui.Effect#createInstance
+         * @param target 要使用此效果为其设置动画的对象。
+         * @return 效果的效果实例对象。
+         */
+        createInstance(target?: any): IEffectInstance;
+        /**
+         *  将效果的属性复制到效果实例。
+         *  <p>创建自定义效果时覆盖此方法，将属性从 Effect 类复制到效果实例类。
+         * 进行覆盖时，请调用 super.initInstance()。 </p>
+         * @param EffectInstance 要初始化的效果实例。
+         */
+        _initInstance(instance: IEffectInstance): void;
+        /**
+         * 删除实例中的事件侦听器，然后从实例列表中删除该实例。
+         * @method egret.gui.Effect#deleteInstance
+         */
+        deleteInstance(instance: IEffectInstance): void;
+        /**
+         * 开始播放效果。通常在调用 play() 方法之前先调用 end() 方法，以确保在开始播放新效果前已结束先前效果的所有实例。
+         * @method egret.gui.Effect#play
+         * @param targets 播放此效果的目标对象的数组。如果已指定此参数，则不会使用效果的 targets 属性。
+         * @param playReversedFromEnd 如果为 true，则向后播放效果。
+         * @return 效果的 EffectInstance 对象的数组，一个目标一个数组。
+         */
+        play(targets?: Array<any>, playReversedFromEnd?: boolean): Array<any>;
+        /**
+         * 暂停效果，直到调用 resume() 方法。
+         * @method egret.gui.Effect#pause
+         */
+        pause(): void;
+        /**
+         * 停止播放效果，使效果目标保持当前状态。
+         * 与调用 pause() 方法不同，无法先调用 stop() 方法再调用 resume() 方法。
+         * 不过，您可以调用 play() 方法重新播放效果。
+         * @method egret.gui.Effect#stop
+         */
+        stop(): void;
+        /**
+         * 在效果由 pause() 方法暂停后继续播放效果。
+         * @method egret.gui.Effect#resume
+         */
+        resume(): void;
+        /**
+         * 逆序播放效果；如果当前正在播放效果，则从该效果的当前位置开始逆序播放。
+         * @method egret.gui.Effect#reverse
+         */
+        reverse(): void;
+        /**
+         * 中断当前正在播放的效果，立即跳转到该效果的末尾。调用此方法将调用 EffectInstance.end() 方法。
+         * <p>如果调用此方法来结束播放效果，效果实例将分派 effectEnd 事件。</p>
+         * <p>如果将效果实例作为参数传递，则会中断此实例。
+         * 如果没有传入参数，则该效果当前生成的所有效果实例都将中断。</p>
+         * @method egret.gui.Effect#end
+         */
+        end(effectInstance?: IEffectInstance): void;
+        /**
+         * 当效果实例开始播放时调用此方法。
+         */
+        _effectStartHandler(event: EffectEvent): void;
+        /**
+         * 当效果实例已被 stop() 方法调用停止时调用。
+         */
+        _effectStopHandler(event: EffectEvent): void;
+        /**
+         * 当效果实例完成播放时调用。
+         */
+        _effectEndHandler(event: EffectEvent): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.CompositeEffect
+     * @classdesc
+     * 复合效果的基类
+     * @extends egret.gui.Effect
+     */
+    class CompositeEffect extends Effect {
+        /**
+         * @method egret.gui.CompositeEffect#constructor
+         */
+        constructor(target?: any);
+        private childTargets;
+        private _children;
+        /**
+         * 子效果的数组。
+         * @member egret.gui.CompositeEffect#children
+         */
+        children: Array<Effect>;
+        /**
+         * 返回此效果的总持续时间。
+         * @member egret.gui.CompositeEffect#compositeDuration
+         */
+        compositeDuration: number;
+        createInstance(target?: any): IEffectInstance;
+        createInstances(targets?: Array<any>): Array<any>;
+        _initInstance(instance: IEffectInstance): void;
+        /**
+         * 将新的子效果添加到此复合效果。
+         * @method egret.gui.CompositeEffect#addChild
+         */
+        addChild(childEffect: Effect): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Parallel
+     * @classdesc
+     * Parallel 效果同时播放多个子效果。
+     * @extends egret.gui.CompositeEffect
+     */
+    class Parallel extends CompositeEffect {
+        /**
+         * @method egret.gui.Parallel#constructor
+         */
+        constructor(target?: any);
+        compositeDuration: number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Sequence
+     * @classdesc
+     * Sequence 效果以子效果的添加顺序依次播放多个子效果。
+     * @extends egret.gui.CompositeEffect
+     */
+    class Sequence extends CompositeEffect {
+        /**
+         * @method egret.gui.Sequence#constructor
+         */
+        constructor(target?: any);
+        compositeDuration: number;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Animate
+     * @classdesc
+     * Animate 效果可设置各个值之间的任意属性集的动画。通过设置 motionPaths 属性，指定要设置动画的属性和值。
+     * @extends egret.gui.Effect
+     */
+    class Animate extends Effect {
+        /**
+         * @method egret.gui.Animate#constructor
+         */
+        constructor(target?: any);
+        private numUpdateListeners;
+        private _motionPaths;
+        /**
+         * MotionPath 对象的 Array，其中的每个对象都带有正在设置动画的属性的名称以及该属性在动画过程中所采用的值。
+         * 此 Array 优先于 Animate 的子类中所声明的任何属性。
+         * 例如，如果此 Array 是直接在 Move 效果上设置的，则会忽略 Move 效果的任何属性（如 xFrom）。
+         * @member egret.gui.Animate#motionPaths
+         */
+        motionPaths: Array<MotionPath>;
+        private _easer;
+        /**
+         * 此效果的缓动行为，默认为Sine(.5)
+         * @member egret.gui.Animate#easer
+         */
+        easer: IEaser;
+        private _interpolator;
+        /**
+         * 此效果计算属性的起始值和结束值之间的值所用的插补器。
+         * 默认情况下，NumberInterpolator 类处理内插值.
+         * @member egret.gui.Animate#interpolator
+         */
+        interpolator: IInterpolator;
+        private _repeatBehavior;
+        /**
+         * 一种重复效果的行为。RepeatBehavior类中定义的常量。默认为RepeatBehavior.LOOP
+         * @member egret.gui.Animate#repeatBehavior
+         */
+        repeatBehavior: string;
+        private _disableLayout;
+        /**
+         * 如果为 true，则对目标对象禁用任何布局约束。效果完成时，将还原这些属性。
+         * @member egret.gui.Animate#disableLayout
+         */
+        disableLayout: boolean;
+        /**
+         * @method egret.gui.Animate#_initInstance
+         */
+        _initInstance(instance: IEffectInstance): void;
+        addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number): void;
+        removeEventListener(type: string, listener: Function, useCapture?: boolean): void;
+        /**
+         * 派发动画事件
+         */
+        private animationEventHandler(event);
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.AnimateTransform
+     * @classdesc
+     * AnimateTransform 效果控制目标对象上所有与转换相关的动画。
+     * @extends egret.gui.Animate
+     */
+    class AnimateTransform extends Animate {
+        /**
+         * @method egret.gui.AnimateTransform#constructor
+         */
+        constructor(target?: any);
+        /**
+         * 指定在转换效果开始播放时，该效果是否围绕目标的中心发生。
+         * 如果未设置该标志，转换中心将由此效果中的 transformX, transformY属性决定。
+         * @member egret.gui.AnimateTransform#autoCenterTransform
+         */
+        autoCenterTransform: boolean;
+        /**
+         * 设置转换中心的 x 坐标（由 autoCenterTransform 属性覆盖时除外）。
+         * @member egret.gui.AnimateTransform#transformX
+         */
+        transformX: number;
+        /**
+         * 设置转换中心的 y 坐标（由 autoCenterTransform 属性覆盖时除外）。
+         * @member egret.gui.AnimateTransform#transformY
+         */
+        transformY: number;
+        /**
+         * 获取效果所属的复合效果
+         */
+        private getOwningParallelEffect();
+        createInstance(target?: any): IEffectInstance;
+        _effectStartHandler(event: EffectEvent): void;
+        /**
+         * 计算目标的转换中心
+         */
+        private computeTransformCenterForTarget(target, valueMap?);
+        /**
+         * 插入关键帧
+         */
+        private insertKeyframe(keyframes, newKF);
+        /**
+         * 添加一个运动路径
+         * @param property
+         * @param valueFrom
+         * @param valueTo
+         * @param valueBy
+         * @private
+         */
+        _addMotionPath(property: string, valueFrom?: number, valueTo?: number, valueBy?: number): void;
+        _initInstance(instance: IEffectInstance): void;
+        private getGlobalStartTime();
+        private static sharedObjectMaps;
+        private static sharedObjectRefcounts;
+        /**
+         * 获取共享的实例
+         */
+        private static getSharedInstance(topmostParallel, target);
+        private static removeSharedInstance(topmostParallel, target);
+        private static storeSharedInstance(topmostParallel, target, effectInstance);
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Move
+     * @classdesc
+     * Move 效果按 x 和 y 方向移动目标对象。
+     * @extends egret.gui.AnimateTransform
+     */
+    class Move extends AnimateTransform {
+        /**
+         * @method egret.gui.Move#constructor
+         */
+        constructor(target?: any);
+        /**
+         * 按其修改目标的 y 位置的像素数目。此值可以为负值
+         * @member egret.gui.Move#yBy
+         */
+        yBy: number;
+        /**
+         * 目标的初始 y 位置
+         * @member egret.gui.Move#yFrom
+         */
+        yFrom: number;
+        /**
+         * 目标的最终 y 位置
+         * @member egret.gui.Move#yTo
+         */
+        yTo: number;
+        /**
+         * 按其修改目标的 x 位置的像素数目
+         * @member egret.gui.Move#xBy
+         */
+        xBy: number;
+        /**
+         * 目标的初始 x 位置
+         * @member egret.gui.Move#xFrom
+         */
+        xFrom: number;
+        /**
+         * 目标的最终 x 位置
+         * @member egret.gui.Move#xTo
+         */
+        xTo: number;
+        createInstance(target?: any): IEffectInstance;
+        _initInstance(instance: IEffectInstance): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Rotate
+     * @classdesc
+     * Rotate 效果围绕转换中心旋转目标对象。
+     * @extends egret.gui.AnimateTransform
+     */
+    class Rotate extends AnimateTransform {
+        /**
+         * @method egret.gui.Rotate#constructor
+         */
+        constructor(target?: any);
+        /**
+         * 目标对象的起始旋转角度
+         * @member egret.gui.Rotate#angleFrom
+         */
+        angleFrom: number;
+        /**
+         * 目标对象的结束旋转角度
+         * @member egret.gui.Rotate#angleTo
+         */
+        angleTo: number;
+        /**
+         * 旋转目标对象的度数
+         * @member egret.gui.Rotate#angleBy
+         */
+        angleBy: number;
+        createInstance(target?: any): IEffectInstance;
+        _initInstance(instance: IEffectInstance): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Scale
+     * @classdesc
+     * Scale 效果围绕转换中心在 x 和 y 方向上缩放目标对象
+     * @extends egret.gui.AnimateTransform
+     */
+    class Scale extends AnimateTransform {
+        /**
+         * @method egret.gui.Scale#constructor
+         */
+        constructor(target?: any);
+        /**
+         * 在 y 方向上的起始比例因子。
+         * @member egret.gui.Scale#scaleYFrom
+         */
+        scaleYFrom: number;
+        /**
+         * 在 y 方向上的结束比例因子。
+         * @member egret.gui.Scale#scaleYTo
+         */
+        scaleYTo: number;
+        /**
+         * 在 y 方向上按其缩放对象的因子。
+         * @member egret.gui.Scale#scaleYBy
+         */
+        scaleYBy: number;
+        /**
+         * 在 x 方向上的起始比例因子。
+         * @member egret.gui.Scale#scaleXFrom
+         */
+        scaleXFrom: number;
+        /**
+         * 在 x 方向上的结束比例因子。
+         * @member egret.gui.Scale#scaleXTo
+         */
+        scaleXTo: number;
+        /**
+         * 在 x 方向上按其缩放对象的因子。
+         * @member egret.gui.Scale#scaleXBy
+         */
+        scaleXBy: number;
+        createInstance(target?: any): IEffectInstance;
+        _initInstance(instance: IEffectInstance): void;
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret.gui {
+    /**
+     * @class egret.gui.Fade
+     * @classdesc
+     * 淡入淡出效果
+     * @extends egret.gui.Animate
+     */
+    class Fade extends Animate {
+        /**
+         * @method egret.gui.Fade#constructor
+         */
+        constructor(target?: any);
+        /**
+         * 效果开始的透明度
+         * @member egret.gui.Fade#alphaFrom
+         */
+        alphaFrom: number;
+        /**
+         * 效果结束的透明度
+         * @member egret.gui.Fade#alphaTo
+         */
+        alphaTo: number;
+        _initInstance(instance: IEffectInstance): void;
+    }
+}
+declare module egret.gui {
+    class InterruptionBehavior {
+        /**
+         * 指定一个过渡（可中断另一个正在运行的过渡）在开始之前结束另一个过渡。
+         * 通过对过渡中的所有效果调用 end() 方法来结束过渡。end() 方法导致所有效果到达结束状态。
+         */
+        static END: string;
+        /**
+         * 指定一个过渡（可中断另一个正在运行的过渡）在开始之前停止正在进行的其它过渡。
+         * 通过对过渡中的所有效果调用 stop() 方法来停止过渡。
+         */
+        static STOP: string;
+        constructor();
+    }
+}
+declare module egret.gui {
+    class Transition {
+        constructor();
+        /**
+         * 应用过渡时要播放的 IEffect 对象。通常，它是一个包含多个效果的复合效果对象（如 Parallel 或 Sequence 效果）。
+         */
+        effect: IEffect;
+        /**
+         * 该字符串指定在应用过渡时要从中进行更改的视图状态。默认值为“*”，表示任何视图状态。
+         * <p>可以将该属性设置为空字符串“”，它对应于基本视图状态。</p>
+         */
+        fromState: string;
+        /**
+         *  该字符串指定在应用过渡时要更改到的视图状态。默认值为“*”，表示任何视图状态。
+         *
+         *  <p>可以将该属性设置为空字符串“”，它对应于基本视图状态。</p>
+         */
+        toState: string;
+        /**
+         * 设置为 true 以指定该过渡应用于正向和逆向视图状态更改。
+         * 因此，对于从视图状态 A 到视图状态 B 的更改以及从视图状态 B 到视图状态 A 的更改，使用该过渡。
+         */
+        autoReverse: boolean;
+        /**
+         * 该属性控制当前过渡中断时的行为方式。 InterruptionBehavior 类定义此属性的可能值。
+         * 默认值为end
+         */
+        interruptionBehavior: string;
+    }
 }
 /**
  * Copyright (c) 2014,Egret-Labs.org
@@ -3605,7 +6353,7 @@ declare module egret.gui {
     /**
      * @class egret.gui.UIAsset
      * @classdesc
-     * 素材和非GUI显示对象包装器包装器。<p/>
+     * 素材和非GUI显示对象包装器。<p/>
      * @extends egret.gui.UIComponent
      * @implements egret.gui.ISkinnableClient
      */
@@ -3638,6 +6386,7 @@ declare module egret.gui {
          */
         source: any;
         _content: any;
+        _contentIsTexture: boolean;
         /**
          * 解析source得到的对象，通常为显示对象或Texture。
          * @member egret.gui.UIAsset#content
@@ -3645,6 +6394,7 @@ declare module egret.gui {
         content: any;
         private createChildrenCalled;
         /**
+         * 创建该容器的子元素对象
          */
         createChildren(): void;
         /**
@@ -3664,30 +6414,40 @@ declare module egret.gui {
          * 皮肤发生改变
          */
         private contentChanged(content, source);
+        /**
+         * 计算组件的默认大小和（可选）默认最小大小
+         */
         measure(): void;
         /**
          * 是自动否缩放content对象，以符合UIAsset的尺寸。默认值true。
          */
         autoScale: boolean;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
+        /**
+         *
+         * @param renderContext
+         * @private
+         */
         _render(renderContext: RendererContext): void;
         /**
          * @returns {Rectangle}
          * @private
          */
-        _measureBounds(): Rectangle;
-        private static errorStr;
+        _measureBounds(): egret.Rectangle;
         /**
+         * 此方法不支持
          * @deprecated
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
         addChild(child: DisplayObject): DisplayObject;
         /**
+         * 此方法不支持
          * @deprecated
          * @param child {DisplayObject}
          * @param index {number}
@@ -3695,30 +6455,35 @@ declare module egret.gui {
          */
         addChildAt(child: DisplayObject, index: number): DisplayObject;
         /**
+         * 此方法不支持
          * @deprecated
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
         removeChild(child: DisplayObject): DisplayObject;
         /**
+         * 此方法不支持
          * @deprecated
          * @param index {number}
          * @returns {DisplayObject}
          */
         removeChildAt(index: number): DisplayObject;
         /**
+         * 此方法不支持
          * @deprecated
          * @param child {DisplayObject}
          * @param index {number}
          */
         setChildIndex(child: DisplayObject, index: number): void;
         /**
+         * 此方法不支持
          * @deprecated
          * @param child1 {DisplayObject}
          * @param child2 {DisplayObject}
          */
         swapChildren(child1: DisplayObject, child2: DisplayObject): void;
         /**
+         * 此方法不支持
          * @deprecated
          * @param index1 {number}
          * @param index2 {number}
@@ -3788,6 +6553,7 @@ declare module egret.gui {
         skinName: any;
         _createChildrenCalled: boolean;
         /**
+         * 创建该容器的子元素对象
          * @method egret.gui.SkinnableComponent#createChildren
          */
         createChildren(): void;
@@ -3904,19 +6670,28 @@ declare module egret.gui {
          */
         getCurrentSkinState(): string;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.SkinnableComponent#commitProperties
          */
         commitProperties(): void;
+        /**
+         *
+         * @private
+         */
         _childXYChanged(): void;
+        /**
+         * 计算组件的默认大小和（可选）默认最小大小
+         */
         measure(): void;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.SkinnableComponent#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
-        private static errorStr;
         /**
+         * 不支持此方法
          * @method egret.gui.SkinnableComponent#addChild
          * @deprecated
          * @param child {DisplayObject}
@@ -3924,6 +6699,7 @@ declare module egret.gui {
          */
         addChild(child: DisplayObject): DisplayObject;
         /**
+         *  不支持此方法
          * @method egret.gui.SkinnableComponent#addChildAt
          * @deprecated
          * @param child {DisplayObject}
@@ -3932,6 +6708,7 @@ declare module egret.gui {
          */
         addChildAt(child: DisplayObject, index: number): DisplayObject;
         /**
+         *  不支持此方法
          * @method egret.gui.SkinnableComponent#removeChild
          * @deprecated
          * @param child {DisplayObject}
@@ -3939,6 +6716,7 @@ declare module egret.gui {
          */
         removeChild(child: DisplayObject): DisplayObject;
         /**
+         *  不支持此方法
          * @method egret.gui.SkinnableComponent#removeChildAt
          * @deprecated
          * @param index {number}
@@ -3946,6 +6724,7 @@ declare module egret.gui {
          */
         removeChildAt(index: number): DisplayObject;
         /**
+         *  不支持此方法
          * @method egret.gui.SkinnableComponent#setChildIndex
          * @deprecated
          * @param child {DisplayObject}
@@ -3953,6 +6732,7 @@ declare module egret.gui {
          */
         setChildIndex(child: DisplayObject, index: number): void;
         /**
+         *  不支持此方法
          * @method egret.gui.SkinnableComponent#swapChildren
          * @deprecated
          * @param child1 {DisplayObject}
@@ -3960,6 +6740,7 @@ declare module egret.gui {
          */
         swapChildren(child1: DisplayObject, child2: DisplayObject): void;
         /**
+         *  不支持此方法
          * @method egret.gui.SkinnableComponent#swapChildrenAt
          * @deprecated
          * @param index1 {number}
@@ -4148,6 +6929,7 @@ declare module egret.gui {
      */
     class SkinBasicLayout extends HashObject {
         /**
+         * 构造函数
          * @method egret.gui.SkinBasicLayout#constructor
          */
         constructor();
@@ -4338,10 +7120,16 @@ declare module egret.gui {
          */
         private autoRepeat_timerHandler(event);
         /**
+         * 返回要应用到外观的状态的名称
          * @method egret.gui.ButtonBase#getCurrentSkinState
          * @returns {string}
          */
         getCurrentSkinState(): string;
+        /**
+         * 添加外观部件时调用
+         * @param partName
+         * @param instance
+         */
         partAdded(partName: string, instance: any): void;
     }
 }
@@ -4380,25 +7168,41 @@ declare module egret.gui {
      */
     class ToggleButtonBase extends ButtonBase {
         /**
+         * 构造函数
          * @method egret.gui.ToggleButtonBase#constructor
          */
         constructor();
+        /**
+         *
+         * @type {boolean}
+         * @private
+         */
         _selected: boolean;
         /**
          * 按钮处于按下状态时为 true，而按钮处于弹起状态时为 false。
          * @member egret.gui.ToggleButtonBase#selected
          */
         selected: boolean;
+        /**
+         *
+         * @param value
+         * @private
+         */
         _setSelected(value: boolean): void;
         /**
+         * 返回要应用到外观的状态的名称
          * @method egret.gui.ToggleButtonBase#getCurrentSkinState
          * @returns {string}
          */
         getCurrentSkinState(): string;
         /**
          * 是否根据鼠标事件自动变换选中状态,默认true。仅框架内使用。
+         * @private
          */
         _autoSelected: boolean;
+        /**
+         * 当在用户单击按钮之后处理 MouseEvent.MOUSE_UP 事件时，将调用此方法
+         */
         buttonReleased(): void;
     }
 }
@@ -4438,6 +7242,7 @@ declare module egret.gui {
      */
     class TextBase extends UIComponent implements IDisplayText {
         /**
+         * 构造函数
          * @method egret.gui.TextBase#constructor
          */
         constructor();
@@ -4456,6 +7261,10 @@ declare module egret.gui {
          */
         _textField: TextField;
         private allStyleChanged;
+        /**
+         * 检测对样式属性的更改
+         * @param styleProp
+         */
         styleChanged(styleProp: string): void;
         private fontFamilyChanged;
         private _fontFamily;
@@ -4474,6 +7283,7 @@ declare module egret.gui {
         _focusEnabled: boolean;
         focusEnabled: boolean;
         /**
+         * 设置此组件的焦点
          * @inheritDoc
          */
         setFocus(): void;
@@ -4519,6 +7329,7 @@ declare module egret.gui {
         private textColorChanged;
         private _textColor;
         /**
+         * 文本颜色
          * @member egret.gui.TextBase#textColor
          */
         textColor: number;
@@ -4528,13 +7339,28 @@ declare module egret.gui {
         _textChanged: boolean;
         _text: string;
         /**
+         * 获得文体内容
          * @member egret.gui.TextBase#text
          */
         text: string;
-        _textFlow: ITextElement[];
+        _textFlow: Array<egret.ITextElement>;
         _textFlowChanged: boolean;
-        textFlow: ITextElement[];
+        textFlow: Array<egret.ITextElement>;
+        /**
+         * 文本全部显示时的高度（无行间距）
+         */
+        textHeight: number;
+        /**
+         * 文本全部显示时宽
+         */
+        textWidth: number;
+        /**
+         * 创建组件的子对象
+         */
         createChildren(): void;
+        /**
+         * 处理对组件设置的属性
+         */
         commitProperties(): void;
         /**
          * 检查是否创建了textField对象，没有就创建一个。
@@ -4542,6 +7368,9 @@ declare module egret.gui {
         private checkTextField();
         _createTextField(): void;
         _textFieldChanged(): void;
+        /**
+         * 计算组件的默认大小和（可选）默认最小大小
+         */
         measure(): void;
         /**
          * 更新显示列表
@@ -4554,6 +7383,12 @@ declare module egret.gui {
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
+        /**
+         * 更新属性时调度 PropertyChangeEvent 的 Helper 方法
+         * @param propertyName
+         * @param oldValue
+         * @param value
+         */
         dispatchPropertyChangeEvent(propertyName: string, oldValue: any, value: any): void;
     }
 }
@@ -4593,24 +7428,36 @@ declare module egret.gui {
      */
     class GroupBase extends UIComponent implements IViewport {
         /**
+         * 构造函数
          * @method egret.gui.GroupBase#constructor
          */
         constructor();
         /**
+         * 如果尚未设置布局对象，则 createChildren() 会为该容器指定默认布局对象 BasicLayout
          * @method egret.gui.GroupBase#createChildren
          */
         createChildren(): void;
         private _contentWidth;
         /**
+         * 视域的内容的宽度
          * @member egret.gui.GroupBase#contentWidth
          */
         contentWidth: number;
+        /**
+         * 设置setContentWidth
+         * @param value
+         */
         private setContentWidth(value);
         private _contentHeight;
         /**
+         * 视域的内容的高度
          * @member egret.gui.GroupBase#contentHeight
          */
         contentHeight: number;
+        /**
+         * 设置ContentHeight
+         * @param value
+         */
         private setContentHeight(value);
         /**
          * 设置 contentWidth 和 contentHeight 属性，此方法由Layout类调用
@@ -4657,6 +7504,7 @@ declare module egret.gui {
          */
         private updateScrollRect(w, h);
         /**
+         * 计算组件的默认大小和（可选）默认最小大小
          * @method egret.gui.GroupBase#measure
          */
         measure(): void;
@@ -4669,6 +7517,7 @@ declare module egret.gui {
          */
         _invalidateDisplayListExceptLayout(): void;
         /**
+         * 标记组件，以便在稍后屏幕更新期间调用该组件的 updateDisplayList() 方法
          * @method egret.gui.GroupBase#invalidateDisplayList
          */
         invalidateDisplayList(): void;
@@ -4682,9 +7531,15 @@ declare module egret.gui {
          */
         _invalidateSizeExceptLayout(): void;
         /**
+         * 标记组件，以便在稍后屏幕更新期间调用该组件的 measure() 方法
          * @method egret.gui.GroupBase#invalidateSize
          */
         invalidateSize(): void;
+        /**
+         * 绘制对象和/或设置其子项的大小和位置
+         * @param unscaledWidth
+         * @param unscaledHeight
+         */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
         /**
          * 此容器中的可视元素的数量。
@@ -4711,7 +7566,7 @@ declare module egret.gui {
          * @method egret.gui.GroupBase#getElementIndicesInView
          * @returns {number}
          */
-        getElementIndicesInView(): number[];
+        getElementIndicesInView(): Array<number>;
         /**
          * 在支持虚拟布局的容器中，设置容器内可见的子元素索引范围。此方法在不支持虚拟布局的容器中无效。
          * 通常在即将连续调用getVirtualElementAt()之前需要显式设置一次，以便容器提前释放已经不可见的子元素。
@@ -4765,6 +7620,7 @@ declare module egret.gui {
      */
     class ItemRenderer extends ButtonBase implements IItemRenderer {
         /**
+         * 构造函数
          * @method egret.gui.ItemRenderer#constructor
          */
         constructor();
@@ -4791,10 +7647,12 @@ declare module egret.gui {
          */
         itemIndex: number;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.ItemRenderer#commitProperties
          */
         commitProperties(): void;
         /**
+         * 返回要应用到呈示器的状态的名称
          * @method egret.gui.ItemRenderer#getCurrentSkinState
          * @returns {string}
          */
@@ -4857,39 +7715,66 @@ declare module egret.gui {
          * @member egret.gui.TreeItemRenderer#contentGroup
          */
         contentGroup: DisplayObject;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         private _indentation;
         /**
          * 子节点相对父节点的缩进值，以像素为单位。默认17。
          * @member egret.gui.TreeItemRenderer#indentation
          */
         indentation: number;
+        /**
+         *
+         * @type {null}
+         * @private
+         */
         private _iconSkinName;
         /**
          * @member egret.gui.TreeItemRenderer#iconSkinName
          */
         iconSkinName: any;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         private _depth;
         /**
          * @member egret.gui.TreeItemRenderer#depth
          */
         depth: number;
+        /**
+         *
+         * @type {boolean}
+         * @private
+         */
         private _hasChildren;
         /**
          * @member egret.gui.TreeItemRenderer#hasChildren
          */
         hasChildren: boolean;
+        /**
+         *
+         * @type {boolean}
+         * @private
+         */
         private _isOpen;
         /**
          * @member egret.gui.TreeItemRenderer#opened
          */
         opened: boolean;
         /**
+         * 添加外观部件时调用
          * @method egret.gui.TreeItemRenderer#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 删除外观部件的实例时调用
          * @method egret.gui.TreeItemRenderer#partRemoved
          * @param partName {string}
          * @param instance {any}
@@ -4901,207 +7786,6 @@ declare module egret.gui {
          * @param event {TouchEvent}
          */
         disclosureButton_mouseDownHandler(event: TouchEvent): void;
-    }
-}
-/**
- * Copyright (c) 2014,Egret-Labs.org
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Egret-Labs.org nor the
- *       names of its contributors may be used to endorse or promote products
- *       derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-declare module egret.gui {
-    /**
-     * @class egret.gui.Animation
-     * @classdesc
-     * 数值缓动工具类
-     */
-    class Animation {
-        /**
-         * 构造函数
-         * @method egret.gui.Animation#constructor
-         * @param updateFunction {Function} 动画更新时的回调函数,updateFunction(animation:Animation):void
-         * @param thisObject {an}
-         */
-        constructor(updateFunction: (animation: Animation) => void, thisObject: any);
-        /**
-         * 此动画的缓动行为。设置为null意味着不使用缓动，默认值为Ease.sineInOut()
-         * @member egret.gui.Animation#easerFunction
-         */
-        easerFunction: Function;
-        private thisObject;
-        private _isPlaying;
-        /**
-         * 是否正在播放动画，不包括延迟等待和暂停的阶段
-         * @member egret.gui.Animation#isPlaying
-         */
-        isPlaying: boolean;
-        private _duration;
-        /**
-         * 动画持续时间,单位毫秒，默认值500
-         * @member egret.gui.Animation#duration
-         */
-        duration: number;
-        private _startDelay;
-        /**
-         * 动画开始播放前的延时时间,单位毫秒,默认0。
-         * @member egret.gui.Animation#startDelay
-         */
-        startDelay: number;
-        private _repeatCount;
-        /**
-         * 动画重复的次数，0代表无限制重复。默认值为1。
-         * @member egret.gui.Animation#repeatCount
-         */
-        repeatCount: number;
-        private _repeatDelay;
-        /**
-         * 每次重复播放之间的间隔。第二次及以后的播放开始之前的延迟毫秒数。若要设置第一次之前的延迟时间，请使用startDelay属性。
-         * @member egret.gui.Animation#repeatDelay
-         */
-        repeatDelay: number;
-        /**
-         * 随着时间的推移Animation将设置动画的属性和值的列表。对象示例:{p:"x",f:10,t:100}表示，属性名"x"从10改变到100。
-         * @member egret.gui.Animation#motionPaths
-         */
-        motionPaths: any[];
-        private _currentValue;
-        /**
-         * 动画到当前时间对应的值。以MotionPath.property为键存储各个MotionPath的当前值。
-         * @member egret.gui.Animation#currentValue
-         */
-        currentValue: any;
-        /**
-         * 动画开始播放时的回调函数,只会在首次延迟等待结束时触发一次,若有重复播放，之后将触发repeatFunction。startFunction(animation:Animation):void
-         * @member egret.gui.Animation#startFunction
-         */
-        startFunction: Function;
-        /**
-         * 动画播放结束时的回调函数,可以是正常播放结束，也可以是被调用了end()方法导致结束。注意：stop()方法被调用不会触发这个函数。endFunction(animation:Animation):void
-         * @member egret.gui.Animation#endFunction
-         */
-        endFunction: (animation: Animation) => void;
-        /**
-         * 动画更新时的回调函数,updateFunction(animation:Animation):void
-         * @member egret.gui.Animation#updateFunction
-         */
-        updateFunction: Function;
-        /**
-         * 动画被停止的回调函数，即stop()方法被调用。stopFunction(animation:Animation):void
-         * @member egret.gui.Animation#stopFunction
-         */
-        stopFunction: Function;
-        /**
-         * 开始正向播放动画,无论何时调用都重新从零时刻开始，若设置了延迟会首先进行等待。
-         * @method egret.gui.Animation#play
-         */
-        play(): void;
-        /**
-         * 立即跳到指定百分比的动画位置
-         */
-        private seek(runningTime);
-        /**
-         * 开始播放动画
-         */
-        private start();
-        /**
-         * 直接跳到动画结尾
-         * @method egret.gui.Animation#end
-         */
-        end(): void;
-        /**
-         * 停止播放动画
-         * @method egret.gui.Animation#stop
-         */
-        stop(): void;
-        /**
-         * 仅停止播放动画，而不调用stopFunction。
-         */
-        private stopAnimation();
-        private pauseTime;
-        private _isPaused;
-        /**
-         * 正在暂停中
-         * @member egret.gui.Animation#isPaused
-         */
-        isPaused: boolean;
-        /**
-         * 暂停播放
-         * @method egret.gui.Animation#pause
-         */
-        pause(): void;
-        /**
-         * 继续播放
-         * @method egret.gui.Animation#resume
-         */
-        resume(): void;
-        /**
-         * 动画启动时刻
-         */
-        private startTime;
-        private _started;
-        /**
-         * 动画已经开始的标志，包括延迟等待和暂停的阶段。
-         * @member egret.gui.Animation#started
-         */
-        started: boolean;
-        /**
-         * 已经播放的次数。
-         */
-        private playedTimes;
-        /**
-         * 计算当前值并返回动画是否结束
-         */
-        private doInterval();
-        /**
-         * 计算当前值
-         */
-        private caculateCurrentValue(fraction);
-        /**
-         * 总时间轴的当前时间
-         */
-        private static currentTime;
-        private static TIMER_RESOLUTION;
-        private static registered;
-        /**
-         * 正在活动的动画
-         */
-        private static activeAnimations;
-        /**
-         * 添加动画到队列
-         */
-        private static addAnimation(animation);
-        /**
-         * 从队列移除动画,返回移除前的索引
-         */
-        private static removeAnimation(animation);
-        /**
-         * 当前正在执行动画的索引
-         */
-        private static currentIntervalIndex;
-        /**
-         * 计时器触发函数
-         */
-        private static onEnterFrame(frameTime, currentTime);
     }
 }
 /**
@@ -5202,6 +7886,7 @@ declare module egret.gui {
          */
         snapInterval: number;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.Range#commitProperties
          */
         commitProperties(): void;
@@ -5328,23 +8013,27 @@ declare module egret.gui {
          */
         pointToValue(x: number, y: number): number;
         /**
+         * 按 stepSize 增大或减小 value
          * @method egret.gui.TrackBase#changeValueByStep
          * @param increase {boolean}
          */
         changeValueByStep(increase?: boolean): void;
         /**
+         * 添加外观部件时调用
          * @method egret.gui.TrackBase#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 删除外观部件的实例时调用
          * @method egret.gui.TrackBase#partRemoved
          * @param partName {string}
          * @param instance {any}
          */
         partRemoved(partName: string, instance: any): void;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.TrackBase#updateDisplayList
          * @param w {number}
          * @param h {number}
@@ -5352,8 +8041,15 @@ declare module egret.gui {
         updateDisplayList(w: number, h: number): void;
         /**
          * 记录鼠标在thumb上按下的位置
+         * @type {number}
+         * @private
          */
         _clickOffsetX: number;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         _clickOffsetY: number;
         /**
          * 更新皮肤部件（通常为滑块）的大小和可见性。<br/>
@@ -5396,7 +8092,17 @@ declare module egret.gui {
          * @method egret.gui.TrackBase#updateWhenMouseMove
          */
         updateWhenMouseMove(): void;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         _moveStageX: number;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         _moveStageY: number;
         /**
          * 鼠标移动事件
@@ -5490,6 +8196,7 @@ declare module egret.gui {
          */
         pendingValue: number;
         /**
+         * 在 value 属性改变时为该属性设置后备存储，并调度 valueCommit 事件
          * @method egret.gui.SliderBase#setValue
          * @param value {number}
          */
@@ -5536,6 +8243,7 @@ declare module egret.gui {
          */
         track_mouseDownHandler(event: TouchEvent): void;
         /**
+         * 正删除外观部件的实例时调用
          * @method egret.gui.SliderBase#partAdded
          * @param partName {string}
          * @param instance {any}
@@ -5571,6 +8279,9 @@ declare module egret.gui {
  */
 declare module egret.gui {
     class SkinnableTextBase extends SkinnableComponent {
+        /**
+         * 构造函数
+         */
         constructor();
         _focusEnabled: boolean;
         focusEnabled: boolean;
@@ -5682,18 +8393,22 @@ declare module egret.gui {
         _getHeightInLines(): number;
         _setHeightInLines(value: number): void;
         /**
+         * 返回要应用到外观的状态的名称
          * @inheritDoc
          */
         getCurrentSkinState(): string;
         /**
+         * 添加外观部件时调用
          * @inheritDoc
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 正删除外观部件的实例时调用
          * @inheritDoc
          */
         partRemoved(partName: string, instance: any): void;
         /**
+         * 设置此组件的焦点
          * @inheritDoc
          */
         setFocus(): void;
@@ -5868,10 +8583,12 @@ declare module egret.gui {
          */
         paddingBottom: number;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.TextBase#commitProperties
          */
         commitProperties(): void;
         /**
+         * 计算组件的默认大小和（可选）默认最小大小
          * @method egret.gui.Label#measure
          */
         measure(): void;
@@ -5884,6 +8601,7 @@ declare module egret.gui {
          */
         private measureUsingWidth(w);
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.Label#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
@@ -5950,6 +8668,7 @@ declare module egret.gui {
         font: any;
         private createChildrenCalled;
         /**
+         * 创建子对象
          */
         createChildren(): void;
         /**
@@ -5985,18 +8704,33 @@ declare module egret.gui {
          * @member egret.gui.BitmapLabel#paddingLeft
          */
         paddingLeft: number;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         private _paddingRight;
         /**
          * 文字距离右边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
          * @member egret.gui.BitmapLabel#paddingRight
          */
         paddingRight: number;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         private _paddingTop;
         /**
          * 文字距离顶部边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
          * @member egret.gui.BitmapLabel#paddingTop
          */
         paddingTop: number;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         private _paddingBottom;
         /**
          * 文字距离底部边缘的空白像素,若为NaN将使用padding的值，默认值：NaN。
@@ -6004,6 +8738,7 @@ declare module egret.gui {
          */
         paddingBottom: number;
         /**
+         * 计算  容器默认大小的最小值和最大值
          * @method egret.gui.BitmapLabel#measure
          */
         measure(): void;
@@ -6016,12 +8751,16 @@ declare module egret.gui {
          */
         private measureUsingWidth(w);
         /**
+         * 通过设置此容器子项的位置和大小来响应大小更改
          * @method egret.gui.BitmapLabel#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
         private checkBitmapText();
+        /**
+         * 处理对组件设置的属性
+         */
         commitProperties(): void;
     }
 }
@@ -6102,13 +8841,22 @@ declare module egret.gui {
          * @returns {Rectangle}
          * @private
          */
-        _measureBounds(): Rectangle;
+        _measureBounds(): egret.Rectangle;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.Rect#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
+        /**
+         * 碰撞检测
+         * @param x
+         * @param y
+         * @param ignoreTouchEnabled
+         * @returns {*}
+         */
+        hitTest(x: number, y: number, ignoreTouchEnabled?: boolean): DisplayObject;
     }
 }
 /**
@@ -6160,9 +8908,20 @@ declare module egret.gui {
          * @member egret.gui.ButtonBase#icon
          */
         icon: any;
+        /**
+         *
+         * @returns {any}
+         * @private
+         */
         _getIcon(): any;
+        /**
+         *
+         * @param value
+         * @private
+         */
         _setIcon(value: any): void;
         /**
+         * 添加外观部件时调用
          * @method egret.gui.ButtonBase#partAdded
          * @param partName {string}
          * @param instance {any}
@@ -6264,6 +9023,7 @@ declare module egret.gui {
         _getIcon(): any;
         _setIcon(value: any): void;
         /**
+         * [覆盖] 添加外观部件时调用
          * @param partName {string}
          * @param instance {any}
          */
@@ -6341,7 +9101,7 @@ declare module egret.gui {
     /**
      * @class egret.gui.RadioButtonGroup
      * @classdesc
-     * 单选按钮组
+     * RadioButtonGroup 组件定义一组 RadioButton 组件，这些组件相互排斥；因此，用户每次只能选择一个 RadioButton 组件
      * @extends egret.EventDispatcher
      */
     class RadioButtonGroup extends EventDispatcher {
@@ -6453,7 +9213,7 @@ declare module egret.gui {
     /**
      * @class egret.gui.RadioButton
      * @classdesc
-     * 单选按钮
+     * RadioButton 组件使用户可在一组互相排斥的选择中做出一种选择
      * @extends egret.gui.ToggleButtonBase
      */
     class RadioButton extends ToggleButtonBase {
@@ -6471,6 +9231,7 @@ declare module egret.gui {
          */
         _radioButtonGroup: RadioButtonGroup;
         /**
+         * 组件是否可以接受用户交互。默认值为true。设置此属性将影响组内所有单选按钮
          * @member egret.gui.RadioButton#enabled
          */
         /**
@@ -6497,7 +9258,9 @@ declare module egret.gui {
          */
         groupName: string;
         /**
-         * @inheritDoc
+         *
+         * @param value
+         * @private
          */
         _setSelected(value: boolean): void;
         private _value;
@@ -6508,16 +9271,19 @@ declare module egret.gui {
          */
         value: any;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.RadioButton#commitProperties
          */
         commitProperties(): void;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.RadioButton#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
         /**
+         * 当在用户单击按钮之后处理 MouseEvent.MOUSE_UP 事件时，将调用此方法
          * @method egret.gui.RadioButton#buttonReleased
          */
         buttonReleased(): void;
@@ -6571,6 +9337,7 @@ declare module egret.gui {
          */
         private createChildrenCalled;
         /**
+         * 创建子对象
          * @method egret.gui.Group#createChildren
          */
         createChildren(): void;
@@ -6582,21 +9349,23 @@ declare module egret.gui {
         /**
          * 返回子元素列表
          */
-        _getElementsContent(): any[];
+        _getElementsContent(): Array<any>;
         /**
          * 设置容器子对象数组 。数组包含要添加到容器的子项列表，之前的已存在于容器中的子项列表被全部移除后添加列表里的每一项到容器。
          * 设置该属性时会对您输入的数组进行一次浅复制操作，所以您之后对该数组的操作不会影响到添加到容器的子项列表数量。
          */
-        elementsContent: any[];
+        elementsContent: Array<any>;
         /**
          * 设置容器子对象列表
          */
         private setElementsContent(value);
         /**
+         * 获得容器中的子对象数
          * @member egret.gui.Group#numElements
          */
         numElements: number;
         /**
+         * 返回指定索引处的可视元素
          * @method egret.gui.Group#getElementAt
          * @param index {number}
          * @returns {IVisualElement}
@@ -6604,12 +9373,14 @@ declare module egret.gui {
         getElementAt(index: number): IVisualElement;
         private checkForRangeError(index, addingElement?);
         /**
+         * 将可视元素添加到此容器中
          * @method egret.gui.Group#addElement
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         addElement(element: IVisualElement): IVisualElement;
         /**
+         * 将可视元素添加到此容器中
          * @method egret.gui.Group#addElementAt
          * @param element {IVisualElement}
          * @param index {number}
@@ -6617,40 +9388,47 @@ declare module egret.gui {
          */
         addElementAt(element: IVisualElement, index: number): IVisualElement;
         /**
+         * 从此容器的子列表中删除指定的可视元素
          * @method egret.gui.Group#removeElement
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         removeElement(element: IVisualElement): IVisualElement;
         /**
+         * 从容器中的指定索引位置删除可视元素
          * @method egret.gui.Group#removeElementAt
          * @param index {number}
          * @returns {IVisualElement}
          */
         removeElementAt(index: number): IVisualElement;
         /**
+         * 删除容器中的所有子元素
          * @method egret.gui.Group#removeAllElements
          */
         removeAllElements(): void;
         /**
+         * 返回可视元素的索引位置
          * @method egret.gui.Group#getElementIndex
          * @param element {IVisualElement}
          * @returns {number}
          */
         getElementIndex(element: IVisualElement): number;
         /**
+         * 在可视容器中更改现有可视元素的位置
          * @method egret.gui.Group#setElementIndex
          * @param element {IVisualElement}
          * @param index {number}
          */
         setElementIndex(element: IVisualElement, index: number): void;
         /**
+         * 交换两个指定可视元素的索引
          * @method egret.gui.Group#swapElements
          * @param element1 {IVisualElement}
          * @param element2 {IVisualElement}
          */
         swapElements(element1: IVisualElement, element2: IVisualElement): void;
         /**
+         * 交换容器中位于两个指定索引位置的可视元素
          * @method egret.gui.Group#swapElementsAt
          * @param index1 {number}
          * @param index2 {number}
@@ -6670,27 +9448,29 @@ declare module egret.gui {
          * @param notifyListeners {boolean}
          */
         _elementRemoved(element: IVisualElement, index: number, notifyListeners?: boolean): void;
-        private static errorStr;
         /**
+         * 将可视元素添加到此容器中
          * @deprecated
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
         addChild(child: DisplayObject): DisplayObject;
         /**
+         * 将可视元素添加到此容器中
          * @deprecated
          * @param child {DisplayObject}
          * @param index {number}
          * @returns {DisplayObject}
          */
         addChildAt(child: DisplayObject, index: number): DisplayObject;
-        /**
+        /**从此容器的子列表中删除指定的可视元素
          * @deprecated
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
         removeChild(child: DisplayObject): DisplayObject;
         /**
+         * 从此容器的子列表中删除指定的可视元素
          * @method egret.gui.Group#removeChildAt
          * @deprecated
          * @param index {number}
@@ -6698,18 +9478,21 @@ declare module egret.gui {
          */
         removeChildAt(index: number): DisplayObject;
         /**
+         * 在可视容器中更改现有可视元素的位置
          * @deprecated
          * @param child {DisplayObject}
          * @param index {number}
          */
         setChildIndex(child: DisplayObject, index: number): void;
         /**
+         * 交换两个指定可视元素的索引
          * @deprecated
          * @param child1 {DisplayObject}
          * @param child2 {DisplayObject}
          */
         swapChildren(child1: DisplayObject, child2: DisplayObject): void;
         /**
+         * 交换容器中位于两个指定索引位置的可视元素
          * @method egret.gui.Group#swapChildrenAt
          * @deprecated
          * @param index1 {number}
@@ -6816,7 +9599,14 @@ declare module egret.gui {
          * 子项显示列表顺序发生改变。
          */
         private childOrderingChanged;
+        /**
+         * 处理对组件设置的属性
+         */
         commitProperties(): void;
+        /**
+         *
+         * @param newIndex
+         */
         private commitSelection(newIndex);
         /**
          * 子项数量
@@ -6942,22 +9732,28 @@ declare module egret.gui {
          * @inheritDoc
          */
         hostComponent: SkinnableComponent;
+        /**
+         *
+         * @param value
+         * @private
+         */
         _setHostComponent(value: SkinnableComponent): void;
         private _elementsContent;
         /**
          * 返回子元素列表
          */
-        _getElementsContent(): any[];
+        _getElementsContent(): Array<any>;
         /**
          * 设置容器子对象数组 。数组包含要添加到容器的子项列表，之前的已存在于容器中的子项列表被全部移除后添加列表里的每一项到容器。
          * 设置该属性时会对您输入的数组进行一次浅复制操作，所以您之后对该数组的操作不会影响到添加到容器的子项列表数量。
          */
-        elementsContent: any[];
+        elementsContent: Array<any>;
         /**
          * @member egret.gui.Skin#numElements
          */
         numElements: number;
         /**
+         * 如果存在视域，且传入的索引为 0，则返回该视域
          * @method egret.gui.Skin#getElementAt
          * @param index {number}
          * @returns {IVisualElement}
@@ -6965,12 +9761,14 @@ declare module egret.gui {
         getElementAt(index: number): IVisualElement;
         private checkForRangeError(index, addingElement?);
         /**
+         * 将可视元素添加到此容器中
          * @method egret.gui.Skin#addElement
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         addElement(element: IVisualElement): IVisualElement;
         /**
+         * 将可视元素添加到此容器中
          * @method egret.gui.Skin#addElementAt
          * @param element {IVisualElement}
          * @param index {number}
@@ -6978,24 +9776,28 @@ declare module egret.gui {
          */
         addElementAt(element: IVisualElement, index: number): IVisualElement;
         /**
+         * 从此容器的子列表中删除指定的可视元素
          * @method egret.gui.Skin#removeElement
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         removeElement(element: IVisualElement): IVisualElement;
         /**
+         * 从容器中的指定索引位置删除可视元素
          * @method egret.gui.Skin#removeElementAt
          * @param index {number}
          * @returns {IVisualElement}
          */
         removeElementAt(index: number): IVisualElement;
         /**
+         * 返回可视元素的索引位置
          * @method egret.gui.Skin#getElementIndex
          * @param element {IVisualElement}
          * @returns {number}
          */
         getElementIndex(element: IVisualElement): number;
         /**
+         * 按照索引添加到容器
          * @method egret.gui.Skin#setElementIndex
          * @param element {IVisualElement}
          * @param index {number}
@@ -7033,8 +9835,24 @@ declare module egret.gui {
          * 为此组件定义的视图状态。
          * @member egret.StateClientHelper#states
          */
-        states: any[];
-        _setStates(value: any[]): void;
+        states: Array<any>;
+        _setStates(value: Array<any>): void;
+        /**
+         * 当前的过渡效果
+         */
+        private _currentTransition;
+        private _transitions;
+        /**
+         *  一个 Transition 对象 Array，其中的每个 Transition 对象都定义一组效果，
+         * 用于在视图状态发生更改时播放。
+         */
+        transitions: Array<Transition>;
+        /**
+         * 播放过渡效果的标志
+         */
+        private playStateTransition;
+        private transitionFromState;
+        private transitionToState;
         /**
          * 当前视图状态发生改变的标志
          */
@@ -7065,6 +9883,7 @@ declare module egret.gui {
          * @method egret.gui.Skin#commitCurrentState
          */
         commitCurrentState(): void;
+        private transition_effectEndHandler(event);
         /**
          * 通过名称返回视图状态
          */
@@ -7083,6 +9902,14 @@ declare module egret.gui {
          * @method egret.StateClientHelper#initializeStates
          */
         initializeStates(): void;
+        /**
+         *  获取两个状态之间的过渡
+         */
+        private getTransition(oldState, newState);
+        /**
+         * 效果的总持续时间
+         */
+        private getTotalDuration(effect);
     }
 }
 /**
@@ -7127,13 +9954,19 @@ declare module egret.gui {
          * @param disabledSkinName {any} 按钮禁用状态的要显示的资源名
          */
         constructor(upSkinName?: any, downSkinName?: any, disabledSkinName?: any);
+        /**
+         *
+         * @type {string[]}
+         * @private
+         */
         private static _skinParts;
-        skinParts: string[];
+        skinParts: Array<string>;
         private stateMap;
         private backgroundAsset;
         labelDisplay: Label;
         iconDisplay: UIAsset;
         /**
+         * 创建容器的子对象
          * @inheritDoc
          */
         createChildren(): void;
@@ -7141,7 +9974,15 @@ declare module egret.gui {
          * @inheritDoc
          */
         commitCurrentState(): void;
+        /**
+         * 计算 Panel 容器默认大小的最小值和最大值
+         */
         measure(): void;
+        /**
+         * 通过设置此容器子项的位置和大小来响应大小更改
+         * @param unscaledWidth
+         * @param unscaledHeight
+         */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
     }
 }
@@ -7237,6 +10078,7 @@ declare module egret.gui {
          */
         private createNewRendererFlag;
         /**
+         * 标记组件，以便在稍后屏幕更新期间调用该组件的 measure() 方法
          * @method egret.gui.DataGroup#invalidateSize
          */
         invalidateSize(): void;
@@ -7265,7 +10107,7 @@ declare module egret.gui {
          * @method egret.gui.DataGroup#getElementIndicesInView
          * @returns {number}
          */
-        getElementIndicesInView(): number[];
+        getElementIndicesInView(): Array<number>;
         /**
          * 更改是否使用虚拟布局
          */
@@ -7368,10 +10210,12 @@ declare module egret.gui {
          */
         createChildren(): void;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.DataGroup#commitProperties
          */
         commitProperties(): void;
         /**
+         * 计算组件的默认大小和（可选）默认最小大小
          * @method egret.gui.DataGroup#measure
          */
         measure(): void;
@@ -7380,6 +10224,7 @@ declare module egret.gui {
          */
         private virtualLayoutUnderway;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.DataGroup#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
@@ -7444,23 +10289,26 @@ declare module egret.gui {
          */
         itemToLabel(item: any): string;
         /**
+         * 返回位于指定索引处的子显示对象实例
          * @method egret.gui.DataGroup#getElementAt
          * @param index {number}
          * @returns {IVisualElement}
          */
         getElementAt(index: number): IVisualElement;
         /**
+         * 返回 element 实例的索引位置
          * @method egret.gui.DataGroup#getElementIndex
          * @param element {IVisualElement}
          * @returns {number}
          */
         getElementIndex(element: IVisualElement): number;
         /**
+         * 获得对象容器的子对象总数
          * @member egret.gui.DataGroup#numElements
          */
         numElements: number;
-        private static errorStr;
         /**
+         * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中
          * @method egret.gui.DataGroup#addChild
          * @deprecated
          * @param child {DisplayObject}
@@ -7468,6 +10316,7 @@ declare module egret.gui {
          */
         addChild(child: DisplayObject): DisplayObject;
         /**
+         * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中
          * @method egret.gui.DataGroup#addChildAt
          * @deprecated
          * @param child {DisplayObject}
@@ -7476,6 +10325,7 @@ declare module egret.gui {
          */
         addChildAt(child: DisplayObject, index: number): DisplayObject;
         /**
+         * 从 DisplayObjectContainer 实例的子列表中删除指定的 child DisplayObject 实例
          * @method egret.gui.DataGroup#removeChild
          * @deprecated
          * @param child {DisplayObject}
@@ -7483,6 +10333,7 @@ declare module egret.gui {
          */
         removeChild(child: DisplayObject): DisplayObject;
         /**
+         * 从 DisplayObjectContainer 的子列表中指定的 index 位置删除子 DisplayObject
          * @method egret.gui.DataGroup#removeChildAt
          * @deprecated
          * @param index {number}
@@ -7490,6 +10341,7 @@ declare module egret.gui {
          */
         removeChildAt(index: number): DisplayObject;
         /**
+         * 更改现有子项在显示对象容器中的位置
          * @method egret.gui.DataGroup#setChildIndex
          * @deprecated
          * @param child {DisplayObject}
@@ -7497,6 +10349,7 @@ declare module egret.gui {
          */
         setChildIndex(child: DisplayObject, index: number): void;
         /**
+         * 交换两个指定子对象的 Z 轴顺序（从前到后顺序）
          * @method egret.gui.DataGroup#swapChildren
          * @deprecated
          * @param child1 {DisplayObject}
@@ -7504,6 +10357,7 @@ declare module egret.gui {
          */
         swapChildren(child1: DisplayObject, child2: DisplayObject): void;
         /**
+         * 在子级列表中两个指定的索引位置，交换子对象的 Z 轴顺序（前后顺序）
          * @method egret.gui.DataGroup#swapChildrenAt
          * @deprecated
          * @param index1 {number}
@@ -7568,55 +10422,65 @@ declare module egret.gui {
          * 设置容器子对象数组 。数组包含要添加到容器的子项列表，之前的已存在于容器中的子项列表被全部移除后添加列表里的每一项到容器。
          * 设置该属性时会对您输入的数组进行一次浅复制操作，所以您之后对该数组的操作不会影响到添加到容器的子项列表数量。
          */
-        elementsContent: any[];
+        elementsContent: Array<any>;
         /**
          */
         numElements: number;
         /**
+         * 返回指定索引处的可视元素
          * @param index {number}
          * @returns {IVisualElement}
          */
         getElementAt(index: number): IVisualElement;
         /**
+         * 将可视元素添加到此容器中
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         addElement(element: IVisualElement): IVisualElement;
         /**
+         * 将可视元素添加到此容器中
          * @param element {IVisualElement}
          * @param index {number}
          * @returns {IVisualElement}
          */
         addElementAt(element: IVisualElement, index: number): IVisualElement;
         /**
+         * 从此容器的子列表中删除指定的可视元素
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         removeElement(element: IVisualElement): IVisualElement;
         /**
+         * 从容器中的指定索引位置删除可视元素
          * @param index {number}
          * @returns {IVisualElement}
          */
         removeElementAt(index: number): IVisualElement;
         /**
+         * 删除容器中的所有子元素
          */
         removeAllElements(): void;
         /**
+         * 获取子元素对象在容器中的索引值
          * @param element {IVisualElement}
          * @returns {number}
          */
         getElementIndex(element: IVisualElement): number;
         /**
+         * 根据索引设置子元素的显示
          * @param element {IVisualElement}
          * @param index {number}
          */
         setElementIndex(element: IVisualElement, index: number): void;
         /**
+         * 交换两个指定可视元素的索引
          * @param element1 {IVisualElement}
          * @param element2 {IVisualElement}
          */
         swapElements(element1: IVisualElement, element2: IVisualElement): void;
         /**
+         * 交换容器中位于两个指定索引位置的可视元素
          * @param index1 {number}
          * @param index2 {number}
          */
@@ -7631,11 +10495,13 @@ declare module egret.gui {
          */
         layout: LayoutBase;
         /**
+         * [覆盖] 添加外观部件时调用
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * [覆盖] 正删除外观部件的实例时调用
          * @param partName {string}
          * @param instance {any}
          */
@@ -7691,6 +10557,7 @@ declare module egret.gui {
          */
         constructor();
         /**
+         * 更新项呈示器，以备使用或重用
          * @method egret.gui.SkinnableDataContainer#updateRenderer
          * @param renderer {IItemRenderer}
          * @param itemIndex {number}
@@ -7748,18 +10615,21 @@ declare module egret.gui {
         layout: LayoutBase;
         _setLayout(value: LayoutBase): void;
         /**
+         * [覆盖] 添加外观部件时调用
          * @method egret.gui.SkinnableDataContainer#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * [覆盖] 正删除外观部件的实例时调用
          * @method egret.gui.SkinnableDataContainer#partRemoved
          * @param partName {string}
          * @param instance {any}
          */
         partRemoved(partName: string, instance: any): void;
         /**
+         * 使用 EventDispatcher 对象注册事件侦听器对象，以使侦听器能够接收事件通知
          * @method egret.gui.SkinnableDataContainer#addEventListener
          * @param type {string}
          * @param listener {Function}
@@ -7769,6 +10639,7 @@ declare module egret.gui {
          */
         addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number): void;
         /**
+         * 从 EventDispatcher 对象中删除侦听器
          * @method egret.gui.SkinnableDataContainer#removeEventListener
          * @param type {string}
          * @param listener {Function}
@@ -7828,6 +10699,7 @@ declare module egret.gui {
          */
         static CUSTOM_SELECTED_ITEM: number;
         /**
+         * 构造函数
          * @method egret.gui.ListBase#constructor
          */
         constructor();
@@ -7926,6 +10798,7 @@ declare module egret.gui {
         _getUseVirtualLayout(): boolean;
         _setUseVirtualLayout(value: boolean): void;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.ListBase#commitProperties
          */
         commitProperties(): void;
@@ -7934,18 +10807,21 @@ declare module egret.gui {
          */
         private updateRendererLabelProperty(itemIndex);
         /**
+         * 添加外观部件时调用
          * @method egret.gui.ListBase#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 正删除外观部件的实例时调用
          * @method egret.gui.ListBase#partRemoved
          * @param partName {string}
          * @param instance {any}
          */
         partRemoved(partName: string, instance: any): void;
         /**
+         * 更新项呈示器，以备使用或重用
          * @method egret.gui.ListBase#updateRenderer
          * @param renderer {IItemRenderer}
          * @param itemIndex {number}
@@ -7954,6 +10830,7 @@ declare module egret.gui {
          */
         updateRenderer(renderer: IItemRenderer, itemIndex: number, data: any): IItemRenderer;
         /**
+         * 如果有一个数据项目，则返回呈示器应该显示的正确文本，同时将 labelField 和 labelFunction 属性考虑在内
          * @method egret.gui.ListBase#itemToLabel
          * @param item {any}
          * @returns {string}
@@ -8088,6 +10965,11 @@ declare module egret.gui {
          * @member egret.gui.Panel#title
          */
         title: string;
+        /**
+         * [覆盖] 添加外观部件时调用
+         * @param partName
+         * @param instance
+         */
         partAdded(partName: string, instance: any): void;
     }
 }
@@ -8158,11 +11040,13 @@ declare module egret.gui {
          */
         autoBackToStage: boolean;
         /**
+         * [覆盖] 添加外观部件时调用
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * [覆盖] 正删除外观部件的实例时调用
          * @method egret.gui.TitleWindow#partRemoved
          * @param partName {string}
          * @param instance {any}
@@ -8262,9 +11146,10 @@ declare module egret.gui {
          * @param secondButtonLabel {string} 第二个按钮上显示的文本，若为null，则不显示第二个按钮。
          * @param modal {boolean} 是否启用模态。即禁用弹出框以下的鼠标事件。默认true。
          * @param center {boolean} 是否居中。默认true。
+         * @param thisObject {any} 回掉函数绑定的this对象
          * @returns {Alert}
          */
-        static show(text?: string, title?: string, closeHandler?: Function, firstButtonLabel?: string, secondButtonLabel?: string, modal?: boolean, center?: boolean): Alert;
+        static show(text?: string, title?: string, closeHandler?: Function, firstButtonLabel?: string, secondButtonLabel?: string, modal?: boolean, center?: boolean, thisObject?: any): Alert;
         /**
          * 构造函数，请通过静态方法Alert.show()来创建对象实例。
          * @method egret.gui.Alert#constructor
@@ -8276,12 +11161,22 @@ declare module egret.gui {
          * @member egret.gui.Alert#firstButtonLabel
          */
         firstButtonLabel: string;
+        /**
+         *
+         * @type {string}
+         * @private
+         */
         private _secondButtonLabel;
         /**
          * 第二个按钮上显示的文本
          * @member egret.gui.Alert#secondButtonLabel
          */
         secondButtonLabel: string;
+        /**
+         *
+         * @type {string}
+         * @private
+         */
         private _contentText;
         /**
          * 文本内容
@@ -8293,6 +11188,10 @@ declare module egret.gui {
          */
         private closeHandler;
         /**
+        * 对话框关闭回调函数对应的this对象
+        */
+        private thisObject;
+        /**
          * 关闭事件
          */
         private onClose(event);
@@ -8301,6 +11200,7 @@ declare module egret.gui {
          * @param event {TouchEvent}
          */
         closeButton_clickHandler(event: TouchEvent): void;
+        private callCloseHandler(closeEvent);
         /**
          * [SkinPart]文本内容显示对象
          * @member egret.gui.Alert#contentDisplay
@@ -8317,12 +11217,14 @@ declare module egret.gui {
          */
         secondButton: Button;
         /**
+         * 添加外观部件时调用
          * @method egret.gui.Alert#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 删除外观部件的实例时调用
          * @method egret.gui.Alert#partRemoved
          * @param partName {string}
          * @param instance {any}
@@ -8435,18 +11337,32 @@ declare module egret.gui {
          */
         setValue(value: number): void;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @method egret.gui.ProgressBar#updateDisplayList
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
+        /**
+         * [覆盖] 添加外观部件时调用
+         * @param partName
+         * @param instance
+         */
         partAdded(partName: string, instance: any): void;
+        /**
+         * [覆盖] 正删除外观部件的实例时调用
+         * @param partName
+         * @param instance
+         */
         partRemoved(partName: string, instance: any): void;
         private trackResizedOrMoved;
         /**
          * track的位置或尺寸发生改变
          */
         private onTrackResizeOrMove(event);
+        /**
+         * 处理对组件设置的属性
+         */
         commitProperties(): void;
         /**
          * 更新皮肤部件大小和可见性。
@@ -8549,7 +11465,16 @@ declare module egret.gui {
          * @method egret.gui.HSlider#constructor
          */
         constructor();
+        /**
+         * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
+         * @param x
+         * @param y
+         * @returns {number}
+         */
         pointToValue(x: number, y: number): number;
+        /**
+         * 设置外观部件的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+         */
         updateSkinDisplayList(): void;
     }
 }
@@ -8580,16 +11505,44 @@ declare module egret.gui {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret.gui {
+    /**
+     *  @classdesc
+     * HScrollBar（水平 ScrollBar）控件可以在因数据太多而不能在显示区域中以水平方向完全显示时控制显示的数据部分。
+     尽管可以使用 HScrollBar 控件作为独立控件，但通常将其结合作为另一组组件的一部分来提供滚动功能
+     */
     class HScrollBar extends HSlider {
         private _thumbLengthRatio;
+        /**
+         *
+         * @param width
+         * @param contentWidth
+         * @private
+         */
         _setViewportMetric(width: number, contentWidth: number): void;
         trackAlpha: number;
         thumbAlpha: number;
         setPosition(value: number): void;
         getPosition(): number;
+        /**
+         *
+         * @param value
+         * @private
+         */
         _setValue(value: number): void;
+        /**
+         * [覆盖] 更新 value 属性，并且如果 viewport 为非 null，则将其 horizontalScrollPosition 设置为 value
+         * @param value
+         */
         setValue(value: number): void;
+        /**
+         *
+         * @param animation
+         * @private
+         */
         _animationUpdateHandler(animation: Animation): void;
+        /**
+         * 设置外观部件的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+         */
         updateSkinDisplayList(): void;
     }
 }
@@ -8633,12 +11586,14 @@ declare module egret.gui {
          */
         constructor();
         /**
+         * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
          * @param x {number}
          * @param y {number}
          * @returns {number}
          */
         pointToValue(x: number, y: number): number;
         /**
+         * 设置外观部件（通常为滑块）的边界，这些外观部件的几何图形不是完全由外观的布局指定的
          */
         updateSkinDisplayList(): void;
     }
@@ -8670,9 +11625,19 @@ declare module egret.gui {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret.gui {
+    /**
+     * @classic
+     * VScrollBar（垂直 ScrollBar）控件可以在因数据太多而不能在显示区域中以垂直方向完全显示时控制显示的数据部分
+     */
     class VScrollBar extends VSlider {
         constructor();
         private _thumbLengthRatio;
+        /**
+         *
+         * @param height
+         * @param contentHeight
+         * @private
+         */
         _setViewportMetric(height: number, contentHeight: number): void;
         trackAlpha: number;
         thumbAlpha: number;
@@ -8682,11 +11647,15 @@ declare module egret.gui {
         setValue(value: number): void;
         _animationUpdateHandler(animation: Animation): void;
         /**
+         * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
          * @param x {number}
          * @param y {number}
          * @returns {number}
          */
         pointToValue(x: number, y: number): number;
+        /**
+         * 设置外观部件（通常为滑块）的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+         */
         updateSkinDisplayList(): void;
     }
 }
@@ -8725,6 +11694,9 @@ declare module egret.gui {
      */
     class List extends ListBase {
         constructor();
+        /**
+         * 创建容器的子元素
+         */
         createChildren(): void;
         /**
          * 是否使用虚拟布局,默认true
@@ -8746,7 +11718,7 @@ declare module egret.gui {
          * 当前选中的一个或多个项目的索引列表
          * @member egret.gui.List#selectedIndices
          */
-        selectedIndices: number[];
+        selectedIndices: Array<number>;
         /**
          * @member egret.gui.List#selectedIndex
          */
@@ -8755,12 +11727,13 @@ declare module egret.gui {
          * 当前选中的一个或多个项目的数据源列表
          * @member egret.gui.List#selectedItems
          */
-        selectedItems: Object[];
+        selectedItems: Array<Object>;
         /**
          * 设置多个选中项
          */
-        _setSelectedIndices(value: number[], dispatchChangeEvent?: boolean): void;
+        _setSelectedIndices(value: Array<number>, dispatchChangeEvent?: boolean): void;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.List#commitProperties
          */
         commitProperties(): void;
@@ -8773,11 +11746,17 @@ declare module egret.gui {
         /**
          * 是否是有效的索引
          */
-        private isValidIndex(item, index, v);
+        private isValidIndex;
         /**
          * 提交多项选中项属性
          */
         commitMultipleSelection(): void;
+        /**
+         *
+         * @param index
+         * @returns {boolean}
+         * @private
+         */
         _isItemIndexSelected(index: number): boolean;
         dataGroup_rendererAddHandler(event: RendererExistenceEvent): void;
         /**
@@ -8789,13 +11768,13 @@ declare module egret.gui {
          * 是否捕获ItemRenderer以便在MouseUp时抛出ItemClick事件
          */
         _captureItemRenderer: boolean;
-        private mouseDownItemRenderer;
+        _mouseDownItemRenderer: IItemRenderer;
         /**
          * 鼠标在项呈示器上按下
          * @method egret.gui.List#item_mouseDownHandler
          * @param event {TouchEvent}
          */
-        item_mouseDownHandler(event: TouchEvent): void;
+        _item_touchBeginHandler(event: TouchEvent): void;
         /**
          * 计算当前的选中项列表
          */
@@ -8803,11 +11782,11 @@ declare module egret.gui {
         /**
          * 鼠标在项呈示器上弹起，抛出ItemClick事件。
          */
-        private item_mouseUpHandler(event);
+        _item_touchEndHandler(event: TouchEvent): void;
         /**
          * 鼠标在舞台上弹起
          */
-        private stage_mouseUpHandler(event);
+        private stage_touchEndHandler(event);
     }
 }
 /**
@@ -9024,7 +12003,7 @@ declare module egret.gui {
          * 在包含项列出的任何组件内进行鼠标单击不会自动关闭下拉列表。
          * @member egret.gui.DropDownController#hitAreaAdditions
          */
-        hitAreaAdditions: DisplayObject[];
+        hitAreaAdditions: Array<DisplayObject>;
         private _dropDown;
         /**
          * 下拉区域显示对象
@@ -9232,22 +12211,26 @@ declare module egret.gui {
         isDropDownOpen: boolean;
         private _userProposedSelectedIndex;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.DropDownListBase#commitProperties
          */
         commitProperties(): void;
         /**
+         * 添加外观部件时调用
          * @method egret.gui.DropDownListBase#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 正删除外观部件的实例时调用
          * @method egret.gui.DropDownListBase#partRemoved
          * @param partName {string}
          * @param instance {any}
          */
         partRemoved(partName: string, instance: any): void;
         /**
+         * 返回要应用到外观的状态的名称
          * @method egret.gui.DropDownListBase#getCurrentSkinState
          * @returns {string}
          */
@@ -9292,7 +12275,7 @@ declare module egret.gui {
          * @method egret.gui.DropDownListBase#item_mouseDownHandler
          * @param event {TouchEvent}
          */
-        item_mouseDownHandler(event: TouchEvent): void;
+        _item_touchEndHandler(event: TouchEvent): void;
         /**
          * 控制器抛出打开列表事件
          */
@@ -9354,10 +12337,12 @@ declare module egret.gui {
         constructor();
         static defaultTreeRendererFactory: ClassFactory;
         /**
+         * 创建该容器的子元素对象
          * @method egret.gui.Tree#createChildren
          */
         createChildren(): void;
         /**
+         * 更新项呈示器，以备使用或重用
          * @method egret.gui.Tree#updateRenderer
          * @param renderer {IItemRenderer}
          * @param itemIndex {number}
@@ -9424,6 +12409,7 @@ declare module egret.gui {
          */
         dataProvider_collectionChangeHandler(event: CollectionEvent): void;
         /**
+         * 处理对组件设置的属性
          * @method egret.gui.Tree#commitProperties
          */
         commitProperties(): void;
@@ -9485,11 +12471,16 @@ declare module egret.gui {
          */
         prompt: string;
         /**
+         * 添加外观部件时调用
          * @method egret.gui.DropDownList#partAdded
          * @param partName {string}
          * @param instance {any}
          */
         partAdded(partName: string, instance: any): void;
+        /**
+         * 绘制对象和/或设置其子项的大小和位置
+         * @param displayItem
+         */
         updateLabelDisplay(displayItem?: any): void;
     }
 }
@@ -9586,23 +12577,22 @@ declare module egret.gui {
      * 选项卡组件
      * @extends egret.gui.ListBase
      */
-    class TabBar extends ListBase {
+    class TabBar extends List {
         /**
          * 构造函数
          * @method egret.gui.TabBar#constructor
          */
         constructor();
         /**
+         * 创建容器的子元素
+         */
+        createChildren(): void;
+        /**
          * requireSelection改变标志
          */
         private requireSelectionChanged_tabBar;
-        private _touchBeginItem;
         /**
-         * 是否捕获ItemRenderer以便在MouseUp时抛出ItemClick事件
-         */
-        _captureItemRenderer: boolean;
-        /**
-         * @method egret.gui.TabBar#c
+         * @method egret.gui.TabBar#requireSelection
          * @param value {boolean}
          */
         requireSelection: boolean;
@@ -9618,21 +12608,15 @@ declare module egret.gui {
          * ViewStack选中项发生改变
          */
         private onViewStackIndexChange(event);
+        /**
+         * 处理对组件设置的属性
+         */
         commitProperties(): void;
         dataGroup_rendererAddHandler(event: RendererExistenceEvent): void;
-        dataGroup_rendererRemoveHandler(event: RendererExistenceEvent): void;
-        /**
-         * 鼠标在条目上按下
-         */
-        private item_touchBeginHandler(event);
         /**
          * 鼠标在项呈示器上弹起，抛出ItemClick事件。
          */
-        private item_touchEndHandler(event);
-        /**
-         * 鼠标在舞台上弹起
-         */
-        private stage_touchEndHandler(event);
+        _item_touchEndHandler(event: TouchEvent): void;
     }
 }
 /**
@@ -9678,12 +12662,25 @@ declare module egret.gui {
         private _scrollLeft;
         private _scrollTop;
         private _content;
+        /**
+         * 开始滚动的阈值，当触摸点偏离初始触摸点的距离超过这个值时才会触发滚动
+         * @member {number} egret.gui.Scroller#scrollBeginThreshold
+         */
+        scrollBeginThreshold: number;
+        /**
+         * 滚动速度，这个值为需要的速度与默认速度的比值。
+         * 取值范围为 scrollSpeed > 0 赋值为 2 时，速度是默认速度的 2 倍
+         * @member {number} egret.gui.Scroller#scrollSpeed
+         */
+        scrollSpeed: number;
         setContent(content: IViewport): void;
         _updateContentPosition(): void;
         getMaxScrollLeft(): number;
         getMaxScrollTop(): number;
         _getContentWidth(): number;
         _getContentHeight(): number;
+        _onScrollStarted(): void;
+        _onScrollFinished(): void;
         /**
              * [SkinPart]水平滚动条
              */
@@ -9692,12 +12689,14 @@ declare module egret.gui {
          * [SkinPart]垂直滚动条
          */
         verticalScrollBar: VScrollBar;
-        _scroller: ScrollView;
+        _scroller: egret.ScrollView;
         /**
+         * 计算组件的默认大小和（可选）默认最小大小
          * @method egret.gui.Scroller#measure
          */
         measure(): void;
         /**
+         * 绘制对象和/或设置其子项的大小和位置
          * @param unscaledWidth {number}
          * @param unscaledHeight {number}
          */
@@ -9728,8 +12727,22 @@ declare module egret.gui {
          * 卸载视域组件
          */
         private uninstallViewport();
+        /**
+         *
+         * @param e
+         * @private
+         */
         private _viewportChangedHandler(e);
+        /**
+         *
+         * @param e
+         * @private
+         */
         private _scrollerChangedHandler(e);
+        /**
+         *
+         * @param pos
+         */
         private setViewportVScrollPosition(pos);
         private setViewportHScrollPosition(pos);
         /**
@@ -9768,28 +12781,33 @@ declare module egret.gui {
          */
         private throwRangeError(index);
         /**
+         * 如果存在视域，且传入的索引为 0，则返回该视域
          * @param index {number}
          * @returns {IVisualElement}
          */
         getElementAt(index: number): IVisualElement;
         /**
+         * 如果传入的元素是视域，则返回 0
          * @param element {IVisualElement}
          * @returns {number}
          */
         getElementIndex(element: IVisualElement): number;
         /**
+         * 确定指定显示对象是 DisplayObjectContainer 实例的子项还是该实例本身
          * @param element {IVisualElement}
          * @returns {boolean}
          */
         containsElement(element: IVisualElement): boolean;
         private throwNotSupportedError();
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         addElement(element: IVisualElement): IVisualElement;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param element {IVisualElement}
          * @param index {number}
@@ -9797,46 +12815,54 @@ declare module egret.gui {
          */
         addElementAt(element: IVisualElement, index: number): IVisualElement;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param element {IVisualElement}
          * @returns {IVisualElement}
          */
         removeElement(element: IVisualElement): IVisualElement;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param index {number}
          * @returns {IVisualElement}
          */
         removeElementAt(index: number): IVisualElement;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          */
         removeAllElements(): void;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param element {IVisualElement}
          * @param index {number}
          */
         setElementIndex(element: IVisualElement, index: number): void;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param element1 {IVisualElement}
          * @param element2 {IVisualElement}
          */
         swapElements(element1: IVisualElement, element2: IVisualElement): void;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param index1 {number}
          * @param index2 {number}
          */
         swapElementsAt(index1: number, index2: number): void;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
         addChild(child: DisplayObject): DisplayObject;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param child {DisplayObject}
          * @param index {number}
@@ -9844,37 +12870,53 @@ declare module egret.gui {
          */
         addChildAt(child: DisplayObject, index: number): DisplayObject;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
         removeChild(child: DisplayObject): DisplayObject;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param index {number}
          * @returns {DisplayObject}
          */
         removeChildAt(index: number): DisplayObject;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param child {DisplayObject}
          * @param index {number}
          */
         setChildIndex(child: DisplayObject, index: number): void;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param child1 {DisplayObject}
          * @param child2 {DisplayObject}
          */
         swapChildren(child1: DisplayObject, child2: DisplayObject): void;
         /**
+         * Scroller 不支持该操作
          * @deprecated
          * @param index1 {number}
          * @param index2 {number}
          */
         swapChildrenAt(index1: number, index2: number): void;
+        /**
+         *
+         * @private
+         */
         _checkHbar(): void;
+        /**
+         *
+         * @private
+         */
         _checkVbar(): void;
+        /**
+         * 创建容器的子元素
+         */
         createChildren(): void;
         /**
          * 若皮肤是ISkin,则调用此方法附加皮肤中的公共部件
@@ -9923,6 +12965,9 @@ declare module egret.gui {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret.gui {
+    /**
+     *
+     */
     class EditableText extends TextBase implements IEditableText, IDisplayText, IViewport {
         constructor();
         private _selectable;
@@ -10019,10 +13064,12 @@ declare module egret.gui {
          */
         clipAndEnableScrolling: boolean;
         /**
+         * 处理对组件设置的属性
          * @inheritDoc
          */
         commitProperties(): void;
         /**
+         * 通过设置此容器子项的位置和大小来响应大小更改
          * @inheritDoc
          */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
@@ -10059,6 +13106,7 @@ declare module egret.gui {
          */
         private defaultWidth;
         /**
+         * 计算  容器默认大小的最小值和最大值
          * @inheritDoc
          */
         measure(): void;
@@ -10145,14 +13193,17 @@ declare module egret.gui {
         scroller: Scroller;
         _setText(value: string): void;
         /**
+         * 处理对组件设置的属性
          * @inheritDoc
          */
         commitProperties(): void;
         /**
+         * 添加外观部件时调用
          * @inheritDoc
          */
         partAdded(partName: string, instance: any): void;
         /**
+         * 创建外观部件的引用
          * @inheritDoc
          */
         createSkinParts(): void;
@@ -10185,6 +13236,10 @@ declare module egret.gui {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret.gui {
+    /**
+     * TextInput 是一个文本输入控件，供用户输入和编辑单行统一格式文本
+     * @classic
+     */
     class TextInput extends SkinnableTextBase {
         /**
          * 构造函数
@@ -10196,10 +13251,12 @@ declare module egret.gui {
         widthInChars: number;
         _setText(value: string): void;
         /**
+         * 添加外观部件时调用
          * @inheritDoc
          */
         partAdded(partName: string, instance: any): void;
         /**
+         *  创建外观部件的引用
          * @inheritDoc
          */
         createSkinParts(): void;
@@ -10754,7 +13811,7 @@ declare module egret.gui {
          * @param items {Array<any>}
          * @param oldItems {Array<any>}
          */
-        constructor(type: string, bubbles?: boolean, cancelable?: boolean, kind?: string, location?: number, oldLocation?: number, items?: any[], oldItems?: any[]);
+        constructor(type: string, bubbles?: boolean, cancelable?: boolean, kind?: string, location?: number, oldLocation?: number, items?: Array<any>, oldItems?: Array<any>);
         /**
          * 指示发生的事件类型。此属性值可以是 CollectionEventKind 类中的一个值，也可以是 null，用于指示类型未知。
          * @member egret.gui.CollectionEvent#kind
@@ -10764,12 +13821,12 @@ declare module egret.gui {
          * 受事件影响的项目的列表
          * @member egret.gui.CollectionEvent#items
          */
-        items: any[];
+        items: Array<any>;
         /**
          * 仅当kind的值为CollectionEventKind.REPLACE时，表示替换前的项目列表
          * @member egret.gui.CollectionEvent#oldItems
          */
-        oldItems: any[];
+        oldItems: Array<any>;
         /**
          * 如果 kind 值为 CollectionEventKind.ADD、 CollectionEventKind.MOVE、
          * CollectionEventKind.REMOVE 或 CollectionEventKind.REPLACE，
@@ -10788,7 +13845,7 @@ declare module egret.gui {
          * 使用指定的EventDispatcher对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
          * @method egret.gui.CollectionEvent.dispatchCollectionEvent
          */
-        static dispatchCollectionEvent(target: IEventDispatcher, type: string, kind?: string, location?: number, oldLocation?: number, items?: any[], oldItems?: any[]): void;
+        static dispatchCollectionEvent(target: IEventDispatcher, type: string, kind?: string, location?: number, oldLocation?: number, items?: Array<any>, oldItems?: Array<any>): void;
     }
 }
 /**
@@ -11292,6 +14349,10 @@ declare module egret.gui {
          */
         static CURRENT_STATE_CHANGING: string;
         /**
+         * 状态过渡完成
+         */
+        static STATE_CHANGE_COMPLETE: string;
+        /**
          * @method egret.gui.StateChangeEvent#constructor
          * @param type {string}
          * @param bubbles {boolean}
@@ -11467,6 +14528,38 @@ declare module egret.gui {
         static dispatchTreeEvent(target: IEventDispatcher, type: string, itemIndex?: number, item?: any, itemRenderer?: ITreeItemRenderer, opening?: boolean): void;
     }
 }
+declare module egret.gui {
+    class EffectEvent extends Event {
+        /**
+         * 动画播放结束
+         */
+        static EFFECT_END: string;
+        /**
+         * 动画播放被停止
+         */
+        static EFFECT_STOP: string;
+        /**
+         * 动画播放开始
+         */
+        static EFFECT_START: string;
+        /**
+         * 动画开始重复播放
+         */
+        static EFFECT_REPEAT: string;
+        /**
+         * 动画播放更新
+         */
+        static EFFECT_UPDATE: string;
+        /**
+         * 构造函数
+         */
+        constructor(eventType: string, bubbles?: boolean, cancelable?: boolean, effectInstance?: IEffectInstance);
+        /**
+         * 事件的效果实例对象。您可以使用此属性从事件侦听器中访问效果实例对象的属性。
+         */
+        effectInstance: IEffectInstance;
+    }
+}
 /**
  * Copyright (c) 2014,Egret-Labs.org
  * All rights reserved.
@@ -11617,7 +14710,15 @@ declare module egret.gui {
         getElementBoundsRightOfScrollRect(scrollRect: Rectangle): Rectangle;
         getElementBoundsAboveScrollRect(scrollRect: Rectangle): Rectangle;
         getElementBoundsBelowScrollRect(scrollRect: Rectangle): Rectangle;
+        /**
+         *基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
+         */
         measure(): void;
+        /**
+         * 调整目标的元素的大小并定位这些元素
+         * @param unscaledWidth
+         * @param unscaledHeight
+         */
         updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
     }
 }
@@ -11858,6 +14959,9 @@ declare module egret.gui {
          * 标记目标容器的尺寸和显示列表失效
          */
         private invalidateTargetSizeAndDisplayList();
+        /**
+         * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
+         */
         measure(): void;
         /**
          * 测量使用虚拟布局的尺寸
@@ -11868,6 +14972,7 @@ declare module egret.gui {
          */
         private measureReal();
         /**
+         * 调整目标的元素的大小并定位这些元素
          * @param width {number}
          * @param height {number}
          */
@@ -11896,6 +15001,9 @@ declare module egret.gui {
          * @param index {number}
          */
         elementRemoved(index: number): void;
+        /**
+         * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
+         */
         clearVirtualLayoutCache(): void;
         /**
          * 折半查找法寻找指定位置的显示对象索引
@@ -11914,6 +15022,7 @@ declare module egret.gui {
          */
         private indexInViewCalculated;
         /**
+         * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
          */
         scrollPositionChanged(): void;
         /**
@@ -11940,7 +15049,7 @@ declare module egret.gui {
          * @param totalPercent {number}
          * @param childInfoArray {Array<any>}
          */
-        static flexChildrenProportionally(spaceForChildren: number, spaceToDistribute: number, totalPercent: number, childInfoArray: any[]): void;
+        static flexChildrenProportionally(spaceForChildren: number, spaceToDistribute: number, totalPercent: number, childInfoArray: Array<any>): void;
     }
 }
 /**
@@ -12036,6 +15145,7 @@ declare module egret.gui {
          */
         private invalidateTargetSizeAndDisplayList();
         /**
+         * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
          * @method egret.gui.HorizontalLayout#measure
          */
         measure(): void;
@@ -12048,6 +15158,7 @@ declare module egret.gui {
          */
         private measureReal();
         /**
+         * 调整目标的元素的大小并定位这些元素
          * @method egret.gui.HorizontalLayout#updateDisplayList
          * @param width {number}
          * @param height {number}
@@ -12071,6 +15182,9 @@ declare module egret.gui {
         private getElementTotalSize();
         elementAdded(index: number): void;
         elementRemoved(index: number): void;
+        /**
+         * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
+         */
         clearVirtualLayoutCache(): void;
         /**
          * 折半查找法寻找指定位置的显示对象索引
@@ -12089,6 +15203,7 @@ declare module egret.gui {
          */
         private indexInViewCalculated;
         /**
+         * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
          * @method egret.gui.HorizontalLayout#scrollPositionChanged
          */
         scrollPositionChanged(): void;
@@ -12115,7 +15230,7 @@ declare module egret.gui {
          * @param totalPercent {number}
          * @param childInfoArray {Array<any>}
          */
-        static flexChildrenProportionally(spaceForChildren: number, spaceToDistribute: number, totalPercent: number, childInfoArray: any[]): void;
+        static flexChildrenProportionally(spaceForChildren: number, spaceToDistribute: number, totalPercent: number, childInfoArray: Array<any>): void;
     }
 }
 /**
@@ -12320,6 +15435,9 @@ declare module egret.gui {
          * 标记目标容器的尺寸和显示列表失效
          */
         private invalidateTargetSizeAndDisplayList();
+        /**
+         * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
+         */
         measure(): void;
         /**
          * 计算行和列的尺寸及数量
@@ -12346,6 +15464,7 @@ declare module egret.gui {
          */
         private updateMaxElementSizeReal();
         /**
+         * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
          * @method egret.gui.TileLayout#clearVirtualLayoutCache
          */
         clearVirtualLayoutCache(): void;
@@ -12361,12 +15480,16 @@ declare module egret.gui {
          * 视图的第一个和最后一个元素的索引值已经计算好的标志
          */
         private indexInViewCalculated;
+        /**
+         * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
+         */
         scrollPositionChanged(): void;
         /**
          * 获取视图中第一个和最后一个元素的索引,返回是否发生改变
          */
         private getIndexInView();
         /**
+         * 调整目标的元素的大小并定位这些元素
          * @param width {number}
          * @param height {number}
          */
@@ -12438,12 +15561,48 @@ declare module egret.gui {
         private raw_removeElement;
         private raw_removeElementAt;
         private raw_setElementIndex;
+        /**
+         * 返回指定索引处的可视元素
+         * @param index
+         * @returns {IVisualElement}
+         */
         getElementAt(index: number): IVisualElement;
+        /**
+         * 将可视元素添加到此容器中
+         * @param element
+         * @returns {IVisualElement}
+         */
         addElement(element: IVisualElement): IVisualElement;
+        /**
+         * 将可视元素添加到此容器中
+         * @param element
+         * @param index
+         * @returns {IVisualElement}
+         */
         addElementAt(element: IVisualElement, index: number): IVisualElement;
+        /**
+         * 从此容器的子列表中删除指定的可视元素
+         * @param element
+         * @returns {IVisualElement}
+         */
         removeElement(element: IVisualElement): IVisualElement;
+        /**
+         * 从容器中的指定索引位置删除可视元素
+         * @param index
+         * @returns {IVisualElement}
+         */
         removeElementAt(index: number): IVisualElement;
+        /**
+         * 返回可视元素的索引位置
+         * @param element
+         * @returns {number}
+         */
         getElementIndex(element: IVisualElement): number;
+        /**
+         * 在可视容器中更改现有可视元素的位置
+         * @param element
+         * @param index
+         */
         setElementIndex(element: IVisualElement, index: number): void;
     }
 }
@@ -12694,7 +15853,7 @@ declare module egret.gui {
          * 已经弹出的窗口列表
          * @member egret.gui.PopUpManagerImpl#popUpList
          */
-        popUpList: any[];
+        popUpList: Array<any>;
         /**
          * 模态窗口列表
          */
@@ -12845,7 +16004,7 @@ declare module egret.gui {
          * 已经弹出的窗口列表
          * @member egret.gui.PopUpManager.popUpList
          */
-        static popUpList: any[];
+        static popUpList: Array<any>;
         /**
          * 添加事件监听,参考PopUpEvent定义的常量。
          * @method egret.gui.PopUpManager.addEventListener

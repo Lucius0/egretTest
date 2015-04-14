@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -52,16 +46,21 @@ var egret;
                  * requireSelection改变标志
                  */
                 this.requireSelectionChanged_tabBar = false;
-                this._touchBeginItem = null;
-                /**
-                 * 是否捕获ItemRenderer以便在MouseUp时抛出ItemClick事件
-                 */
-                this._captureItemRenderer = true;
                 this.requireSelection = true;
             }
-            Object.defineProperty(TabBar.prototype, "requireSelection", {
+            var __egretProto__ = TabBar.prototype;
+            /**
+             * 创建容器的子元素
+             */
+            __egretProto__.createChildren = function () {
+                gui.ListBase.prototype.createChildren.call(this);
+            };
+            Object.defineProperty(__egretProto__, "requireSelection", {
+                get: function () {
+                    return this._requireSelection;
+                },
                 /**
-                 * @method egret.gui.TabBar#c
+                 * @method egret.gui.TabBar#requireSelection
                  * @param value {boolean}
                  */
                 set: function (value) {
@@ -77,7 +76,7 @@ var egret;
             /**
              * @inheritDoc
              */
-            TabBar.prototype._setDataProvider = function (value) {
+            __egretProto__._setDataProvider = function (value) {
                 if (this.dataProvider instanceof gui.ViewStack) {
                     this.dataProvider.removeEventListener("IndexChanged", this.onViewStackIndexChange, this);
                     this.removeEventListener(gui.IndexChangeEvent.CHANGE, this.onIndexChanged, this);
@@ -91,16 +90,19 @@ var egret;
             /**
              * 鼠标点击的选中项改变
              */
-            TabBar.prototype.onIndexChanged = function (event) {
+            __egretProto__.onIndexChanged = function (event) {
                 (this.dataProvider)._setSelectedIndex(event.newIndex, false);
             };
             /**
              * ViewStack选中项发生改变
              */
-            TabBar.prototype.onViewStackIndexChange = function (event) {
+            __egretProto__.onViewStackIndexChange = function (event) {
                 this._setSelectedIndex((this.dataProvider).selectedIndex, false);
             };
-            TabBar.prototype.commitProperties = function () {
+            /**
+             * 处理对组件设置的属性
+             */
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.requireSelectionChanged_tabBar && this.dataGroup) {
                     this.requireSelectionChanged_tabBar = false;
@@ -112,41 +114,19 @@ var egret;
                     }
                 }
             };
-            TabBar.prototype.dataGroup_rendererAddHandler = function (event) {
+            __egretProto__.dataGroup_rendererAddHandler = function (event) {
                 _super.prototype.dataGroup_rendererAddHandler.call(this, event);
-                var renderer = event.renderer;
-                if (!renderer)
+                if (event.renderer == null)
                     return;
-                renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.item_touchBeginHandler, this);
-                renderer.addEventListener(egret.TouchEvent.TOUCH_END, this.item_touchEndHandler, this);
-                if (renderer instanceof gui.TabBarButton)
-                    renderer.allowDeselection = !this.requireSelection;
-            };
-            TabBar.prototype.dataGroup_rendererRemoveHandler = function (event) {
-                _super.prototype.dataGroup_rendererRemoveHandler.call(this, event);
-                var renderer = event.renderer;
-                if (!renderer)
-                    return;
-                renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.item_touchBeginHandler, this);
-                renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this.item_touchEndHandler, this);
-            };
-            /**
-             * 鼠标在条目上按下
-             */
-            TabBar.prototype.item_touchBeginHandler = function (event) {
-                if (event._isDefaultPrevented)
-                    return;
-                var itemRenderer = (event.currentTarget);
-                this._touchBeginItem = itemRenderer;
-                gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
-                gui.UIGlobals.stage.addEventListener(egret.Event.LEAVE_STAGE, this.stage_touchEndHandler, this);
+                if (event.renderer instanceof gui.TabBarButton)
+                    event.renderer.allowDeselection = !this.requireSelection;
             };
             /**
              * 鼠标在项呈示器上弹起，抛出ItemClick事件。
              */
-            TabBar.prototype.item_touchEndHandler = function (event) {
+            __egretProto__._item_touchEndHandler = function (event) {
                 var itemRenderer = (event.currentTarget);
-                if (itemRenderer != this._touchBeginItem)
+                if (itemRenderer != this._mouseDownItemRenderer)
                     return;
                 var newIndex;
                 if (itemRenderer)
@@ -163,16 +143,8 @@ var egret;
                     return;
                 this._dispatchListEvent(event, gui.ListEvent.ITEM_CLICK, itemRenderer);
             };
-            /**
-             * 鼠标在舞台上弹起
-             */
-            TabBar.prototype.stage_touchEndHandler = function (event) {
-                gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
-                gui.UIGlobals.stage.removeEventListener(egret.Event.LEAVE_STAGE, this.stage_touchEndHandler, this);
-                this._touchBeginItem = null;
-            };
             return TabBar;
-        })(gui.ListBase);
+        })(gui.List);
         gui.TabBar = TabBar;
         TabBar.prototype.__class__ = "egret.gui.TabBar";
     })(gui = egret.gui || (egret.gui = {}));

@@ -24,18 +24,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
      * @class egret.ScrollView
      * @classdesc
-     * ScrollView 是用于滑动的辅助类，将一个显示对象传入构造函数即可
+     * ScrollView 是用于滑动的辅助类，将一个显示对象传入构造函数即可。可以在指定的尺寸范围内显示超过该范围的显示对象。并可以在此范围内随意拖动。
      * @extends egret.DisplayObjectContainer
      */
     var ScrollView = (function (_super) {
@@ -49,9 +43,26 @@ var egret;
             if (content === void 0) { content = null; }
             _super.call(this);
             this._lastTouchPosition = new egret.Point(0, 0);
+            this._touchStartPosition = new egret.Point(0, 0);
+            this._scrollStarted = false;
             this._lastTouchTime = 0;
             this._lastTouchEvent = null;
             this._velocitys = [];
+            this._isHTweenPlaying = false;
+            this._isVTweenPlaying = false;
+            this._hScrollTween = null;
+            this._vScrollTween = null;
+            /**
+             * 开始滚动的阈值，当触摸点偏离初始触摸点的距离超过这个值时才会触发滚动
+             * @member {number} egret.ScrollView#scrollBeginThreshold
+             */
+            this.scrollBeginThreshold = 10;
+            /**
+             * 滚动速度，这个值为需要的速度与默认速度的比值。
+             * 取值范围为 scrollSpeed > 0 赋值为 2 时，速度是默认速度的 2 倍
+             * @member {number} egret.ScrollView#scrollSpeed
+             */
+            this.scrollSpeed = 1;
             this._content = null;
             this._verticalScrollPolicy = "auto";
             this._horizontalScrollPolicy = "auto";
@@ -66,12 +77,13 @@ var egret;
                 this.setContent(content);
             }
         }
+        var __egretProto__ = ScrollView.prototype;
         /**
          * 设置需要滚动的对象
          * @method egret.ScrollView#setContent
          * @param content {egret.DisplayObject} 需要滚动的对象
          */
-        ScrollView.prototype.setContent = function (content) {
+        __egretProto__.setContent = function (content) {
             if (this._content === content)
                 return;
             this.removeContent();
@@ -85,14 +97,14 @@ var egret;
          * 移除滚动的对象
          * @method egret.ScrollView#removeContent
          */
-        ScrollView.prototype.removeContent = function () {
+        __egretProto__.removeContent = function () {
             if (this._content) {
                 this._removeEvents();
                 _super.prototype.removeChildAt.call(this, 0);
             }
             this._content = null;
         };
-        Object.defineProperty(ScrollView.prototype, "verticalScrollPolicy", {
+        Object.defineProperty(__egretProto__, "verticalScrollPolicy", {
             /**
              * 垂直滚动条显示策略，on/off/auto。
              * @member egret.ScrollView#verticalScrollPolicy
@@ -108,7 +120,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(ScrollView.prototype, "horizontalScrollPolicy", {
+        Object.defineProperty(__egretProto__, "horizontalScrollPolicy", {
             /**
              * 水平滚动条显示策略，on/off/auto。
              * @member egret.ScrollView#horizontalScrollPolicy
@@ -124,7 +136,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(ScrollView.prototype, "scrollLeft", {
+        Object.defineProperty(__egretProto__, "scrollLeft", {
             /**
              * 获取或设置水平滚动位置,
              * @member {number} egret.ScrollView#scrollLeft
@@ -143,7 +155,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(ScrollView.prototype, "scrollTop", {
+        Object.defineProperty(__egretProto__, "scrollTop", {
             /**
              * 获取或设置垂直滚动位置,
              * @member {number} egret.ScrollView#scrollTop
@@ -169,7 +181,7 @@ var egret;
          * @param left {number} 水平滚动位置
          * @param isOffset {boolean} 可选参数，默认是false，是否是滚动增加量，如 top=1 代表往上滚动1像素
          */
-        ScrollView.prototype.setScrollPosition = function (top, left, isOffset) {
+        __egretProto__.setScrollPosition = function (top, left, isOffset) {
             if (isOffset === void 0) { isOffset = false; }
             if (isOffset && top == 0 && left == 0)
                 return;
@@ -188,7 +200,7 @@ var egret;
             this._validatePosition(true, true);
             this._updateContentPosition();
         };
-        ScrollView.prototype._isOnTheEdge = function (isVertical) {
+        __egretProto__._isOnTheEdge = function (isVertical) {
             if (isVertical === void 0) { isVertical = true; }
             var top = this._scrollTop, left = this._scrollLeft;
             if (isVertical)
@@ -196,7 +208,7 @@ var egret;
             else
                 return left < 0 || left > this.getMaxScrollLeft();
         };
-        ScrollView.prototype._validatePosition = function (top, left) {
+        __egretProto__._validatePosition = function (top, left) {
             if (top === void 0) { top = false; }
             if (left === void 0) { left = false; }
             if (top) {
@@ -215,7 +227,7 @@ var egret;
         /**
          * @inheritDoc
          */
-        ScrollView.prototype._setWidth = function (value) {
+        __egretProto__._setWidth = function (value) {
             if (this._explicitWidth == value)
                 return;
             _super.prototype._setWidth.call(this, value);
@@ -224,20 +236,20 @@ var egret;
         /**
          * @inheritDoc
          */
-        ScrollView.prototype._setHeight = function (value) {
+        __egretProto__._setHeight = function (value) {
             if (this._explicitHeight == value)
                 return;
             _super.prototype._setHeight.call(this, value);
             this._updateContentPosition();
         };
-        ScrollView.prototype._updateContentPosition = function () {
+        __egretProto__._updateContentPosition = function () {
             var size = this.getBounds(egret.Rectangle.identity);
             var height = size.height;
             var width = size.width;
             this.scrollRect = new egret.Rectangle(this._scrollLeft, this._scrollTop, width, height);
             this.dispatchEvent(new egret.Event(egret.Event.CHANGE));
         };
-        ScrollView.prototype._checkScrollPolicy = function () {
+        __egretProto__._checkScrollPolicy = function () {
             var hpolicy = this._horizontalScrollPolicy;
             var hCanScroll = this.__checkScrollPolicy(hpolicy, this._getContentWidth(), this.width);
             this._hCanScroll = hCanScroll;
@@ -246,31 +258,35 @@ var egret;
             this._vCanScroll = vCanScroll;
             return hCanScroll || vCanScroll;
         };
-        ScrollView.prototype.__checkScrollPolicy = function (policy, contentLength, viewLength) {
+        __egretProto__.__checkScrollPolicy = function (policy, contentLength, viewLength) {
             if (policy == "on")
                 return true;
             if (policy == "off")
                 return false;
             return contentLength > viewLength;
         };
-        ScrollView.prototype._addEvents = function () {
+        __egretProto__._addEvents = function () {
             this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
             this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBeginCapture, this, true);
             this.addEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEndCapture, this, true);
         };
-        ScrollView.prototype._removeEvents = function () {
+        __egretProto__._removeEvents = function () {
             this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBegin, this);
             this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onTouchBeginCapture, this, true);
             this.removeEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEndCapture, this, true);
         };
-        ScrollView.prototype._onTouchBegin = function (e) {
+        __egretProto__._onTouchBegin = function (e) {
             if (e._isDefaultPrevented)
                 return;
             var canScroll = this._checkScrollPolicy();
             if (!canScroll) {
                 return;
             }
-            egret.Tween.removeTweens(this);
+            this._touchStartPosition.x = e.stageX;
+            this._touchStartPosition.y = e.stageY;
+            if (this._isHTweenPlaying || this._isVTweenPlaying) {
+                this._onScrollFinished();
+            }
             this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this._onTouchMove, this);
             this.stage.addEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEnd, this);
             this.stage.addEventListener(egret.TouchEvent.LEAVE_STAGE, this._onTouchEnd, this);
@@ -278,14 +294,14 @@ var egret;
             this._logTouchEvent(e);
             e.preventDefault();
         };
-        ScrollView.prototype._onTouchBeginCapture = function (event) {
+        __egretProto__._onTouchBeginCapture = function (event) {
             var canScroll = this._checkScrollPolicy();
             if (!canScroll) {
                 return;
             }
             var target = event.target;
             while (target != this) {
-                if (target instanceof ScrollView) {
+                if ("_checkScrollPolicy" in target) {
                     canScroll = target._checkScrollPolicy();
                     if (canScroll) {
                         return;
@@ -303,42 +319,41 @@ var egret;
             this.touchBeginTimer.start();
             this._onTouchBegin(event);
         };
-        ScrollView.prototype._onTouchEndCapture = function (event) {
+        __egretProto__._onTouchEndCapture = function (event) {
             if (!this.delayTouchBeginEvent) {
                 return;
             }
             this._onTouchBeginTimer();
         };
-        ScrollView.prototype._onTouchBeginTimer = function () {
+        __egretProto__._onTouchBeginTimer = function () {
             this.touchBeginTimer.stop();
             var event = this.delayTouchBeginEvent;
             this.delayTouchBeginEvent = null;
-            this.dispatchPropagationEvent(event);
+            //Dispatch event only if the scroll view is still on the stage
+            if (this.stage)
+                this.dispatchPropagationEvent(event);
         };
-        ScrollView.prototype.dispatchPropagationEvent = function (event) {
+        __egretProto__.dispatchPropagationEvent = function (event) {
             var list = [];
             var target = event._target;
+            var scrollerIndex = 0;
             while (target) {
+                if (target == this)
+                    scrollerIndex = list.length;
                 list.push(target);
                 target = target.parent;
             }
-            var content = this._content;
-            for (var i = 1;; i += 2) {
-                target = list[i];
-                if (!target || target === content) {
-                    break;
-                }
-                list.unshift(target);
-            }
-            this._dispatchPropagationEvent(event, list);
+            var captureList = list.slice(0, scrollerIndex);
+            captureList = captureList.reverse();
+            list = captureList.concat(list);
+            var targetIndex = scrollerIndex;
+            this._dispatchPropagationEvent(event, list, targetIndex);
         };
-        //todo 此处代码是为了兼容之前的实现，应该尽快更优化的实现后删除
-        ScrollView.prototype._dispatchPropagationEvent = function (event, list, targetIndex) {
+        __egretProto__._dispatchPropagationEvent = function (event, list, targetIndex) {
             var length = list.length;
             for (var i = 0; i < length; i++) {
                 var currentTarget = list[i];
                 event._currentTarget = currentTarget;
-                event._target = this;
                 if (i < targetIndex)
                     event._eventPhase = 1;
                 else if (i == targetIndex)
@@ -351,9 +366,18 @@ var egret;
                 }
             }
         };
-        ScrollView.prototype._onTouchMove = function (event) {
+        __egretProto__._onTouchMove = function (event) {
             if (this._lastTouchPosition.x == event.stageX && this._lastTouchPosition.y == event.stageY)
                 return;
+            if (!this._scrollStarted) {
+                var x = event.stageX - this._touchStartPosition.x, y = event.stageY - this._touchStartPosition.y;
+                var distance = Math.sqrt(x * x + y * y);
+                if (distance < this.scrollBeginThreshold) {
+                    this._logTouchEvent(event);
+                    return;
+                }
+            }
+            this._scrollStarted = true;
             if (this.delayTouchBeginEvent) {
                 this.delayTouchBeginEvent = null;
                 this.touchBeginTimer.stop();
@@ -364,33 +388,34 @@ var egret;
             this._calcVelocitys(event);
             this._logTouchEvent(event);
         };
-        ScrollView.prototype._onTouchEnd = function (event) {
+        __egretProto__._onTouchEnd = function (event) {
             this.touchChildren = true;
+            this._scrollStarted = false;
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this._onTouchMove, this);
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this._onTouchEnd, this);
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.LEAVE_STAGE, this._onTouchEnd, this);
             this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
             this._moveAfterTouchEnd();
         };
-        ScrollView.prototype._onEnterFrame = function (event) {
+        __egretProto__._onEnterFrame = function (event) {
             var time = egret.getTimer();
             if (time - this._lastTouchTime > 100 && time - this._lastTouchTime < 300) {
                 this._calcVelocitys(this._lastTouchEvent);
             }
         };
-        ScrollView.prototype._logTouchEvent = function (e) {
+        __egretProto__._logTouchEvent = function (e) {
             this._lastTouchPosition.x = e.stageX;
             this._lastTouchPosition.y = e.stageY;
             this._lastTouchEvent = this.cloneTouchEvent(e);
             this._lastTouchTime = egret.getTimer();
         };
-        ScrollView.prototype._getPointChange = function (e) {
+        __egretProto__._getPointChange = function (e) {
             return {
                 x: this._hCanScroll === false ? 0 : (this._lastTouchPosition.x - e.stageX),
                 y: this._vCanScroll === false ? 0 : (this._lastTouchPosition.y - e.stageY)
             };
         };
-        ScrollView.prototype._calcVelocitys = function (e) {
+        __egretProto__._calcVelocitys = function (e) {
             var time = egret.getTimer();
             if (this._lastTouchTime == 0) {
                 this._lastTouchTime = time;
@@ -406,21 +431,21 @@ var egret;
             this._lastTouchPosition.x = e.stageX;
             this._lastTouchPosition.y = e.stageY;
         };
-        ScrollView.prototype._getContentWidth = function () {
+        __egretProto__._getContentWidth = function () {
             return this._content.explicitWidth || this._content.width;
         };
-        ScrollView.prototype._getContentHeight = function () {
+        __egretProto__._getContentHeight = function () {
             return this._content.explicitHeight || this._content.height;
         };
-        ScrollView.prototype.getMaxScrollLeft = function () {
+        __egretProto__.getMaxScrollLeft = function () {
             var max = this._getContentWidth() - this.width;
             return Math.max(0, max);
         };
-        ScrollView.prototype.getMaxScrollTop = function () {
+        __egretProto__.getMaxScrollTop = function () {
             var max = this._getContentHeight() - this.height;
             return Math.max(0, max);
         };
-        ScrollView.prototype._moveAfterTouchEnd = function () {
+        __egretProto__._moveAfterTouchEnd = function () {
             if (this._velocitys.length == 0)
                 return;
             var sum = { x: 0, y: 0 }, totalW = 0;
@@ -432,7 +457,9 @@ var egret;
                 totalW += w;
             }
             this._velocitys.length = 0;
-            var x = sum.x / totalW, y = sum.y / totalW;
+            if (this.scrollSpeed <= 0)
+                this.scrollSpeed = 1;
+            var x = sum.x / totalW * this.scrollSpeed, y = sum.y / totalW * this.scrollSpeed;
             var pixelsPerMSX = Math.abs(x), pixelsPerMSY = Math.abs(y);
             var maxLeft = this.getMaxScrollLeft();
             var maxTop = this.getMaxScrollTop();
@@ -441,31 +468,62 @@ var egret;
             this.setScrollLeft(datax.position, datax.duration);
             this.setScrollTop(datay.position, datay.duration);
         };
-        ScrollView.prototype.setScrollTop = function (scrollTop, duration) {
+        __egretProto__._onTweenFinished = function (tw) {
+            if (tw == this._vScrollTween)
+                this._isVTweenPlaying = false;
+            if (tw == this._hScrollTween)
+                this._isHTweenPlaying = false;
+            if (this._isHTweenPlaying == false && this._isVTweenPlaying == false) {
+                this._onScrollFinished();
+            }
+        };
+        __egretProto__._onScrollStarted = function () {
+        };
+        __egretProto__._onScrollFinished = function () {
+            egret.Tween.removeTweens(this);
+            this._hScrollTween = null;
+            this._vScrollTween = null;
+            this._isHTweenPlaying = false;
+            this._isVTweenPlaying = false;
+            this.dispatchEvent(new egret.Event(egret.Event.COMPLETE));
+        };
+        __egretProto__.setScrollTop = function (scrollTop, duration) {
             if (duration === void 0) { duration = 0; }
             var finalPosition = Math.min(this.getMaxScrollTop(), Math.max(scrollTop, 0));
             if (duration == 0) {
                 this.scrollTop = finalPosition;
                 return null;
             }
-            var twy = egret.Tween.get(this).to({ scrollTop: scrollTop }, duration, egret.Ease.quartOut);
+            var vtween = egret.Tween.get(this).to({ scrollTop: scrollTop }, duration, egret.Ease.quartOut);
             if (finalPosition != scrollTop) {
-                twy.to({ scrollTop: finalPosition }, 300, egret.Ease.quintOut);
+                vtween.to({ scrollTop: finalPosition }, 300, egret.Ease.quintOut);
             }
+            this._isVTweenPlaying = true;
+            this._vScrollTween = vtween;
+            vtween.call(this._onTweenFinished, this, [vtween]);
+            if (!this._isHTweenPlaying)
+                this._onScrollStarted();
+            return vtween;
         };
-        ScrollView.prototype.setScrollLeft = function (scrollLeft, duration) {
+        __egretProto__.setScrollLeft = function (scrollLeft, duration) {
             if (duration === void 0) { duration = 0; }
             var finalPosition = Math.min(this.getMaxScrollLeft(), Math.max(scrollLeft, 0));
             if (duration == 0) {
                 this.scrollLeft = finalPosition;
                 return null;
             }
-            var tw = egret.Tween.get(this).to({ scrollLeft: scrollLeft }, duration, egret.Ease.quartOut);
+            var htween = egret.Tween.get(this).to({ scrollLeft: scrollLeft }, duration, egret.Ease.quartOut);
             if (finalPosition != scrollLeft) {
-                tw.to({ scrollLeft: finalPosition }, 300, egret.Ease.quintOut);
+                htween.to({ scrollLeft: finalPosition }, 300, egret.Ease.quintOut);
             }
+            this._isHTweenPlaying = true;
+            this._hScrollTween = htween;
+            htween.call(this._onTweenFinished, this, [htween]);
+            if (!this._isVTweenPlaying)
+                this._onScrollStarted();
+            return htween;
         };
-        ScrollView.prototype.getAnimationDatas = function (pixelsPerMS, curPos, maxPos) {
+        __egretProto__.getAnimationDatas = function (pixelsPerMS, curPos, maxPos) {
             var absPixelsPerMS = Math.abs(pixelsPerMS);
             var extraFricition = 0.95;
             var duration = 0;
@@ -494,7 +552,7 @@ var egret;
             };
             return result;
         };
-        ScrollView.prototype.cloneTouchEvent = function (event) {
+        __egretProto__.cloneTouchEvent = function (event) {
             var evt = new egret.TouchEvent(event._type, event._bubbles, event.cancelable);
             evt.touchPointID = event.touchPointID;
             evt._stageX = event._stageX;
@@ -507,8 +565,8 @@ var egret;
             evt._target = event._target;
             return evt;
         };
-        ScrollView.prototype.throwNotSupportedError = function () {
-            throw new Error("此方法在ScrollView内不可用!");
+        __egretProto__.throwNotSupportedError = function () {
+            throw new Error(egret.getString(1023));
         };
         /**
          * @method egret.ScrollView#addChild
@@ -516,7 +574,7 @@ var egret;
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
-        ScrollView.prototype.addChild = function (child) {
+        __egretProto__.addChild = function (child) {
             this.throwNotSupportedError();
             return null;
         };
@@ -527,7 +585,7 @@ var egret;
          * @param index {number}
          * @returns {DisplayObject}
          */
-        ScrollView.prototype.addChildAt = function (child, index) {
+        __egretProto__.addChildAt = function (child, index) {
             this.throwNotSupportedError();
             return null;
         };
@@ -537,7 +595,7 @@ var egret;
          * @param child {DisplayObject}
          * @returns {DisplayObject}
          */
-        ScrollView.prototype.removeChild = function (child) {
+        __egretProto__.removeChild = function (child) {
             this.throwNotSupportedError();
             return null;
         };
@@ -547,7 +605,7 @@ var egret;
          * @param index {number}
          * @returns {DisplayObject}
          */
-        ScrollView.prototype.removeChildAt = function (index) {
+        __egretProto__.removeChildAt = function (index) {
             this.throwNotSupportedError();
             return null;
         };
@@ -557,7 +615,7 @@ var egret;
          * @param child {DisplayObject}
          * @param index {number}
          */
-        ScrollView.prototype.setChildIndex = function (child, index) {
+        __egretProto__.setChildIndex = function (child, index) {
             this.throwNotSupportedError();
         };
         /**
@@ -566,7 +624,7 @@ var egret;
          * @param child1 {DisplayObject}
          * @param child2 {DisplayObject}
          */
-        ScrollView.prototype.swapChildren = function (child1, child2) {
+        __egretProto__.swapChildren = function (child1, child2) {
             this.throwNotSupportedError();
         };
         /**
@@ -575,10 +633,10 @@ var egret;
          * @param index1 {number}
          * @param index2 {number}
          */
-        ScrollView.prototype.swapChildrenAt = function (index1, index2) {
+        __egretProto__.swapChildrenAt = function (index1, index2) {
             this.throwNotSupportedError();
         };
-        ScrollView.prototype.hitTest = function (x, y, ignoreTouchEnabled) {
+        __egretProto__.hitTest = function (x, y, ignoreTouchEnabled) {
             if (ignoreTouchEnabled === void 0) { ignoreTouchEnabled = false; }
             var childTouched = _super.prototype.hitTest.call(this, x, y, ignoreTouchEnabled);
             if (childTouched)

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
@@ -39,6 +33,7 @@ var egret;
      * Rectangle 类的 x、y、width 和 height 属性相互独立；更改一个属性的值不会影响其他属性。
      * 但是，right 和 bottom 属性与这四个属性是整体相关的。例如，如果更改 right 属性的值，则 width 属性的值将发生变化；如果更改 bottom 属性，则 height 属性的值将发生变化。
      * @extends egret.HashObject
+     * @link http://docs.egret-labs.org/post/manual/graphics/drawrect.html 绘制矩形
      */
     var Rectangle = (function (_super) {
         __extends(Rectangle, _super);
@@ -53,7 +48,8 @@ var egret;
             this.width = width;
             this.height = height;
         }
-        Object.defineProperty(Rectangle.prototype, "right", {
+        var __egretProto__ = Rectangle.prototype;
+        Object.defineProperty(__egretProto__, "right", {
             /**
              * x 和 width 属性的和。
              * @member {number} egret.Rectangle#right
@@ -67,7 +63,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Rectangle.prototype, "bottom", {
+        Object.defineProperty(__egretProto__, "bottom", {
             /**
              * y 和 height 属性的和。
              * @member {number} egret.Rectangle#bottom
@@ -90,7 +86,7 @@ var egret;
          * @param height {number} 矩形的高度
          * @returns {egret.Rectangle}
          */
-        Rectangle.prototype.initialize = function (x, y, width, height) {
+        __egretProto__.initialize = function (x, y, width, height) {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -104,7 +100,7 @@ var egret;
          * @param y {number} 检测点的y轴
          * @returns {boolean} 如果检测点位于矩形内，返回true，否则，返回false
          */
-        Rectangle.prototype.contains = function (x, y) {
+        __egretProto__.contains = function (x, y) {
             return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
         };
         /**
@@ -113,10 +109,10 @@ var egret;
          * @param toIntersect {egret.Rectangle} 要与此 Rectangle 对象比较的 Rectangle 对象。
          * @returns {boolean} 如果两个矩形相交，返回true，否则返回false
          */
-        Rectangle.prototype.intersects = function (toIntersect) {
+        __egretProto__.intersects = function (toIntersect) {
             return Math.max(this.x, toIntersect.x) <= Math.min(this.right, toIntersect.right) && Math.max(this.y, toIntersect.y) <= Math.min(this.bottom, toIntersect.bottom);
         };
-        Rectangle.prototype.setEmpty = function () {
+        __egretProto__.setEmpty = function () {
             this.x = 0;
             this.y = 0;
             this.width = 0;
@@ -127,7 +123,7 @@ var egret;
          * @method egret.Rectangle#clone
          * @returns {egret.Rectangle} 返回克隆后的矩形
          */
-        Rectangle.prototype.clone = function () {
+        __egretProto__.clone = function () {
             return new Rectangle(this.x, this.y, this.width, this.height);
         };
         /**
@@ -137,7 +133,7 @@ var egret;
          * @param point {egret.Point} 包含点对象
          * @returns {boolean} 如果包含，返回true，否则返回false
          */
-        Rectangle.prototype.containsPoint = function (point) {
+        __egretProto__.containsPoint = function (point) {
             if (this.x < point.x && this.x + this.width > point.x && this.y < point.y && this.y + this.height > point.y) {
                 return true;
             }

@@ -1,9 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var skins;
 (function (skins) {
     var simple;
@@ -16,8 +10,7 @@ var skins;
                 this.minHeight = 22;
                 this.elementsContent = [this.__7_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
+                    new egret.gui.State("up", []),
                     new egret.gui.State("down", [
                         new egret.gui.SetProperty("__7", "source", "tree_btndown_png")
                     ]),
@@ -35,7 +28,8 @@ var skins;
                     ])
                 ];
             }
-            TreeDisclosureButtonSkin.prototype.__7_i = function () {
+            var __egretProto__ = TreeDisclosureButtonSkin.prototype;
+            __egretProto__.__7_i = function () {
                 var t = new egret.gui.UIAsset();
                 this.__7 = t;
                 this.__s(t, ["percentHeight", "source", "percentWidth"], [100, "tree_btnup_png", 100]);

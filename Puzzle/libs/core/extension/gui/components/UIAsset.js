@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -37,7 +31,7 @@ var egret;
         /**
          * @class egret.gui.UIAsset
          * @classdesc
-         * 素材和非GUI显示对象包装器包装器。<p/>
+         * 素材和非GUI显示对象包装器。<p/>
          * @extends egret.gui.UIComponent
          * @implements egret.gui.ISkinnableClient
          */
@@ -67,6 +61,7 @@ var egret;
                 this.sourceChanged = false;
                 this._source = null;
                 this._content = null;
+                this._contentIsTexture = false;
                 this.createChildrenCalled = false;
                 this.contentReused = false;
                 /**
@@ -79,7 +74,8 @@ var egret;
                 }
                 this.autoScale = autoScale;
             }
-            Object.defineProperty(UIAsset.prototype, "source", {
+            var __egretProto__ = UIAsset.prototype;
+            Object.defineProperty(__egretProto__, "source", {
                 /**
                  * 素材标识符。可以为Class,String,或DisplayObject实例等任意类型，具体规则由项目注入的素材适配器决定，
                  * 适配器根据此属性值解析获取对应的显示对象，并赋值给content属性。
@@ -103,7 +99,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(UIAsset.prototype, "content", {
+            Object.defineProperty(__egretProto__, "content", {
                 /**
                  * 解析source得到的对象，通常为显示对象或Texture。
                  * @member egret.gui.UIAsset#content
@@ -115,8 +111,9 @@ var egret;
                 configurable: true
             });
             /**
+             * 创建该容器的子元素对象
              */
-            UIAsset.prototype.createChildren = function () {
+            __egretProto__.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 if (this.sourceChanged) {
                     this.parseSource();
@@ -126,7 +123,7 @@ var egret;
             /**
              * 解析source
              */
-            UIAsset.prototype.parseSource = function () {
+            __egretProto__.parseSource = function () {
                 this.sourceChanged = false;
                 var adapter = UIAsset.assetAdapter;
                 if (!adapter) {
@@ -144,7 +141,7 @@ var egret;
             /**
              * 获取资源适配器
              */
-            UIAsset.prototype.getAdapter = function () {
+            __egretProto__.getAdapter = function () {
                 var adapter;
                 try {
                     adapter = egret.Injector.getInstance("egret.gui.IAssetAdapter");
@@ -158,11 +155,19 @@ var egret;
             /**
              * 皮肤发生改变
              */
-            UIAsset.prototype.contentChanged = function (content, source) {
+            __egretProto__.contentChanged = function (content, source) {
                 if (source !== this._source)
                     return;
                 var oldContent = this._content;
                 this._content = content;
+                if (this._content instanceof egret.Texture) {
+                    this._texture_to_render = content;
+                    this._contentIsTexture = true;
+                }
+                else {
+                    this._texture_to_render = null;
+                    this._contentIsTexture = false;
+                }
                 if (oldContent !== content) {
                     if (oldContent instanceof egret.DisplayObject) {
                         if (oldContent.parent == this) {
@@ -184,7 +189,10 @@ var egret;
                     gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.CONTENT_CHANGED);
                 }
             };
-            UIAsset.prototype.measure = function () {
+            /**
+             * 计算组件的默认大小和（可选）默认最小大小
+             */
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 var content = this._content;
                 if (content instanceof egret.DisplayObject) {
@@ -203,16 +211,17 @@ var egret;
                         content.height = oldH;
                     }
                 }
-                else if (content instanceof egret.Texture) {
+                else if (this._contentIsTexture) {
                     this.measuredWidth = content._textureWidth;
                     this.measuredHeight = content._textureHeight;
                 }
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
-            UIAsset.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 var content = this._content;
                 if (this.autoScale && content instanceof egret.DisplayObject) {
@@ -226,10 +235,14 @@ var egret;
                 }
                 this._setSizeDirty();
             };
-            UIAsset.prototype._render = function (renderContext) {
-                if (this._content instanceof egret.Texture) {
+            /**
+             *
+             * @param renderContext
+             * @private
+             */
+            __egretProto__._render = function (renderContext) {
+                if (this._contentIsTexture) {
                     var texture = this._content;
-                    this._texture_to_render = texture;
                     var w;
                     var h;
                     if (this.autoScale) {
@@ -240,10 +253,8 @@ var egret;
                         w = texture._textureWidth;
                         h = texture._textureHeight;
                     }
+                    this._texture_to_render = texture;
                     egret.Bitmap._drawBitmap(renderContext, w, h, this);
-                }
-                else {
-                    this._texture_to_render = null;
                 }
                 _super.prototype._render.call(this, renderContext);
             };
@@ -251,8 +262,8 @@ var egret;
              * @returns {Rectangle}
              * @private
              */
-            UIAsset.prototype._measureBounds = function () {
-                if (this._content instanceof egret.Texture) {
+            __egretProto__._measureBounds = function () {
+                if (this._contentIsTexture) {
                     var texture = this._content;
                     var textureW = texture._textureWidth;
                     var textureH = texture._textureHeight;
@@ -265,67 +276,73 @@ var egret;
                 return _super.prototype._measureBounds.call(this);
             };
             /**
+             * 此方法不支持
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
-            UIAsset.prototype.addChild = function (child) {
-                throw (new Error("addChild()" + UIAsset.errorStr + "addElement()代替"));
+            __egretProto__.addChild = function (child) {
+                throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
-             * @deprecated
-             * @param child {DisplayObject}
-             * @param index {number}
-             * @returns {DisplayObject}
-             */
-            UIAsset.prototype.addChildAt = function (child, index) {
-                throw (new Error("addChildAt()" + UIAsset.errorStr + "addElementAt()代替"));
-            };
-            /**
-             * @deprecated
-             * @param child {DisplayObject}
-             * @returns {DisplayObject}
-             */
-            UIAsset.prototype.removeChild = function (child) {
-                throw (new Error("removeChild()" + UIAsset.errorStr + "removeElement()代替"));
-            };
-            /**
-             * @deprecated
-             * @param index {number}
-             * @returns {DisplayObject}
-             */
-            UIAsset.prototype.removeChildAt = function (index) {
-                throw (new Error("removeChildAt()" + UIAsset.errorStr + "removeElementAt()代替"));
-            };
-            /**
+             * 此方法不支持
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
+             * @returns {DisplayObject}
              */
-            UIAsset.prototype.setChildIndex = function (child, index) {
-                throw (new Error("setChildIndex()" + UIAsset.errorStr + "setElementIndex()代替"));
+            __egretProto__.addChildAt = function (child, index) {
+                throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
             /**
+             * 此方法不支持
+             * @deprecated
+             * @param child {DisplayObject}
+             * @returns {DisplayObject}
+             */
+            __egretProto__.removeChild = function (child) {
+                throw (new Error(egret.getString(3006, egret.getString(3003))));
+            };
+            /**
+             * 此方法不支持
+             * @deprecated
+             * @param index {number}
+             * @returns {DisplayObject}
+             */
+            __egretProto__.removeChildAt = function (index) {
+                throw (new Error(egret.getString(3007, egret.getString(3003))));
+            };
+            /**
+             * 此方法不支持
+             * @deprecated
+             * @param child {DisplayObject}
+             * @param index {number}
+             */
+            __egretProto__.setChildIndex = function (child, index) {
+                throw (new Error(egret.getString(3008, egret.getString(3003))));
+            };
+            /**
+             * 此方法不支持
              * @deprecated
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
-            UIAsset.prototype.swapChildren = function (child1, child2) {
-                throw (new Error("swapChildren()" + UIAsset.errorStr + "swapElements()代替"));
+            __egretProto__.swapChildren = function (child1, child2) {
+                throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
+             * 此方法不支持
              * @deprecated
              * @param index1 {number}
              * @param index2 {number}
              */
-            UIAsset.prototype.swapChildrenAt = function (index1, index2) {
-                throw (new Error("swapChildrenAt()" + UIAsset.errorStr + "swapElementsAt()代替"));
+            __egretProto__.swapChildrenAt = function (index1, index2) {
+                throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
             /**
              * 皮肤解析适配器
              */
             UIAsset.assetAdapter = null;
-            UIAsset.errorStr = "在此组件中不可用，若此组件为容器类，请使用";
             return UIAsset;
         })(gui.UIComponent);
         gui.UIAsset = UIAsset;

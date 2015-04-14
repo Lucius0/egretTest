@@ -15,12 +15,6 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var RES;
 (function (RES) {
     var JsonAnalyzer = (function (_super) {
@@ -29,10 +23,11 @@ var RES;
             _super.call(this);
             this._dataFormat = egret.URLLoaderDataFormat.TEXT;
         }
+        var __egretProto__ = JsonAnalyzer.prototype;
         /**
          * 解析并缓存加载成功的数据
          */
-        JsonAnalyzer.prototype.analyzeData = function (resItem, data) {
+        __egretProto__.analyzeData = function (resItem, data) {
             var name = resItem.name;
             if (this.fileDic[name] || !data) {
                 return;
@@ -42,7 +37,7 @@ var RES;
                 this.fileDic[name] = JSON.parse(str);
             }
             catch (e) {
-                egret.Logger.warning("JSON文件格式不正确: " + resItem.url + "\ndata:" + data);
+                egret.Logger.warningWithErrorId(1017, resItem.url, data);
             }
         };
         return JsonAnalyzer;

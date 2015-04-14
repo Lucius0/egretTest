@@ -36,6 +36,45 @@ var egret;
     var Logger = (function () {
         function Logger() {
         }
+        var __egretProto__ = Logger.prototype;
+        /**
+         * @private
+         * @param logType
+         */
+        Logger.openLogByType = function (logType) {
+            if (Logger.logFuncs == null) {
+                Logger.logFuncs = { "error": console.error, "debug": console.debug, "warn": console.warn, "info": console.info, "log": console.log };
+            }
+            switch (logType) {
+                case Logger.OFF:
+                    console.error = function () {
+                    };
+                case Logger.ERROR:
+                    console.warn = function () {
+                    };
+                case Logger.WARN:
+                    console.info = function () {
+                    };
+                    console.log = function () {
+                    };
+                case Logger.INFO:
+                    console.debug = function () {
+                    };
+                default: break;
+            }
+            switch (logType) {
+                case Logger.ALL:
+                    console.debug = Logger.logFuncs["debug"];
+                case Logger.INFO:
+                    console.log = Logger.logFuncs["log"];
+                    console.info = Logger.logFuncs["info"];
+                case Logger.WARN:
+                    console.warn = Logger.logFuncs["warn"];
+                case Logger.ERROR:
+                    console.error = Logger.logFuncs["error"];
+                default: break;
+            }
+        };
         /**
          * 表示出现了致命错误，开发者必须修复错误
          * @method egret.Logger.fatal
@@ -67,6 +106,48 @@ var egret;
             if (value === void 0) { value = null; }
             egret.Logger.traceToConsole("Warning", actionCode, value);
         };
+        Logger.fatalWithErrorId = function (errorId) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            args.unshift(errorId);
+            var actionCode = getString.apply(null, args);
+            if (actionCode) {
+                Logger.fatal(actionCode);
+            }
+            else {
+                Logger.warning(getString(-1, errorId));
+            }
+        };
+        Logger.infoWithErrorId = function (errorId) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            args.unshift(errorId);
+            var actionCode = getString.apply(null, args);
+            if (actionCode) {
+                Logger.info(actionCode);
+            }
+            else {
+                Logger.warning(getString(-1, errorId));
+            }
+        };
+        Logger.warningWithErrorId = function (errorId) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            args.unshift(errorId);
+            var actionCode = getString.apply(null, args);
+            if (actionCode) {
+                Logger.warning(actionCode);
+            }
+            else {
+                Logger.warning(getString(-1, errorId));
+            }
+        };
         /**
          * @private
          * @param type
@@ -84,10 +165,31 @@ var egret;
          * @returns {string}
          */
         Logger.getTraceCode = function (type, actionCode, value) {
-            return "[" + type + "]" + actionCode + ":" + (value == null ? "" : value);
+            return "[" + type + "]" + actionCode + (value == null ? "" : ":" + value);
         };
+        Logger.ALL = "all";
+        Logger.DEBUG = "debug";
+        Logger.INFO = "info";
+        Logger.WARN = "warn";
+        Logger.ERROR = "error";
+        Logger.OFF = "off";
         return Logger;
     })();
     egret.Logger = Logger;
     Logger.prototype.__class__ = "egret.Logger";
+    function getString(id) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        var message = egret.egret_string_code[id];
+        if (message) {
+            var length = args.length;
+            for (var i = 0; i < length; i++) {
+                message = message.replace("{" + i + "}", args[i]);
+            }
+        }
+        return message;
+    }
+    egret.getString = getString;
 })(egret || (egret = {}));

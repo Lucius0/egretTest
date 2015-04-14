@@ -26,6 +26,10 @@
  */
 var egret;
 (function (egret) {
+    /**
+     *
+     * @private
+     */
     var WebGLShaderManager = (function () {
         function WebGLShaderManager(gl) {
             this.gl = null;
@@ -36,26 +40,29 @@ var egret;
             this.defaultShader = null;
             this.primitiveShader = null;
             this.colorTransformShader = null;
+            this.blurShader = null;
             for (var i = 0; i < this.maxAttibs; i++) {
                 this.attribState[i] = false;
             }
             this.setContext(gl);
         }
-        WebGLShaderManager.prototype.setContext = function (gl) {
+        var __egretProto__ = WebGLShaderManager.prototype;
+        __egretProto__.setContext = function (gl) {
             this.gl = gl;
             this.primitiveShader = new egret.PrimitiveShader(gl);
             this.defaultShader = new egret.EgretShader(gl);
             this.colorTransformShader = new egret.ColorTransformShader(gl);
+            this.blurShader = new egret.BlurShader(gl);
             this.activateShader(this.defaultShader);
         };
-        WebGLShaderManager.prototype.activateShader = function (shader) {
+        __egretProto__.activateShader = function (shader) {
             if (this.currentShader != shader) {
                 this.gl.useProgram(shader.program);
                 this.setAttribs(shader.attributes);
                 this.currentShader = shader;
             }
         };
-        WebGLShaderManager.prototype.setAttribs = function (attribs) {
+        __egretProto__.setAttribs = function (attribs) {
             var i;
             var l;
             l = this.tempAttribState.length;

@@ -24,23 +24,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
      * @class egret.URLRequest
      * @classdesc URLRequest 类可捕获单个 HTTP 请求中的所有信息。
      * @extends egret.HashObject
+     * @link http://docs.egret-labs.org/post/manual/net/createconnect.html 构建通信请求
      */
     var URLRequest = (function (_super) {
         __extends(URLRequest, _super);
         /**
-         * 实例化一个URLRequest对象
+         * 创建一个 egret.URLRequest 对象
          * @method egret.URLRequest#constructor
          * @param url {string} 进行网络请求的地址
          */
@@ -72,6 +67,7 @@ var egret;
             this.url = "";
             this.url = url;
         }
+        var __egretProto__ = URLRequest.prototype;
         return URLRequest;
     })(egret.HashObject);
     egret.URLRequest = URLRequest;

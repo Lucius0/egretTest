@@ -61,18 +61,29 @@ var egret;
                 this.lowerBoundReference = lowerBoundReference;
                 this.upperBoundReference = upperBoundReference;
             }
-            Object.defineProperty(UILayer.prototype, "numElements", {
+            var __egretProto__ = UILayer.prototype;
+            Object.defineProperty(__egretProto__, "numElements", {
                 get: function () {
                     return this.owner[this.upperBoundReference] - this.owner[this.lowerBoundReference];
                 },
                 enumerable: true,
                 configurable: true
             });
-            UILayer.prototype.getElementAt = function (index) {
+            /**
+             * 返回指定索引处的可视元素
+             * @param index
+             * @returns {IVisualElement}
+             */
+            __egretProto__.getElementAt = function (index) {
                 var retval = this.owner[this.raw_getElementAt](this.owner[this.lowerBoundReference] + index);
                 return retval;
             };
-            UILayer.prototype.addElement = function (element) {
+            /**
+             * 将可视元素添加到此容器中
+             * @param element
+             * @returns {IVisualElement}
+             */
+            __egretProto__.addElement = function (element) {
                 var index = this.owner[this.upperBoundReference];
                 if (element.parent === this.owner)
                     index--;
@@ -81,13 +92,24 @@ var egret;
                 element.ownerChanged(this);
                 return element;
             };
-            UILayer.prototype.addElementAt = function (element, index) {
+            /**
+             * 将可视元素添加到此容器中
+             * @param element
+             * @param index
+             * @returns {IVisualElement}
+             */
+            __egretProto__.addElementAt = function (element, index) {
                 this.owner[this.upperBoundReference]++;
                 this.owner[this.raw_addElementAt](element, this.owner[this.lowerBoundReference] + index);
                 element.ownerChanged(this);
                 return element;
             };
-            UILayer.prototype.removeElement = function (element) {
+            /**
+             * 从此容器的子列表中删除指定的可视元素
+             * @param element
+             * @returns {IVisualElement}
+             */
+            __egretProto__.removeElement = function (element) {
                 var index = this.owner[this.raw_getElementIndex](element);
                 if (this.owner[this.lowerBoundReference] <= index && index < this.owner[this.upperBoundReference]) {
                     this.owner[this.raw_removeElement](element);
@@ -96,7 +118,12 @@ var egret;
                 element.ownerChanged(null);
                 return element;
             };
-            UILayer.prototype.removeElementAt = function (index) {
+            /**
+             * 从容器中的指定索引位置删除可视元素
+             * @param index
+             * @returns {IVisualElement}
+             */
+            __egretProto__.removeElementAt = function (index) {
                 index += this.owner[this.lowerBoundReference];
                 var element;
                 if (this.owner[this.lowerBoundReference] <= index && index < this.owner[this.upperBoundReference]) {
@@ -106,12 +133,22 @@ var egret;
                 element.ownerChanged(null);
                 return element;
             };
-            UILayer.prototype.getElementIndex = function (element) {
+            /**
+             * 返回可视元素的索引位置
+             * @param element
+             * @returns {number}
+             */
+            __egretProto__.getElementIndex = function (element) {
                 var retval = this.owner[this.raw_getElementIndex](element);
                 retval -= this.owner[this.lowerBoundReference];
                 return retval;
             };
-            UILayer.prototype.setElementIndex = function (element, index) {
+            /**
+             * 在可视容器中更改现有可视元素的位置
+             * @param element
+             * @param index
+             */
+            __egretProto__.setElementIndex = function (element, index) {
                 this.owner[this.raw_setElementIndex](element, this.owner[this.lowerBoundReference] + index);
             };
             return UILayer;

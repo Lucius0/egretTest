@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
@@ -37,6 +31,7 @@ var egret;
      * @classdesc
      * MainContext是游戏的核心跨平台接口，组合了多个功能Context，并是游戏启动的主入口
      * @extends egret.EventDispatcher
+     * @private
      */
     var MainContext = (function (_super) {
         __extends(MainContext, _super);
@@ -69,20 +64,22 @@ var egret;
             this.stage = null;
             this.reuseEvent = new egret.Event("");
         }
+        var __egretProto__ = MainContext.prototype;
         /**
          * 游戏启动，开启主循环，参考Flash的滑动跑道模型
          * @method egret.MainContext#run
          */
-        MainContext.prototype.run = function () {
+        __egretProto__.run = function () {
             egret.Ticker.getInstance().run();
             egret.Ticker.getInstance().register(this.renderLoop, this, Number.NEGATIVE_INFINITY);
             egret.Ticker.getInstance().register(this.broadcastEnterFrame, this, Number.POSITIVE_INFINITY);
             this.touchContext.run();
+            this._profileInstance = egret.Profiler.getInstance();
         };
         /**
          * 滑动跑道模型，渲染部分
          */
-        MainContext.prototype.renderLoop = function (frameTime) {
+        __egretProto__.renderLoop = function (frameTime) {
             if (egret.__callLaterFunctionList.length > 0) {
                 var functionList = egret.__callLaterFunctionList;
                 egret.__callLaterFunctionList = [];
@@ -108,18 +105,38 @@ var egret;
             var context = this.rendererContext;
             context.onRenderStart();
             context.clearScreen();
+            MainContext.__DRAW_COMMAND_LIST = [];
+            MainContext._renderLoopPhase = "updateTransform";
             stage._updateTransform();
+            MainContext._renderLoopPhase = "draw";
             event._type = egret.Event.FINISH_UPDATE_TRANSFORM;
             this.dispatchEvent(event);
-            stage._draw(context);
+            if (MainContext.__use_new_draw) {
+                this._draw(context);
+            }
+            else {
+                stage._draw(context);
+            }
             event._type = egret.Event.FINISH_RENDER;
             this.dispatchEvent(event);
+            if (this._profileInstance._isRunning) {
+                this._profileInstance._drawProfiler(context);
+            }
             context.onRenderFinish();
+        };
+        __egretProto__._draw = function (context) {
+            var list = MainContext.__DRAW_COMMAND_LIST;
+            var length = list.length;
+            for (var i = 0; i < length; i++) {
+                var cmd = list[i];
+                cmd.call(context);
+                cmd.dispose();
+            }
         };
         /**
          * 广播EnterFrame事件。
          */
-        MainContext.prototype.broadcastEnterFrame = function (frameTime) {
+        __egretProto__.broadcastEnterFrame = function (frameTime) {
             var event = this.reuseEvent;
             event._type = egret.Event.ENTER_FRAME;
             this.dispatchEvent(event);
@@ -139,7 +156,7 @@ var egret;
         /**
          * 广播Render事件。
          */
-        MainContext.prototype.broadcastRender = function () {
+        __egretProto__.broadcastRender = function () {
             var event = this.reuseEvent;
             event._type = egret.Event.RENDER;
             var list = egret.DisplayObject._renderCallBackList.concat();
@@ -155,7 +172,7 @@ var egret;
         /**
          * 执行callLater回调函数列表
          */
-        MainContext.prototype.doCallLaterList = function (funcList, thisList, argsList) {
+        __egretProto__.doCallLaterList = function (funcList, thisList, argsList) {
             var length = funcList.length;
             for (var i = 0; i < length; i++) {
                 var func = funcList[i];
@@ -167,7 +184,7 @@ var egret;
         /**
          * 执行callAsync回调函数列表
          */
-        MainContext.prototype.doCallAsyncList = function () {
+        __egretProto__.doCallAsyncList = function () {
             var locCallAsyncFunctionList = egret.__callAsyncFunctionList.concat();
             var locCallAsyncThisList = egret.__callAsyncThisList.concat();
             var locCallAsyncArgsList = egret.__callAsyncArgsList.concat();
@@ -184,8 +201,11 @@ var egret;
         MainContext.deviceType = null;
         MainContext.DEVICE_PC = "web";
         MainContext.DEVICE_MOBILE = "native";
-        MainContext.RUNTIME_HTML5 = "runtime_html5";
-        MainContext.RUNTIME_NATIVE = "runtime_native";
+        MainContext.RUNTIME_HTML5 = "runtimeHtml5";
+        MainContext.RUNTIME_NATIVE = "runtimeNative";
+        MainContext.__DRAW_COMMAND_LIST = [];
+        //是否使用新的draw机制
+        MainContext.__use_new_draw = true;
         MainContext.cachedEvent = new egret.Event("");
         return MainContext;
     })(egret.EventDispatcher);

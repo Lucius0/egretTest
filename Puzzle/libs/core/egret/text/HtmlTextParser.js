@@ -28,14 +28,21 @@ var egret;
 (function (egret) {
     /**
      * @class egret.HtmlTextParser
-     * @classdesc
-     *
+     * @classdesc 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
+     * @link http://docs.egret-labs.org/jkdoc/manual-text-multiformat.html 多种样式文本混合
      */
     var HtmlTextParser = (function () {
         function HtmlTextParser() {
             this.resutlArr = [];
         }
-        HtmlTextParser.prototype.parser = function (htmltext) {
+        var __egretProto__ = HtmlTextParser.prototype;
+        /**
+         * 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
+         * @param htmltext {string} html文本
+         * @method egret.HtmlTextParser#parser
+         * @returns {Array<egret.ITextElement>} 可赋值给 egret.TextField#textFlow 属性的对象
+         */
+        __egretProto__.parser = function (htmltext) {
             this.stackArray = [];
             this.resutlArr = [];
             var firstIdx = 0; //文本段开始位置
@@ -60,7 +67,7 @@ var egret;
             }
             return this.resutlArr;
         };
-        HtmlTextParser.prototype.addToResultArr = function (value) {
+        __egretProto__.addToResultArr = function (value) {
             if (value == "") {
                 return;
             }
@@ -84,7 +91,7 @@ var egret;
             }
         };
         //将字符数据转成Json数据
-        HtmlTextParser.prototype.changeStringToObject = function (str) {
+        __egretProto__.changeStringToObject = function (str) {
             var info = {};
             var array = str.replace(/( )+/g, " ").split(" ");
             for (var i = 0; i < array.length; i++) {
@@ -92,14 +99,22 @@ var egret;
             }
             return info;
         };
-        HtmlTextParser.prototype.addProperty = function (info, prV) {
+        __egretProto__.addProperty = function (info, prV) {
             var valueArr = prV.replace(/( )*=( )*/g, "=").split("=");
             if (valueArr[1]) {
                 valueArr[1] = valueArr[1].replace(/(\"|\')/g, "");
             }
             switch (valueArr[0].toLowerCase()) {
                 case "color":
+                    valueArr[1] = valueArr[1].replace(/#/, "0x");
                     info.textColor = parseInt(valueArr[1]);
+                    break;
+                case "strokecolor":
+                    valueArr[1] = valueArr[1].replace(/#/, "0x");
+                    info.strokeColor = parseInt(valueArr[1]);
+                    break;
+                case "stroke":
+                    info.stroke = parseInt(valueArr[1]);
                     break;
                 case "b":
                     info.bold = (valueArr[1] || "true") == "true";
@@ -110,12 +125,15 @@ var egret;
                 case "size":
                     info.size = parseInt(valueArr[1]);
                     break;
-                case "fontFamily":
+                case "fontfamily":
                     info.fontFamily = valueArr[1];
+                    break;
+                case "href":
+                    info.href = valueArr[1];
                     break;
             }
         };
-        HtmlTextParser.prototype.addToArray = function (infoStr) {
+        __egretProto__.addToArray = function (infoStr) {
             var info = this.changeStringToObject(infoStr);
             if (this.stackArray.length == 0) {
                 this.stackArray.push(info);

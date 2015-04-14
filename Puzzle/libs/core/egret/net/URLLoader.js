@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     /**
@@ -39,10 +33,12 @@ var egret;
      * URLLoader 对象会先从 URL 中下载所有数据，然后才将数据用于应用程序中的代码。它会发出有关下载进度的通知，
      * 通过 bytesLoaded 和 bytesTotal 属性以及已调度的事件，可以监视下载进度。
      * @extends egret.EventDispatcher
+     * @link http://docs.egret-labs.org/post/manual/net/createconnect.html 构建通信请求
      */
     var URLLoader = (function (_super) {
         __extends(URLLoader, _super);
         /**
+         * 创建 egret.URLLoader 对象
          * @method egret.URLLoader#constructor
          * @param request {URLRequest} 一个 URLRequest 对象，指定要下载的 URL。
          * 如果省略该参数，则不开始加载操作。如果已指定参数，则立即开始加载操作
@@ -75,16 +71,21 @@ var egret;
                 this.load(request);
             }
         }
+        var __egretProto__ = URLLoader.prototype;
         /**
          * 从指定的 URL 发送和加载数据。可以以文本、原始二进制数据或 URL 编码变量格式接收数据，这取决于为 dataFormat 属性所设置的值。
          * 请注意 dataFormat 属性的默认值为文本。如果想将数据发送至指定的 URL，则可以在 URLRequest 对象中设置 data 属性。
          * @method egret.URLLoader#load
          * @param request {URLRequest}  一个 URLRequest 对象，指定要下载的 URL。
          */
-        URLLoader.prototype.load = function (request) {
+        __egretProto__.load = function (request) {
             this._request = request;
             this.data = null;
             egret.MainContext.instance.netContext.proceed(this);
+        };
+        __egretProto__.__recycle = function () {
+            this._request = null;
+            this.data = null;
         };
         return URLLoader;
     })(egret.EventDispatcher);

@@ -24,31 +24,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
+    /**
+     * @classdesc
+     * Event 类作为创建 Event 对象的基类，当发生事件时，Event 对象将作为参数传递给事件侦听器。
+     * Event 类的属性包含有关事件的基本信息，例如事件的类型或者是否可以取消事件的默认行为。
+     * 对于许多事件（如由 Event 类常量表示的事件），此基本信息就足够了。但其他事件可能需要更详细的信息。
+     * 例如，与触摸关联的事件需要包括有关触摸事件的位置以及在触摸事件期间是否按下了任何键的其他信息。
+     * 您可以通过扩展 Event 类（TouchEvent 类执行的操作）将此类其他信息传递给事件侦听器。
+     * Egret API 为需要其他信息的常见事件定义多个 Event 子类。与每个 Event 子类关联的事件将在每个类的文档中加以介绍。
+     * Event 类的方法可以在事件侦听器函数中使用以影响事件对象的行为。
+     * 某些事件有关联的默认行为，通过调用 preventDefault() 方法，您的事件侦听器可以取消此行为。
+     * 可以通过调用 stopPropagation() 或 stopImmediatePropagation() 方法，将当前事件侦听器作为处理事件的最后一个事件侦听器。
+     * @link http://docs.egret-labs.org/post/manual/event/eventclass.html Event类
+     */
     var Event = (function (_super) {
         __extends(Event, _super);
         /**
-         * @class egret.Event
-         * @classdesc
-         * Event 类作为创建 Event 对象的基类，当发生事件时，Event 对象将作为参数传递给事件侦听器。
-         * Event 类的属性包含有关事件的基本信息，例如事件的类型或者是否可以取消事件的默认行为。
-         * 对于许多事件（如由 Event 类常量表示的事件），此基本信息就足够了。但其他事件可能需要更详细的信息。
-         * 例如，与触摸关联的事件需要包括有关触摸事件的位置以及在触摸事件期间是否按下了任何键的其他信息。
-         * 您可以通过扩展 Event 类（TouchEvent 类执行的操作）将此类其他信息传递给事件侦听器。
-         * Egret API 为需要其他信息的常见事件定义多个 Event 子类。与每个 Event 子类关联的事件将在每个类的文档中加以介绍。
-         * Event 类的方法可以在事件侦听器函数中使用以影响事件对象的行为。
-         * 某些事件有关联的默认行为，通过调用 preventDefault() 方法，您的事件侦听器可以取消此行为。
-         * 可以通过调用 stopPropagation() 或 stopImmediatePropagation() 方法，将当前事件侦听器作为处理事件的最后一个事件侦听器。
-         * @param {string} type 事件的类型，可以作为 Event.type 访问。
-         * @param bubbles{boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
-         * @param cancelable{boolean} 确定是否可以取消 Event 对象。默认值为 false。
+         * 创建一个作为参数传递给事件侦听器的 Event 对象。
+         * @param type {string} 事件的类型，可以作为 Event.type 访问。
+         * @param bubbles {boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
+         * @param cancelable {boolean} 确定是否可以取消 Event 对象。默认值为 false。
          */
         function Event(type, bubbles, cancelable) {
             if (bubbles === void 0) { bubbles = false; }
@@ -69,7 +66,8 @@ var egret;
             this._bubbles = bubbles;
             this._cancelable = cancelable;
         }
-        Object.defineProperty(Event.prototype, "type", {
+        var __egretProto__ = Event.prototype;
+        Object.defineProperty(__egretProto__, "type", {
             /**
              * 事件的类型。类型区分大小写。
              * @member {string} egret.Event#type
@@ -80,7 +78,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Event.prototype, "bubbles", {
+        Object.defineProperty(__egretProto__, "bubbles", {
             /**
              * 表示事件是否为冒泡事件。如果事件可以冒泡，则此值为 true；否则为 false。
              * @member {boolean} egret.Event#bubbles
@@ -91,7 +89,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Event.prototype, "cancelable", {
+        Object.defineProperty(__egretProto__, "cancelable", {
             /**
              * 表示是否可以阻止与事件相关联的行为。如果可以取消该行为，则此值为 true；否则为 false。
              * @member {boolean} egret.Event#cancelable
@@ -102,7 +100,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Event.prototype, "eventPhase", {
+        Object.defineProperty(__egretProto__, "eventPhase", {
             /**
              * 事件流中的当前阶段。此属性可以包含以下数值：
              * 捕获阶段 (EventPhase.CAPTURING_PHASE)。
@@ -116,7 +114,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Event.prototype, "currentTarget", {
+        Object.defineProperty(__egretProto__, "currentTarget", {
             /**
              * 当前正在使用某个事件侦听器处理 Event 对象的对象。例如，如果用户单击“确定”按钮，
              * 则当前目标可以是包含该按钮的节点，也可以是它的已为该事件注册了事件侦听器的始祖之一。
@@ -128,7 +126,7 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Event.prototype, "target", {
+        Object.defineProperty(__egretProto__, "target", {
             /**
              * 事件目标。此属性包含目标节点。例如，如果用户单击“确定”按钮，则目标节点就是包含该按钮的显示列表节点。
              * @member {any} egret.Event#target
@@ -144,7 +142,7 @@ var egret;
          * @method egret.Event#isDefaultPrevented
          * @returns {boolean} 如果已调用 preventDefault() 方法，则返回 true；否则返回 false。
          */
-        Event.prototype.isDefaultPrevented = function () {
+        __egretProto__.isDefaultPrevented = function () {
             return this._isDefaultPrevented;
         };
         /**
@@ -154,18 +152,18 @@ var egret;
          * 注意：当cancelable属性为false时，此方法不可用。
          * @method egret.Event#preventDefault
          */
-        Event.prototype.preventDefault = function () {
+        __egretProto__.preventDefault = function () {
             if (this._cancelable)
                 this._isDefaultPrevented = true;
         };
         /**
-         * 防止对事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+         * 防止对事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 currentTarget 中的任何事件侦听器。
          * 相比之下，stopImmediatePropagation() 方法可以防止对当前节点中和后续节点中的事件侦听器进行处理。
          * 对此方法的其它调用没有任何效果。可以在事件流的任何阶段中调用此方法。
          * 注意：此方法不会取消与此事件相关联的行为；有关此功能的信息，请参阅 preventDefault()。
          * @method egret.Event#stopPropagation
          */
-        Event.prototype.stopPropagation = function () {
+        __egretProto__.stopPropagation = function () {
             if (this._bubbles)
                 this._isPropagationStopped = true;
         };
@@ -175,11 +173,11 @@ var egret;
          * 注意：此方法不会取消与此事件相关联的行为；有关此功能的信息，请参阅 preventDefault()。
          * @method egret.Event#stopImmediatePropagation
          */
-        Event.prototype.stopImmediatePropagation = function () {
+        __egretProto__.stopImmediatePropagation = function () {
             if (this._bubbles)
                 this._isPropagationImmediateStopped = true;
         };
-        Event.prototype._reset = function () {
+        __egretProto__._reset = function () {
             if (this.isNew) {
                 this.isNew = false;
                 return;
@@ -190,6 +188,11 @@ var egret;
             this._target = null;
             this._currentTarget = null;
             this._eventPhase = 2;
+        };
+        __egretProto__.__recycle = function () {
+            this._currentTarget = null;
+            this._target = null;
+            this.data = null;
         };
         Event._dispatchByTarget = function (EventClass, target, type, props, bubbles, cancelable) {
             if (bubbles === void 0) { bubbles = false; }
@@ -226,14 +229,18 @@ var egret;
             return props;
         };
         /**
-         * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
+         * 使用指定的 EventDispatcher 对象来抛出 Event 事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
+         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param type {string} 事件类型
+         * @param bubbles {boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
+         * @param data {any} 事件data
          * @method egret.Event.dispatchEvent
          */
         Event.dispatchEvent = function (target, type, bubbles, data) {
             if (bubbles === void 0) { bubbles = false; }
             var eventClass = Event;
             var props = Event._getPropertyData(eventClass);
-            if (data) {
+            if (data != undefined) {
                 props.data = data;
             }
             Event._dispatchByTarget(eventClass, target, type, props, bubbles);

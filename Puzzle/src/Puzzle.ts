@@ -48,12 +48,10 @@ class Puzzle extends egret.DisplayObjectContainer
     private bmp:egret.Bitmap;
     private canvas:egret.Rectangle;
     private piecesSpace:egret.Rectangle;
-
     private rowNum:number = 3;
     private totalNum:number;
     private pWidth:number;
     private pHeight:number;
-    private sourceName:string;
     private piecesList:Pieces[];
 
     private startBtn:egret.gui.Button;
@@ -73,8 +71,7 @@ class Puzzle extends egret.DisplayObjectContainer
         this.totalNum = this.rowNum * this.rowNum;
         this.canvas = new egret.Rectangle(10, 10, 440, 440);
         this.piecesSpace = new egret.Rectangle(10, 450, 440, 200);
-        this.sourceName = "map_json.m1";
-        this.bmpData = RES.getRes(this.sourceName); //指定spriteSheet的某一个图片，记得对应的"type":"sheet",是sheet，不是json
+        this.bmpData = RES.getRes("map_json.m1"); //指定spriteSheet的某一个图片，记得对应的"type":"sheet",是sheet，不是json
         this.bmp = new egret.Bitmap();
         this.bmp.texture = this.bmpData;
         this.bmp.x = this.canvas.x;
@@ -102,7 +99,6 @@ class Puzzle extends egret.DisplayObjectContainer
 
     private onStart(e:egret.TouchEvent):void
     {
-        console.log(this.rowNum);
         this.totalNum = this.rowNum * this.rowNum;
         this.pWidth = this.canvas.width / this.rowNum;
         this.pHeight = this.canvas.height / this.rowNum;
@@ -110,19 +106,15 @@ class Puzzle extends egret.DisplayObjectContainer
         this.nextBtn.visible = false;
         this.startBtn.visible = false;
         this.initPieces();
-        this.drawLines();
+       // this.drawLines();
     }
 
     private onNext(e:egret.TouchEvent):void
     {
-        this.sourceName = "map_json.m2";
-        this.bmpData = RES.getRes(this.sourceName);
-        this.bmp.texture = this.bmpData;
         this.bmp.visible = true;
         this.startBtn.visible = true;
         this.nextBtn.visible = false;
         this.rowNum++;
-        console.log(this.rowNum);
         this.clearPieces();
     }
 
@@ -135,10 +127,8 @@ class Puzzle extends egret.DisplayObjectContainer
             {
                 var piece:Pieces = new Pieces();
                 piece.id = new egret.Point((j * this.pWidth + this.canvas.x), (i * this.pHeight + this.canvas.y));
-                console.log(piece.id);
-                piece.bmp = piece.getBitmap(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.sourceName);
-                //piece.x = i * this.pWidth;
-                //piece.y = j * this.pHeight;
+                //piece.bmp = piece.getBitmap(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, "map_json.m1");
+                piece.bmp = piece.getBitmap2(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.bmp);
                 piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
                 piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
                 this.piecesList.push(piece);
@@ -185,6 +175,7 @@ class Puzzle extends egret.DisplayObjectContainer
                 target.y = this.piecesList[i].id.y;
             }
         }
+
         this.checkOver();
     }
 
@@ -197,14 +188,13 @@ class Puzzle extends egret.DisplayObjectContainer
 
         this.lineSprite = new egret.Sprite();
         this.lineSprite.graphics.lineStyle(1, 0x999999, 0.5);
-
         for(var i:number = 0; i <= this.rowNum; i++)
         {
             this.lineSprite.graphics.moveTo(this.canvas.x, (this.canvas.y + this.pHeight * i));
             this.lineSprite.graphics.lineTo((this.canvas.x + this.canvas.width), (this.canvas.y + this.pHeight * i));
 
             this.lineSprite.graphics.moveTo((this.canvas.x + this.pWidth * i), this.canvas.y);
-            this.lineSprite.graphics.lineTo((this.canvas.x + this.pWidth * i), (this.canvas.y + this.canvas.height)); 
+            this.lineSprite.graphics.lineTo((this.canvas.x + this.pWidth * i), (this.canvas.y + this.canvas.height));
         }
 
         this.addChild(this.lineSprite);
@@ -225,7 +215,6 @@ class Puzzle extends egret.DisplayObjectContainer
             }
         }
         if (count == this.totalNum) {
-            console.log("Win");
             this.nextBtn.visible = true;
             for (var j:number = 0; j < this.piecesList.length; j++) {
                 this.piecesList[j].dragale = false; //成功后锁定碎片，无法拖动

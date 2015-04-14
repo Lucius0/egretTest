@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -43,22 +37,33 @@ var egret;
         var List = (function (_super) {
             __extends(List, _super);
             function List() {
+                var _this = this;
                 _super.call(this);
                 this._allowMultipleSelection = false;
                 this._selectedIndices = [];
                 /**
+                 * 是否是有效的索引
+                 */
+                this.isValidIndex = function (item, index, v) {
+                    return _this.dataProvider && (item >= 0) && (item < _this.dataProvider.length);
+                };
+                /**
                  * 是否捕获ItemRenderer以便在MouseUp时抛出ItemClick事件
                  */
                 this._captureItemRenderer = true;
-                this.mouseDownItemRenderer = null;
+                this._mouseDownItemRenderer = null;
                 this.useVirtualLayout = true;
             }
-            List.prototype.createChildren = function () {
+            var __egretProto__ = List.prototype;
+            /**
+             * 创建容器的子元素
+             */
+            __egretProto__.createChildren = function () {
                 if (!this.itemRenderer)
                     this.itemRenderer = gui.DataGroup.defaultRendererFactory;
                 _super.prototype.createChildren.call(this);
             };
-            Object.defineProperty(List.prototype, "useVirtualLayout", {
+            Object.defineProperty(__egretProto__, "useVirtualLayout", {
                 /**
                  * 是否使用虚拟布局,默认true
                  * @member egret.gui.List#useVirtualLayout
@@ -75,7 +80,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "allowMultipleSelection", {
+            Object.defineProperty(__egretProto__, "allowMultipleSelection", {
                 /**
                  * 是否允许同时选中多项
                  * @member egret.gui.List#allowMultipleSelection
@@ -89,7 +94,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "selectedIndices", {
+            Object.defineProperty(__egretProto__, "selectedIndices", {
                 /**
                  * 当前选中的一个或多个项目的索引列表
                  * @member egret.gui.List#selectedIndices
@@ -105,7 +110,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "selectedIndex", {
+            Object.defineProperty(__egretProto__, "selectedIndex", {
                 /**
                  * @member egret.gui.List#selectedIndex
                  */
@@ -123,7 +128,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(List.prototype, "selectedItems", {
+            Object.defineProperty(__egretProto__, "selectedItems", {
                 /**
                  * 当前选中的一个或多个项目的数据源列表
                  * @member egret.gui.List#selectedItems
@@ -161,7 +166,7 @@ var egret;
             /**
              * 设置多个选中项
              */
-            List.prototype._setSelectedIndices = function (value, dispatchChangeEvent) {
+            __egretProto__._setSelectedIndices = function (value, dispatchChangeEvent) {
                 if (dispatchChangeEvent === void 0) { dispatchChangeEvent = false; }
                 if (dispatchChangeEvent)
                     this._dispatchChangeAfterSelection = (this._dispatchChangeAfterSelection || dispatchChangeEvent);
@@ -172,9 +177,10 @@ var egret;
                 this.invalidateProperties();
             };
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.List#commitProperties
              */
-            List.prototype.commitProperties = function () {
+            __egretProto__.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this._proposedSelectedIndices) {
                     this.commitSelection();
@@ -185,7 +191,7 @@ var egret;
              * @param dispatchChangedEvents {boolean}
              * @returns {boolean}
              */
-            List.prototype.commitSelection = function (dispatchChangedEvents) {
+            __egretProto__.commitSelection = function (dispatchChangedEvents) {
                 if (dispatchChangedEvents === void 0) { dispatchChangedEvents = true; }
                 var oldSelectedIndex = this._selectedIndex;
                 if (this._proposedSelectedIndices) {
@@ -231,15 +237,9 @@ var egret;
                 return retVal;
             };
             /**
-             * 是否是有效的索引
-             */
-            List.prototype.isValidIndex = function (item, index, v) {
-                return this.dataProvider && (item >= 0) && (item < this.dataProvider.length);
-            };
-            /**
              * 提交多项选中项属性
              */
-            List.prototype.commitMultipleSelection = function () {
+            __egretProto__.commitMultipleSelection = function () {
                 var removedItems = [];
                 var addedItems = [];
                 var i;
@@ -277,68 +277,61 @@ var egret;
                 }
                 this._proposedSelectedIndices = null;
             };
-            List.prototype._isItemIndexSelected = function (index) {
+            /**
+             *
+             * @param index
+             * @returns {boolean}
+             * @private
+             */
+            __egretProto__._isItemIndexSelected = function (index) {
                 if (this._allowMultipleSelection)
                     return this._selectedIndices.indexOf(index) != -1;
                 return _super.prototype._isItemIndexSelected.call(this, index);
             };
-            List.prototype.dataGroup_rendererAddHandler = function (event) {
+            __egretProto__.dataGroup_rendererAddHandler = function (event) {
                 _super.prototype.dataGroup_rendererAddHandler.call(this, event);
                 var renderer = (event.renderer);
                 if (renderer == null)
                     return;
-                renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.item_mouseDownHandler, this);
+                renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._item_touchBeginHandler, this);
                 //由于ItemRenderer.mouseChildren有可能不为false，在鼠标按下时会出现切换素材的情况，
                 //导致target变化而无法抛出原生的click事件,所以此处监听MouseUp来抛出ItemClick事件。
-                renderer.addEventListener(egret.TouchEvent.TOUCH_END, this.item_mouseUpHandler, this);
+                renderer.addEventListener(egret.TouchEvent.TOUCH_END, this._item_touchEndHandler, this);
             };
             /**
              * 数据源发生刷新
              */
-            List.prototype.dataProviderRefreshed = function () {
+            __egretProto__.dataProviderRefreshed = function () {
                 if (this._allowMultipleSelection) {
                     return;
                 }
                 _super.prototype.dataProviderRefreshed.call(this);
             };
-            List.prototype.dataGroup_rendererRemoveHandler = function (event) {
+            __egretProto__.dataGroup_rendererRemoveHandler = function (event) {
                 _super.prototype.dataGroup_rendererRemoveHandler.call(this, event);
                 var renderer = (event.renderer);
                 if (renderer == null)
                     return;
-                renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.item_mouseDownHandler, this);
-                renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this.item_mouseUpHandler, this);
+                renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this._item_touchBeginHandler, this);
+                renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this._item_touchEndHandler, this);
             };
             /**
              * 鼠标在项呈示器上按下
              * @method egret.gui.List#item_mouseDownHandler
              * @param event {TouchEvent}
              */
-            List.prototype.item_mouseDownHandler = function (event) {
+            __egretProto__._item_touchBeginHandler = function (event) {
                 if (event._isDefaultPrevented)
                     return;
                 var itemRenderer = (event.currentTarget);
-                var newIndex;
-                if (itemRenderer)
-                    newIndex = itemRenderer.itemIndex;
-                else
-                    newIndex = this.dataGroup.getElementIndex((event.currentTarget));
-                if (this._allowMultipleSelection) {
-                    this._setSelectedIndices(this.calculateSelectedIndices(newIndex, event.shiftKey, event.ctrlKey), true);
-                }
-                else {
-                    this._setSelectedIndex(newIndex, true);
-                }
-                if (!this._captureItemRenderer)
-                    return;
-                this.mouseDownItemRenderer = itemRenderer;
-                gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_mouseUpHandler, this);
-                gui.UIGlobals.stage.addEventListener(egret.Event.LEAVE_STAGE, this.stage_mouseUpHandler, this);
+                this._mouseDownItemRenderer = itemRenderer;
+                gui.UIGlobals.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+                gui.UIGlobals.stage.addEventListener(egret.Event.LEAVE_STAGE, this.stage_touchEndHandler, this);
             };
             /**
              * 计算当前的选中项列表
              */
-            List.prototype.calculateSelectedIndices = function (index, shiftKey, ctrlKey) {
+            __egretProto__.calculateSelectedIndices = function (index, shiftKey, ctrlKey) {
                 var i;
                 var interval = [];
                 if (!shiftKey) {
@@ -393,19 +386,32 @@ var egret;
             /**
              * 鼠标在项呈示器上弹起，抛出ItemClick事件。
              */
-            List.prototype.item_mouseUpHandler = function (event) {
+            __egretProto__._item_touchEndHandler = function (event) {
                 var itemRenderer = (event.currentTarget);
-                if (itemRenderer != this.mouseDownItemRenderer)
+                if (itemRenderer != this._mouseDownItemRenderer)
+                    return;
+                var newIndex;
+                if (itemRenderer)
+                    newIndex = itemRenderer.itemIndex;
+                else
+                    newIndex = this.dataGroup.getElementIndex((event.currentTarget));
+                if (this._allowMultipleSelection) {
+                    this._setSelectedIndices(this.calculateSelectedIndices(newIndex, event.shiftKey, event.ctrlKey), true);
+                }
+                else {
+                    this._setSelectedIndex(newIndex, true);
+                }
+                if (!this._captureItemRenderer)
                     return;
                 this._dispatchListEvent(event, gui.ListEvent.ITEM_CLICK, itemRenderer);
             };
             /**
              * 鼠标在舞台上弹起
              */
-            List.prototype.stage_mouseUpHandler = function (event) {
-                gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_mouseUpHandler, this);
-                gui.UIGlobals.stage.removeEventListener(egret.Event.LEAVE_STAGE, this.stage_mouseUpHandler, this);
-                this.mouseDownItemRenderer = null;
+            __egretProto__.stage_touchEndHandler = function (event) {
+                gui.UIGlobals.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+                gui.UIGlobals.stage.removeEventListener(egret.Event.LEAVE_STAGE, this.stage_touchEndHandler, this);
+                this._mouseDownItemRenderer = null;
             };
             return List;
         })(gui.ListBase);

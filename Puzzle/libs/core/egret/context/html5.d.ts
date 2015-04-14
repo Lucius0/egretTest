@@ -29,6 +29,7 @@ declare module egret {
      * @class egret.HTML5DeviceContext
      * @classdesc
      * @extends egret.DeviceContext
+     * @private
      */
     class HTML5DeviceContext extends DeviceContext {
         frameRate: number;
@@ -100,7 +101,7 @@ declare module egret {
         /**
          * @member egret.HTML5CanvasRenderer#canvasContext
          */
-        canvasContext: CanvasRenderingContext2D;
+        private canvasContext;
         private _matrixA;
         private _matrixB;
         private _matrixC;
@@ -110,28 +111,30 @@ declare module egret {
         _transformTx: number;
         _transformTy: number;
         private blendValue;
-        private globalAlpha;
         private _cacheCanvas;
-        _cacheCanvasContext: any;
-        constructor(canvas?: HTMLCanvasElement);
+        private _cacheCanvasContext;
+        private useCacheCanvas;
+        drawCanvasContext: CanvasRenderingContext2D;
+        constructor(canvas?: HTMLCanvasElement, useCacheCanvas?: boolean);
         private createCanvas();
         private onResize();
         clearScreen(): void;
         clearRect(x: number, y: number, w: number, h: number): void;
         drawImage(texture: Texture, sourceX: any, sourceY: any, sourceWidth: any, sourceHeight: any, destX: any, destY: any, destWidth: any, destHeight: any, repeat?: any): void;
         drawRepeatImage(texture: Texture, sourceX: any, sourceY: any, sourceWidth: any, sourceHeight: any, destX: any, destY: any, destWidth: any, destHeight: any, repeat: any): void;
-        setTransform(matrix: Matrix): void;
+        setTransform(matrix: egret.Matrix): void;
         setAlpha(alpha: number, blendMode: string): void;
         private blendModes;
         private initBlendMode();
-        setupFont(textField: TextField, style?: ITextStyle): void;
+        setupFont(textField: TextField, style?: egret.ITextStyle): void;
         measureText(text: string): number;
-        drawText(textField: TextField, text: string, x: number, y: number, maxWidth: number, style?: ITextStyle): void;
+        drawText(textField: egret.TextField, text: string, x: number, y: number, maxWidth: number, style?: egret.ITextStyle): void;
         strokeRect(x: any, y: any, w: any, h: any, color: any): void;
         pushMask(mask: Rectangle): void;
         popMask(): void;
         onRenderStart(): void;
         onRenderFinish(): void;
+        drawCursor(x1: number, y1: number, x2: number, y2: number): void;
     }
 }
 declare module egret_h5_graphics {
@@ -222,7 +225,7 @@ declare module egret {
         private currentBatchSize;
         drawRepeatImage(texture: Texture, sourceX: any, sourceY: any, sourceWidth: any, sourceHeight: any, destX: any, destY: any, destWidth: any, destHeight: any, repeat: any): void;
         drawImage(texture: Texture, sourceX: any, sourceY: any, sourceWidth: any, sourceHeight: any, destX: any, destY: any, destWidth: any, destHeight: any, repeat?: any): void;
-        private _draw();
+        private _drawWebGL();
         private worldTransform;
         setTransform(matrix: Matrix): void;
         private worldAlpha;
@@ -235,19 +238,41 @@ declare module egret {
         popMask(): void;
         private scissor(x, y, w, h);
         private colorTransformMatrix;
-        setGlobalColorTransform(colorTransformMatrix: any[]): void;
+        setGlobalColorTransform(colorTransformMatrix: Array<any>): void;
+        setGlobalFilter(filterData: Filter): void;
+        private filterType;
+        private setFilterProperties(filterData);
         private html5Canvas;
         private canvasContext;
-        setupFont(textField: TextField, style?: ITextStyle): void;
+        setupFont(textField: TextField, style?: egret.ITextStyle): void;
         measureText(text: string): number;
         private graphicsPoints;
         private graphicsIndices;
         private graphicsBuffer;
         private graphicsIndexBuffer;
-        private renderGraphics(graphics);
+        renderGraphics(graphics: any): void;
         private updateGraphics(graphics);
         private buildRectangle(graphicsData);
+        private graphicsStyle;
+        setGraphicsStyle(r: number, g: number, b: number, a: number): void;
     }
+}
+declare module egret_webgl_graphics {
+    function beginFill(color: number, alpha?: number): void;
+    function drawRect(x: number, y: number, width: number, height: number): void;
+    function drawCircle(x: number, y: number, r: number): void;
+    function drawRoundRect(x: number, y: number, width: number, height: number, ellipseWidth: number, ellipseHeight?: number): void;
+    function drawEllipse(x: number, y: number, width: number, height: number): void;
+    function lineStyle(thickness?: number, color?: number, alpha?: number, pixelHinting?: boolean, scaleMode?: string, caps?: string, joints?: string, miterLimit?: number): void;
+    function lineTo(x: number, y: number): void;
+    function curveTo(controlX: Number, controlY: Number, anchorX: Number, anchorY: Number): void;
+    function moveTo(x: number, y: number): void;
+    function clear(): void;
+    function endFill(): void;
+    function _pushCommand(cmd: any): void;
+    function _draw(renderContext: egret.WebGLRenderer): void;
+    function _setStyle(r: number, g: number, b: number, a: number): void;
+    function init(): void;
 }
 /**
  * Copyright (c) 2014,Egret-Labs.org
@@ -276,6 +301,9 @@ declare module egret {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret {
+    /**
+     * @private
+     */
     class WebGLUtils {
         static compileProgram(gl: WebGLRenderingContext, vertexSrc: string, fragmentSrc: string): WebGLProgram;
         static compileFragmentShader(gl: WebGLRenderingContext, shaderSrc: string): WebGLShader;
@@ -312,6 +340,9 @@ declare module egret {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret {
+    /**
+     * @private
+     */
     class EgretShader {
         private defaultVertexSrc;
         private gl;
@@ -324,7 +355,7 @@ declare module egret {
         aVertexPosition: number;
         aTextureCoord: number;
         colorAttribute: number;
-        attributes: number[];
+        attributes: Array<number>;
         uniforms: any;
         constructor(gl: WebGLRenderingContext);
         init(): void;
@@ -359,6 +390,9 @@ declare module egret {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret {
+    /**
+     * @private
+     */
     class ColorTransformShader extends EgretShader {
         fragmentSrc: string;
         uniforms: {
@@ -406,6 +440,53 @@ declare module egret {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret {
+    /**
+     * @private
+     */
+    class BlurShader extends EgretShader {
+        fragmentSrc: string;
+        uniforms: {
+            blur: {
+                type: string;
+                value: {
+                    x: number;
+                    y: number;
+                };
+            };
+        };
+        constructor(gl: WebGLRenderingContext);
+    }
+}
+/**
+ * Copyright (c) 2014,Egret-Labs.org
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Egret-Labs.org nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY EGRET-LABS.ORG AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL EGRET-LABS.ORG AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+declare module egret {
+    /**
+     * @private
+     */
     class PrimitiveShader {
         private gl;
         program: WebGLProgram;
@@ -414,7 +495,7 @@ declare module egret {
         tintColor: WebGLUniformLocation;
         aVertexPosition: number;
         colorAttribute: number;
-        attributes: number[];
+        attributes: Array<number>;
         translationMatrix: WebGLUniformLocation;
         alpha: WebGLUniformLocation;
         fragmentSrc: string;
@@ -450,6 +531,10 @@ declare module egret {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret {
+    /**
+     *
+     * @private
+     */
     class WebGLShaderManager {
         private gl;
         private maxAttibs;
@@ -460,6 +545,7 @@ declare module egret {
         defaultShader: EgretShader;
         primitiveShader: PrimitiveShader;
         colorTransformShader: ColorTransformShader;
+        blurShader: BlurShader;
         setContext(gl: any): void;
         activateShader(shader: any): void;
         private setAttribs(attribs);
@@ -534,6 +620,9 @@ declare module egret {
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 declare module egret {
+    /**
+     * @private
+     */
     class HTML5TouchContext extends TouchContext {
         private _isTouchDown;
         private rootDiv;
@@ -583,36 +672,51 @@ declare module egret {
      * @private
      */
     class HTML5StageText extends StageText {
-        private div;
-        private inputElement;
-        private _shape;
         constructor();
-        private getStageDelegateDiv();
-        _setMultiline(value: boolean): void;
-        private callHandler(e);
-        _add(): void;
-        _remove(): void;
-        private _hasListeners;
-        _addListeners(): void;
-        _removeListeners(): void;
-        private _inputType;
-        private createInput();
-        _open(x: number, y: number, width?: number, height?: number): void;
-        _setScale(x: number, y: number): void;
-        changePosition(x: number, y: number): void;
-        private setStyles();
-        private _isShow;
-        _show(): void;
+        private _isNeedShow;
+        private inputElement;
+        private inputDiv;
+        private _gscaleX;
+        private _gscaleY;
+        _initElement(x: number, y: number, cX: number, cY: number): void;
+        _show(multiline: boolean, size: number, width: number, height: number): void;
+        private onBlurHandler();
+        private executeShow();
+        private _isNeesHide;
         _hide(): void;
         private textValue;
         _getText(): string;
         _setText(value: string): void;
         private resetText();
-        private _width;
-        _setWidth(value: number): void;
-        private _height;
-        _setHeight(value: number): void;
+        _onInput(): void;
+        _onClickHandler(e: any): void;
+        _onDisconnect(): void;
         private _styleInfoes;
         private setElementStyle(style, value);
+        _removeInput(): void;
+        /**
+         * 修改位置
+         * @private
+         */
+        _resetStageText(): void;
+    }
+    class HTMLInput {
+        private _stageText;
+        private _simpleElement;
+        private _multiElement;
+        private _inputElement;
+        _inputDIV: any;
+        isInputOn(): boolean;
+        isCurrentStageText(stageText: any): boolean;
+        private initValue(dom);
+        _needShow: boolean;
+        private initStageDelegateDiv();
+        private initInputElement(multiline);
+        show(): void;
+        disconnectStageText(stageText: any): void;
+        clearInputElement(): void;
+        getInputElement(stageText: any): any;
+        private static _instance;
+        static getInstance(): HTMLInput;
     }
 }

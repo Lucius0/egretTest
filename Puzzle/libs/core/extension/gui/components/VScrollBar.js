@@ -24,79 +24,88 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
     (function (gui) {
+        /**
+         * @classic
+         * VScrollBar（垂直 ScrollBar）控件可以在因数据太多而不能在显示区域中以垂直方向完全显示时控制显示的数据部分
+         */
         var VScrollBar = (function (_super) {
             __extends(VScrollBar, _super);
             function VScrollBar() {
                 _super.call(this);
                 this._thumbLengthRatio = 1;
             }
-            VScrollBar.prototype._setViewportMetric = function (height, contentHeight) {
+            var __egretProto__ = VScrollBar.prototype;
+            /**
+             *
+             * @param height
+             * @param contentHeight
+             * @private
+             */
+            __egretProto__._setViewportMetric = function (height, contentHeight) {
                 var max = Math.max(0, contentHeight - height);
                 this._thumbLengthRatio = contentHeight <= height ? 1 : height / contentHeight;
                 this._setMaximun(max);
                 this._setMinimun(0);
             };
-            Object.defineProperty(VScrollBar.prototype, "trackAlpha", {
+            Object.defineProperty(__egretProto__, "trackAlpha", {
                 get: function () {
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("VScrollBar.trackAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "VScrollBar.trackAlpha");
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(VScrollBar.prototype, "thumbAlpha", {
+            Object.defineProperty(__egretProto__, "thumbAlpha", {
                 get: function () {
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("VScrollBar.thumbAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "VScrollBar.thumbAlpha");
                 },
                 enumerable: true,
                 configurable: true
             });
-            VScrollBar.prototype.setPosition = function (value) {
+            __egretProto__.setPosition = function (value) {
                 this._setValue(value);
             };
-            VScrollBar.prototype.getPosition = function () {
+            __egretProto__.getPosition = function () {
                 return this._getValue();
             };
-            VScrollBar.prototype._setValue = function (value) {
+            __egretProto__._setValue = function (value) {
                 value = Math.max(0, value);
                 _super.prototype._setValue.call(this, value);
             };
-            VScrollBar.prototype.setValue = function (value) {
+            __egretProto__.setValue = function (value) {
                 _super.prototype.setValue.call(this, value);
             };
-            VScrollBar.prototype._animationUpdateHandler = function (animation) {
+            __egretProto__._animationUpdateHandler = function (animation) {
                 this.pendingValue = animation.currentValue["value"];
                 this.value = animation.currentValue["value"];
                 this.dispatchEventWith(egret.Event.CHANGE);
             };
             /**
+             * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
              * @param x {number}
              * @param y {number}
              * @returns {number}
              */
-            VScrollBar.prototype.pointToValue = function (x, y) {
+            __egretProto__.pointToValue = function (x, y) {
                 if (!this.thumb || !this.track)
                     return 0;
                 var range = this.maximum - this.minimum;
                 var thumbRange = this.track.layoutBoundsHeight - this.thumb.layoutBoundsHeight;
                 return this.minimum + ((thumbRange != 0) ? (y / thumbRange) * range : 0);
             };
-            VScrollBar.prototype.updateSkinDisplayList = function () {
+            /**
+             * 设置外观部件（通常为滑块）的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+             */
+            __egretProto__.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;
                 var thumbHeight = this.track.layoutBoundsHeight * this._thumbLengthRatio;

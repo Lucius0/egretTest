@@ -26,9 +26,12 @@
  */
 var egret;
 (function (egret) {
+    /**
+     */
     var ExternalInterface = (function () {
         function ExternalInterface() {
         }
+        var __egretProto__ = ExternalInterface.prototype;
         /**
          * 将信息传递给 Egret 外层容器。
          * 如果该容器是 HTML 页，则此方法不可用。

@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -49,7 +43,8 @@ var egret;
                 _super.call(this);
                 this._mouseWheelSpeed = 20;
             }
-            Object.defineProperty(BasicLayout.prototype, "useVirtualLayout", {
+            var __egretProto__ = BasicLayout.prototype;
+            Object.defineProperty(__egretProto__, "useVirtualLayout", {
                 /**
                  * 此布局不支持虚拟布局，设置这个属性无效
                  */
@@ -58,7 +53,7 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(BasicLayout.prototype, "mouseWheelSpeed", {
+            Object.defineProperty(__egretProto__, "mouseWheelSpeed", {
                 /**
                  * 鼠标滚轮每次滚动时目标容器的verticalScrollPosition
                  * 或horizontalScrollPosition改变的像素距离。必须大于0， 默认值20。
@@ -75,31 +70,34 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            BasicLayout.prototype.getElementBoundsLeftOfScrollRect = function (scrollRect) {
+            __egretProto__.getElementBoundsLeftOfScrollRect = function (scrollRect) {
                 var bounds = new egret.Rectangle();
                 bounds.x = scrollRect.x - this._mouseWheelSpeed;
                 bounds.right = scrollRect.x;
                 return bounds;
             };
-            BasicLayout.prototype.getElementBoundsRightOfScrollRect = function (scrollRect) {
+            __egretProto__.getElementBoundsRightOfScrollRect = function (scrollRect) {
                 var bounds = new egret.Rectangle();
                 bounds.x = scrollRect.right;
                 bounds.right = scrollRect.right + this._mouseWheelSpeed;
                 return bounds;
             };
-            BasicLayout.prototype.getElementBoundsAboveScrollRect = function (scrollRect) {
+            __egretProto__.getElementBoundsAboveScrollRect = function (scrollRect) {
                 var bounds = new egret.Rectangle();
                 bounds.y = scrollRect.y - this._mouseWheelSpeed;
                 bounds.bottom = scrollRect.y;
                 return bounds;
             };
-            BasicLayout.prototype.getElementBoundsBelowScrollRect = function (scrollRect) {
+            __egretProto__.getElementBoundsBelowScrollRect = function (scrollRect) {
                 var bounds = new egret.Rectangle();
                 bounds.y = scrollRect.bottom;
                 bounds.bottom = scrollRect.bottom + this._mouseWheelSpeed;
                 return bounds;
             };
-            BasicLayout.prototype.measure = function () {
+            /**
+             *基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
+             */
+            __egretProto__.measure = function () {
                 _super.prototype.measure.call(this);
                 if (this.target == null)
                     return;
@@ -152,7 +150,12 @@ var egret;
                 this.target.measuredWidth = width;
                 this.target.measuredHeight = height;
             };
-            BasicLayout.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            /**
+             * 调整目标的元素的大小并定位这些元素
+             * @param unscaledWidth
+             * @param unscaledHeight
+             */
+            __egretProto__.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 if (this.target == null)
                     return;

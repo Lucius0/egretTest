@@ -24,12 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var egret;
 (function (egret) {
     var gui;
@@ -43,17 +37,25 @@ var egret;
         var ToggleButtonBase = (function (_super) {
             __extends(ToggleButtonBase, _super);
             /**
+             * 构造函数
              * @method egret.gui.ToggleButtonBase#constructor
              */
             function ToggleButtonBase() {
                 _super.call(this);
+                /**
+                 *
+                 * @type {boolean}
+                 * @private
+                 */
                 this._selected = false;
                 /**
                  * 是否根据鼠标事件自动变换选中状态,默认true。仅框架内使用。
+                 * @private
                  */
                 this._autoSelected = true;
             }
-            Object.defineProperty(ToggleButtonBase.prototype, "selected", {
+            var __egretProto__ = ToggleButtonBase.prototype;
+            Object.defineProperty(__egretProto__, "selected", {
                 /**
                  * 按钮处于按下状态时为 true，而按钮处于弹起状态时为 false。
                  * @member egret.gui.ToggleButtonBase#selected
@@ -67,7 +69,12 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
-            ToggleButtonBase.prototype._setSelected = function (value) {
+            /**
+             *
+             * @param value
+             * @private
+             */
+            __egretProto__._setSelected = function (value) {
                 if (value == this._selected)
                     return;
                 this._selected = value;
@@ -76,10 +83,11 @@ var egret;
                 this.invalidateSkinState();
             };
             /**
+             * 返回要应用到外观的状态的名称
              * @method egret.gui.ToggleButtonBase#getCurrentSkinState
              * @returns {string}
              */
-            ToggleButtonBase.prototype.getCurrentSkinState = function () {
+            __egretProto__.getCurrentSkinState = function () {
                 var state = _super.prototype.getCurrentSkinState.call(this);
                 if (!this.selected) {
                     return state;
@@ -93,7 +101,10 @@ var egret;
                     return state == "disabled" ? "disabled" : "down";
                 }
             };
-            ToggleButtonBase.prototype.buttonReleased = function () {
+            /**
+             * 当在用户单击按钮之后处理 MouseEvent.MOUSE_UP 事件时，将调用此方法
+             */
+            __egretProto__.buttonReleased = function () {
                 _super.prototype.buttonReleased.call(this);
                 if (!this._autoSelected || !this.enabled)
                     return;
