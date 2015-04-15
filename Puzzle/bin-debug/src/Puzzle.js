@@ -48,8 +48,7 @@ var Puzzle = (function (_super) {
         this.totalNum = this.rowNum * this.rowNum;
         this.canvas = new egret.Rectangle(10, 10, 440, 440);
         this.piecesSpace = new egret.Rectangle(10, 450, 440, 200);
-        this.sourceName = "map_json.m1";
-        this.bmpData = RES.getRes(this.sourceName); //指定spriteSheet的某一个图片，记得对应的"type":"sheet",是sheet，不是json
+        this.bmpData = RES.getRes("map_json.m1"); //指定spriteSheet的某一个图片，记得对应的"type":"sheet",是sheet，不是json
         this.bmp = new egret.Bitmap();
         this.bmp.texture = this.bmpData;
         this.bmp.x = this.canvas.x;
@@ -72,7 +71,6 @@ var Puzzle = (function (_super) {
         this.addChild(this.nextBtn);
     };
     __egretProto__.onStart = function (e) {
-        console.log(this.rowNum);
         this.totalNum = this.rowNum * this.rowNum;
         this.pWidth = this.canvas.width / this.rowNum;
         this.pHeight = this.canvas.height / this.rowNum;
@@ -83,14 +81,10 @@ var Puzzle = (function (_super) {
         this.drawLines();
     };
     __egretProto__.onNext = function (e) {
-        this.sourceName = "map_json.m2";
-        this.bmpData = RES.getRes(this.sourceName);
-        this.bmp.texture = this.bmpData;
         this.bmp.visible = true;
         this.startBtn.visible = true;
         this.nextBtn.visible = false;
         this.rowNum++;
-        console.log(this.rowNum);
         this.clearPieces();
     };
     __egretProto__.initPieces = function () {
@@ -99,35 +93,29 @@ var Puzzle = (function (_super) {
             for (var j = 0; j < this.rowNum; j++) {
                 var piece = new Pieces();
                 piece.id = new egret.Point((j * this.pWidth + this.canvas.x), (i * this.pHeight + this.canvas.y));
-                console.log(piece.id);
-                piece.bmp = piece.getBitmap(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.sourceName);
-                //piece.x = i * this.pWidth;
-                //piece.y = j * this.pHeight;
-                piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
-                piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
+                piece.bmp = piece.getBitmap2(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.bmp);
+                piece.anchorX = i;
+                piece.anchorY = j;
+                piece.x = 400;
+                piece.y = 400;
+                //piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
+                //piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
                 this.piecesList.push(piece);
-                this.gameStage.addChild(piece);
+                if (i * j == 4) {
+                    this.gameStage.addChild(piece);
+                }
                 piece.touchChildren = piece.touchEnabled = true;
                 piece.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.startDrag, this);
             }
         }
     };
     __egretProto__.startDrag = function (e) {
-        this.target = (e.currentTarget);
-        this.target.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.doDrag, this);
-        this.target.addEventListener(egret.TouchEvent.TOUCH_END, this.stopDraging, this);
-        this.target.dragale = true;
-        this.startPoint = this.target.globalToLocal(e.stageX, e.stageY);
-    };
-    __egretProto__.doDrag = function (e) {
-        if (this.target.dragale) {
-            this.gameStage.setChildIndex(this.target, (this.gameStage.numChildren - 1));
-            this.target.x = e.stageX - this.startPoint.x;
-            this.target.y = e.stageY - this.startPoint.y;
-        }
-    };
-    __egretProto__.stopDraging = function (e) {
+        var drag = new utils.Drag();
         var target = (e.currentTarget);
+        drag.start(target, 0, 0, this.stopDraging);
+    };
+    __egretProto__.stopDraging = function (obj) {
+        var target = (obj);
         for (var i = 0; i < this.piecesList.length; i++) {
             if (Math.abs(target.x - this.piecesList[i].id.x) < (target.width / 3) && Math.abs(target.y - this.piecesList[i].id.y) < (target.height / 3)) {
                 target.x = this.piecesList[i].id.x;
@@ -163,7 +151,6 @@ var Puzzle = (function (_super) {
             }
         }
         if (count == this.totalNum) {
-            console.log("Win");
             this.nextBtn.visible = true;
             for (var j = 0; j < this.piecesList.length; j++) {
                 this.piecesList[j].dragale = false; //成功后锁定碎片，无法拖动

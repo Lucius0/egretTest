@@ -3,6 +3,10 @@ declare module skins.simple{
 	}
 }
 declare module skins.simple{
+	class Btn1Skin extends egret.gui.Skin{
+	}
+}
+declare module skins.simple{
 	class ButtonSkin extends egret.gui.Skin{
 	}
 }
@@ -156,5 +160,13 @@ declare module skins.simple{
 }
 declare module skins.simple{
 	class VSliderThumbSkin extends egret.gui.Skin{
+	}
+}
+declare module skins.simple{
+	class WingPabelSkin extends egret.gui.Skin{
+	}
+}
+declare module skins.simple{
+	class WingSkin extends egret.gui.Skin{
 	}
 }

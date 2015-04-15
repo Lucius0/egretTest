@@ -106,7 +106,7 @@ class Puzzle extends egret.DisplayObjectContainer
         this.nextBtn.visible = false;
         this.startBtn.visible = false;
         this.initPieces();
-       // this.drawLines();
+       this.drawLines();
     }
 
     private onNext(e:egret.TouchEvent):void
@@ -127,13 +127,19 @@ class Puzzle extends egret.DisplayObjectContainer
             {
                 var piece:Pieces = new Pieces();
                 piece.id = new egret.Point((j * this.pWidth + this.canvas.x), (i * this.pHeight + this.canvas.y));
-                //piece.bmp = piece.getBitmap(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, "map_json.m1");
                 piece.bmp = piece.getBitmap2(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.bmp);
-                piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
-                piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
-                this.piecesList.push(piece);
+                piece.anchorX = i;
+                piece.anchorY = j;
+                piece.x = 400;
+                piece.y = 400;
+                //piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
+                //piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
 
-                this.gameStage.addChild(piece);
+                this.piecesList.push(piece);
+                if(i*j == 4)
+                {
+                    this.gameStage.addChild(piece);
+                }
 
                 piece.touchChildren = piece.touchEnabled = true;
                 piece.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.startDrag, this);
@@ -142,31 +148,16 @@ class Puzzle extends egret.DisplayObjectContainer
         }
     }
 
-    private target:Pieces;
-    private startPoint:egret.Point;
     private startDrag(e:egret.TouchEvent):void
     {
-        this.target= <Pieces>(e.currentTarget);
-
-        this.target.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.doDrag, this);
-        this.target.addEventListener(egret.TouchEvent.TOUCH_END, this.stopDraging, this);
-        this.target.dragale = true;
-        this.startPoint = this.target.globalToLocal(e.stageX, e.stageY);
+        var drag:utils.Drag = new utils.Drag();
+        var target= <Pieces>(e.currentTarget);
+        drag.start(target, 0, 0 ,this.stopDraging);
     }
 
-    private doDrag(e:egret.TouchEvent):void
+    private stopDraging(obj:egret.DisplayObject):void
     {
-        if(this.target.dragale)
-        {
-            this.gameStage.setChildIndex(this.target, (this.gameStage.numChildren - 1));
-            this.target.x = e.stageX - this.startPoint.x;
-            this.target.y = e.stageY - this.startPoint.y;
-        }
-    }
-
-    private stopDraging(e:egret.TouchEvent):void
-    {
-        var target:Pieces = <Pieces>(e.currentTarget);
+        var target:Pieces = <Pieces>(obj);
         for(var i:number = 0; i < this.piecesList.length; i++)
         {
             if (Math.abs(target.x - this.piecesList[i].id.x) < (target.width / 3) && Math.abs(target.y - this.piecesList[i].id.y) < (target.height / 3))

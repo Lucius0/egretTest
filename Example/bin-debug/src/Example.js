@@ -20,8 +20,8 @@ var Example = (function (_super) {
     __egretProto__.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        //RES.loadGroup("rollMc");
-        RES.loadGroup("preload");
+        RES.loadGroup("rollMc");
+        //RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
         //RES.loadGroup("p2");
@@ -55,7 +55,7 @@ var Example = (function (_super) {
         //
         //this.createProgressBar();
         //
-        this.createAlert();
+        //this.createAlert();
         //
         //this.createPanel();
         //
@@ -71,7 +71,7 @@ var Example = (function (_super) {
         //
         //this.createTabWithArrayCollection();
         //
-        //this.createRollMc();
+        this.createRollMc();
         //
         //this.createLightLine();
         //
@@ -104,7 +104,7 @@ var Example = (function (_super) {
         //this.testSocketIO();
         //this.testJsonp(); // 还没完成测试 教程：http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=2460&extra=&page=2
         //this.testGesture();
-        this.drawSector(100, 100, 50, 0, 270);
+        //this.drawSector(100, 100, 50, 0, 270);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -517,21 +517,23 @@ var Example = (function (_super) {
         drag.start(sp);
     };
     __egretProto__.testMd5 = function () {
-        var text1 = new egret.TextField();
-        this.addChild(text1);
-        text1.text = "原始字符: 23233dfa";
-        text1.x = 50;
-        text1.y = 300;
-        text1.size = 30;
-        var str = "23233dfa";
-        var md5Str = new md5().hex_md5(str);
-        var text2 = new egret.TextField();
-        this.addChild(text2);
-        text2.text = "md5后字符: " + md5Str;
-        text2.x = 50;
-        text2.y = 350;
-        text2.size = 30;
-        text2.width = 300;
+        //var text1:egret.TextField = new egret.TextField();
+        //this.addChild(text1);
+        //text1.text = "原始字符: 23233dfa";
+        //text1.x = 50;
+        //text1.y = 300;
+        //text1.size = 30;
+        //
+        //var str:string = "23233dfa";
+        //var md5Str:string = new md5().hex_md5(str);
+        //
+        //var text2:egret.TextField = new egret.TextField();
+        //this.addChild(text2);
+        //text2.text = "md5后字符: " + md5Str;
+        //text2.x = 50;
+        //text2.y = 350;
+        //text2.size = 30;
+        //text2.width = 300;
     };
     __egretProto__.testSocketIO = function () {
         var sky = this.createBitmapByName("bgImage");

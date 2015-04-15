@@ -47,6 +47,7 @@ var Pieces = (function (_super) {
     });
     __egretProto__.getBitmap = function (_bitmapX, _bitmapY, width, height, name) {
         var baseTexture = RES.getRes(name);
+        baseTexture.drawToTexture();
         var bd = baseTexture.bitmapData;
         var texture = new egret.Texture();
         var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
@@ -61,6 +62,14 @@ var Pieces = (function (_super) {
         texture._textureHeight = height * scale;
         texture._sourceWidth = width;
         texture._sourceHeight = height;
+        var b = new egret.Bitmap;
+        b.texture = texture;
+        return b;
+    };
+    __egretProto__.getBitmap2 = function (_bitmapX, _bitmapY, width, height, bmp) {
+        var texture = new egret.RenderTexture;
+        var rec = new egret.Rectangle(_bitmapX, _bitmapY, width, height);
+        texture.drawToTexture(bmp, rec);
         var b = new egret.Bitmap;
         b.texture = texture;
         return b;

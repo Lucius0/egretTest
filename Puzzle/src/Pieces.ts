@@ -77,7 +77,7 @@ class Pieces extends egret.Sprite
     {
         var texture:egret.RenderTexture = new egret.RenderTexture;
         var rec:egret.Rectangle = new egret.Rectangle(_bitmapX, _bitmapY, width, height);
-        texture.drawToTexture(bmp, rec, 1);
+        texture.drawToTexture(bmp, rec);
 
         var b = new egret.Bitmap;
         b.texture = texture;
