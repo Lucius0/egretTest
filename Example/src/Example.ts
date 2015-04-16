@@ -83,7 +83,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createTabWithArrayCollection();
         //
-        this.createRollMc();
+        //this.createRollMc();
+        //
+        this.createScrollBar();
         //
         //this.createLightLine();
         //
@@ -801,5 +803,25 @@ class Example extends egret.DisplayObjectContainer
         }
         sp.graphics.endFill();// if you want a sector without filling color , please remove this line.
         this.addChild(sp);
+    }
+
+    private createScrollBar():void
+    {
+        var controller:egret.gui.Scroller = new egret.gui.Scroller();
+        //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
+        controller.x = 40;
+        controller.y = 40;
+        controller.width = 400;
+        controller.height = 300;
+        controller.autoHideScrollBars = false; // 是否自动隐藏滚动条。
+        controller.verticalScrollPolicy = egret.gui.ScrollPolicy.OFF; //关闭垂直滚动策略
+        var group:egret.gui.Group = new egret.gui.Group();
+        this.guiLayer.addElement(group);
+        //创建一个大图添加到容器上
+        var bmpAsset:egret.gui.UIAsset = new egret.gui.UIAsset("rollMc_png");
+        group.addElement(bmpAsset);
+        //设置viewport
+        controller.viewport = group;
+        this.guiLayer.addElement(controller);
     }
 }

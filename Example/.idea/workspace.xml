@@ -27,8 +27,8 @@
       <file leaf-file-name="Example.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Example.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1207952" vertical-offset="14957" max-vertical-offset="20250">
-              <caret line="412" column="12" selection-start-line="412" selection-start-column="12" selection-end-line="412" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.38837922" vertical-offset="20121" max-vertical-offset="20800">
+              <caret line="815" column="49" selection-start-line="815" selection-start-column="49" selection-end-line="815" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -87,8 +87,8 @@
       <file leaf-file-name="gui.d.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/core/extension/gui/gui.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="9955" max-vertical-offset="400225">
-              <caret line="428" column="49" selection-start-line="428" selection-start-column="39" selection-end-line="428" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="318307" max-vertical-offset="400225">
+              <caret line="12766" column="8" selection-start-line="12766" selection-start-column="8" selection-end-line="12766" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -419,7 +419,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -766,14 +766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/core/extension/gui/gui.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9955" max-vertical-offset="400225">
-          <caret line="428" column="49" selection-start-line="428" selection-start-column="39" selection-end-line="428" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/egretProperties.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.205882" vertical-offset="517" max-vertical-offset="1150">
@@ -830,10 +822,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/libs/core/extension/gui/gui.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="318307" max-vertical-offset="400225">
+          <caret line="12766" column="8" selection-start-line="12766" selection-start-column="8" selection-end-line="12766" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Example.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1207952" vertical-offset="14957" max-vertical-offset="20250">
-          <caret line="412" column="12" selection-start-line="412" selection-start-column="12" selection-end-line="412" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.38837922" vertical-offset="20121" max-vertical-offset="20800">
+          <caret line="815" column="49" selection-start-line="815" selection-start-column="49" selection-end-line="815" selection-end-column="49" />
           <folding />
         </state>
       </provider>
