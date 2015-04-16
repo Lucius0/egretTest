@@ -50,9 +50,9 @@ class Pieces extends egret.Sprite
         this._dragale = value;
     }
 
+    // 升级到1.6之后失效
     public getBitmap(_bitmapX: number, _bitmapY, width:number, height:number, name: string):egret.Bitmap {
         var baseTexture = RES.getRes(name);
-        baseTexture.drawToTexture()
         var bd = baseTexture.bitmapData;
         var texture = new egret.Texture();
         var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
@@ -73,6 +73,7 @@ class Pieces extends egret.Sprite
         return b;
     }
 
+    // 鼠标的触发点出错
     public getBitmap2(_bitmapX: number, _bitmapY, width:number, height:number, bmp: egret.Bitmap):egret.Bitmap
     {
         var texture:egret.RenderTexture = new egret.RenderTexture;
@@ -81,6 +82,16 @@ class Pieces extends egret.Sprite
 
         var b = new egret.Bitmap;
         b.texture = texture;
+        return b;
+    }
+
+    public getBitmap3(_bitmapX: number, _bitmapY, width:number, height:number, texture: egret.Texture):egret.Bitmap
+    {
+        var spriteSheet:egret.SpriteSheet = new egret.SpriteSheet(texture);
+        var t = spriteSheet.createTexture(texture.toString(), _bitmapX, _bitmapY, width, height);
+
+        var b = new egret.Bitmap;
+        b.texture = t;
         return b;
     }
 }

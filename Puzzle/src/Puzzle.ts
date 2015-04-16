@@ -127,19 +127,13 @@ class Puzzle extends egret.DisplayObjectContainer
             {
                 var piece:Pieces = new Pieces();
                 piece.id = new egret.Point((j * this.pWidth + this.canvas.x), (i * this.pHeight + this.canvas.y));
-                piece.bmp = piece.getBitmap2(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.bmp);
-                piece.anchorX = i;
-                piece.anchorY = j;
-                piece.x = 400;
-                piece.y = 400;
-                //piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
-                //piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
+                piece.bmp = piece.getBitmap3(this.pWidth * i, this.pHeight * j, this.pWidth, this.pHeight, this.bmp.texture);
+                piece.x = this.piecesSpace.x + (this.piecesSpace.width - piece.width) * Math.random();
+                piece.y = this.piecesSpace.y + (this.piecesSpace.height - piece.height) * Math.random();
 
                 this.piecesList.push(piece);
-                if(i*j == 4)
-                {
-                    this.gameStage.addChild(piece);
-                }
+
+                this.gameStage.addChild(piece);
 
                 piece.touchChildren = piece.touchEnabled = true;
                 piece.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.startDrag, this);
@@ -152,22 +146,22 @@ class Puzzle extends egret.DisplayObjectContainer
     {
         var drag:utils.Drag = new utils.Drag();
         var target= <Pieces>(e.currentTarget);
-        drag.start(target, 0, 0 ,this.stopDraging);
+        drag.start(target, 0, 0 ,this.stopDraging, this);
     }
 
-    private stopDraging(obj:egret.DisplayObject):void
+    private stopDraging(obj:egret.DisplayObject, self:any):void
     {
         var target:Pieces = <Pieces>(obj);
-        for(var i:number = 0; i < this.piecesList.length; i++)
+        for(var i:number = 0; i < self.piecesList.length; i++)
         {
-            if (Math.abs(target.x - this.piecesList[i].id.x) < (target.width / 3) && Math.abs(target.y - this.piecesList[i].id.y) < (target.height / 3))
+            if (Math.abs(target.x - self.piecesList[i].id.x) < (target.width / 3) && Math.abs(target.y - self.piecesList[i].id.y) < (target.height / 3))
             {
-                target.x = this.piecesList[i].id.x;
-                target.y = this.piecesList[i].id.y;
+                target.x = self.piecesList[i].id.x;
+                target.y = self.piecesList[i].id.y;
             }
         }
 
-        this.checkOver();
+        self.checkOver();
     }
 
     private drawLines():void

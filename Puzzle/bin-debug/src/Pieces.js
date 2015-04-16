@@ -45,9 +45,9 @@ var Pieces = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    // 升级到1.6之后失效
     __egretProto__.getBitmap = function (_bitmapX, _bitmapY, width, height, name) {
         var baseTexture = RES.getRes(name);
-        baseTexture.drawToTexture();
         var bd = baseTexture.bitmapData;
         var texture = new egret.Texture();
         var scale = egret.MainContext.instance.rendererContext._texture_scale_factor;
@@ -66,12 +66,20 @@ var Pieces = (function (_super) {
         b.texture = texture;
         return b;
     };
+    // 鼠标的触发点出错
     __egretProto__.getBitmap2 = function (_bitmapX, _bitmapY, width, height, bmp) {
         var texture = new egret.RenderTexture;
         var rec = new egret.Rectangle(_bitmapX, _bitmapY, width, height);
         texture.drawToTexture(bmp, rec);
         var b = new egret.Bitmap;
         b.texture = texture;
+        return b;
+    };
+    __egretProto__.getBitmap3 = function (_bitmapX, _bitmapY, width, height, texture) {
+        var spriteSheet = new egret.SpriteSheet(texture);
+        var t = spriteSheet.createTexture(texture.toString(), _bitmapX, _bitmapY, width, height);
+        var b = new egret.Bitmap;
+        b.texture = t;
         return b;
     };
     return Pieces;

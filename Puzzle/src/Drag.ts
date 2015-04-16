@@ -9,6 +9,7 @@ module utils
         private offsetX:number = 0;
         private offsetY:number = 0;
         private stopCallBack:Function;
+        private self;
 
         public constructor()
         {
@@ -21,12 +22,13 @@ module utils
          * @param offsetX     X轴偏移
          * @param offsetY     Y轴偏移
          * */
-        public start(_dragObject:egret.DisplayObject, offsetX:number = 0, offsetY:number = 0, callBack?:Function) {
+        public start(_dragObject:egret.DisplayObject, offsetX:number = 0, offsetY:number = 0, callBack?:Function, self?:any) {
             this.offsetX = offsetX;
             this.offsetY = offsetY;
             //
             this.dragObject = _dragObject;
             this.stopCallBack = callBack;
+            this.self = self;
             this.dragObject.touchEnabled = true;
             this.dragObject.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEend, this);
@@ -50,6 +52,11 @@ module utils
             if (this.dragObject) {
                 this.dragObject.x = tempX;
                 this.dragObject.y = tempY;
+
+                if(this.stopCallBack)
+                {
+                    this.stopCallBack(this.dragObject, this.self);
+                }
             }
             else {
                 this.stop();
@@ -60,10 +67,6 @@ module utils
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEend, this);
             this.dragObject.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-            if(this.stopCallBack)
-            {
-                this.stopCallBack(this.dragObject);
-            }
         }
     }
 }

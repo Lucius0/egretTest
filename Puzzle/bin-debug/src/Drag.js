@@ -17,7 +17,7 @@ var utils;
          * @param offsetX     X轴偏移
          * @param offsetY     Y轴偏移
          * */
-        __egretProto__.start = function (_dragObject, offsetX, offsetY, callBack) {
+        __egretProto__.start = function (_dragObject, offsetX, offsetY, callBack, self) {
             if (offsetX === void 0) { offsetX = 0; }
             if (offsetY === void 0) { offsetY = 0; }
             this.offsetX = offsetX;
@@ -25,6 +25,7 @@ var utils;
             //
             this.dragObject = _dragObject;
             this.stopCallBack = callBack;
+            this.self = self;
             this.dragObject.touchEnabled = true;
             this.dragObject.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEend, this);
@@ -41,6 +42,9 @@ var utils;
             if (this.dragObject) {
                 this.dragObject.x = tempX;
                 this.dragObject.y = tempY;
+                if (this.stopCallBack) {
+                    this.stopCallBack(this.dragObject, this.self);
+                }
             }
             else {
                 this.stop();
@@ -50,9 +54,6 @@ var utils;
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
             egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEend, this);
             this.dragObject.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-            if (this.stopCallBack) {
-                this.stopCallBack(this.dragObject);
-            }
         };
         return Drag;
     })(egret.Sprite);
