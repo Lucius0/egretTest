@@ -820,8 +820,13 @@ class Example extends egret.DisplayObjectContainer
         //创建一个大图添加到容器上
         var bmpAsset:egret.gui.UIAsset = new egret.gui.UIAsset("rollMc_png");
         group.addElement(bmpAsset);
+        var btn:egret.gui.Button = new egret.gui.Button();
+        btn.label = "click me!";
+        this.guiLayer.addElement(btn);
         //设置viewport
         controller.viewport = group;
+        controller.validateNow();
         this.guiLayer.addElement(controller);
+
     }
 }

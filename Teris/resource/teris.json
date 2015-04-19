@@ -1,0 +1,14 @@
+{
+	"groups":[
+	{
+		"keys":"teris_json",
+		"name":"teris"
+	}],
+	"resources":[
+	{
+		"name":"teris_json",
+		"subkeys":"backImage,r1,r2,r3,r4",
+		"type":"sheet",
+		"url":"assets/simple/teris/teris.json"
+	}]
+}

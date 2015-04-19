@@ -629,7 +629,7 @@ var Example = (function (_super) {
         controller.y = 40;
         controller.width = 400;
         controller.height = 300;
-        controller.autoHideScrollBars = false;
+        controller.autoHideScrollBars = false; // 是否自动隐藏滚动条。
         controller.verticalScrollPolicy = egret.gui.ScrollPolicy.OFF; //关闭垂直滚动策略
         var group = new egret.gui.Group();
         this.guiLayer.addElement(group);
@@ -638,7 +638,11 @@ var Example = (function (_super) {
         group.addElement(bmpAsset);
         //设置viewport
         controller.viewport = group;
+        controller.validateNow();
         this.guiLayer.addElement(controller);
+        var btn = new egret.gui.Button();
+        btn.label = "click me!";
+        this.guiLayer.addElement(btn);
     };
     return Example;
 })(egret.DisplayObjectContainer);
