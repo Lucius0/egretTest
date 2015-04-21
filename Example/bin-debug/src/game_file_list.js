@@ -19,6 +19,7 @@ var game_file_list = [
 	"skins/simple/TitleWindowDemoSkin.js",
 	"skins/simple/TreeDisclosureButtonSkin.js",
 	"skins/simple/VScrollBarThumbSkin.js",
+	"Annular.js",
 	"AssetAdapter.js",
 	"JsonpReq.js",
 	"Light.js",

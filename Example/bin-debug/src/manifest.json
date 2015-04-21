@@ -20,6 +20,7 @@
 	"skins\\simple\\TreeDisclosureButtonSkin.exml",
 	"skins\\simple\\VScrollBarThumbSkin.exml",
 	"utils\\IDictionary.ts",
+	"Annular.ts",
 	"AssetAdapter.ts",
 	"JsonpReq.ts",
 	"Light.ts",

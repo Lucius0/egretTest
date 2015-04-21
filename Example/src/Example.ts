@@ -24,8 +24,8 @@ class Example extends egret.DisplayObjectContainer
     {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.loadGroup("rollMc");
-        //RES.loadGroup("preload");
+        //RES.loadGroup("rollMc");
+        RES.loadGroup("preload");
         //RES.loadGroup("particle");
         //RES.loadGroup("btnSource");
         //RES.loadGroup("p2");
@@ -85,7 +85,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createRollMc();
         //
-        this.createScrollBar();
+        //this.createScrollBar();
         //
         //this.createLightLine();
         //
@@ -116,12 +116,14 @@ class Example extends egret.DisplayObjectContainer
         //this.testMd5();
         //
         //this.testSocketIO();
-
+        //
         //this.testJsonp(); // 还没完成测试 教程：http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=2460&extra=&page=2
-
+        //
         //this.testGesture();
-
+        //
         //this.drawSector(100, 100, 50, 0, 270);
+
+        this.createAnnular();
     }
 
     /**
@@ -523,22 +525,29 @@ class Example extends egret.DisplayObjectContainer
         // 不规则遮罩，使用 RenderTexture + BlendMode 实现，这个调用方式在未来会进一步简化
         // 实现原理： 创建一个 Container，在其中先添加一个图片，然后再添加一个蒙版，并将蒙版的混合模式设置为擦除，然后将这个 Container 通过 RenderTexture 绘制为一个纹理
 
-        var mask = this.createBitmapByName("hero");
-        mask.width = 100;
-        mask.height = 100;
-        var maskW:number = mask.width;
-        var maskH:number = mask.height;
-        mask.x = (this.stage.stageWidth - mask.width) / 2;
-        mask.y = (this.stage.stageHeight - mask.height) / 2;
-        mask.blendMode = egret.BlendMode.ERASE_REVERSE;
-        this.addChild(mask);
+        //var mask = this.createBitmapByName("hero");
+        //mask.width = 100;
+        //mask.height = 100;
+        //var maskW:number = mask.width;
+        //var maskH:number = mask.height;
+        //mask.x = (this.stage.stageWidth - mask.width) / 2;
+        //mask.y = (this.stage.stageHeight - mask.height) / 2;
+        //mask.blendMode = egret.BlendMode.ERASE_REVERSE;
+        //this.addChild(mask);
 
-        var texture = new egret.RenderTexture();
-        //为保证擦除结果正确，传入clipRect参数，规定最终RenderTexture大小只有mask区域大小
-        texture.drawToTexture(this, new egret.Rectangle(mask.x, mask.y, maskW, maskH));
-        var bitmap = new egret.Bitmap(texture);
-        bitmap.x = 200;
-        egret.MainContext.instance.stage.addChild(bitmap);
+        var rect1 = new egret.Shape();
+        rect1.graphics.beginFill(0xFFFFFF,1);
+        rect1.graphics.drawCircle(this.stage.stageWidth / 2, this.stage.stageHeight / 2,50);
+        rect1.graphics.endFill();
+        rect1.blendMode = egret.BlendMode.ERASE_REVERSE;
+        this.addChild(rect1);
+
+        //var texture = new egret.RenderTexture();
+        ////为保证擦除结果正确，传入clipRect参数，规定最终RenderTexture大小只有mask区域大小
+        //texture.drawToTexture(this, new egret.Rectangle(mask.x, mask.y, maskW, maskH));
+        //var bitmap = new egret.Bitmap(texture);
+        //bitmap.x = 200;
+        //egret.MainContext.instance.stage.addChild(bitmap);
 
         // 矩形遮罩，使用 DisplayObject.mask 属性
         //var hero2 = this.createBitmapByName("hero");
@@ -827,6 +836,13 @@ class Example extends egret.DisplayObjectContainer
         controller.viewport = group;
         controller.validateNow();
         this.guiLayer.addElement(controller);
+    }
 
+    private createAnnular():void
+    {
+        var annular:Annular = new Annular(this.stage.stageWidth / 2, this.stage.stageHeight / 2, 50, 80, 0xFFC125);
+        //annular.setPercent(100);
+        annular.setPercentWithAnimation(100, 10000);
+        this.addChild(annular);
     }
 }
