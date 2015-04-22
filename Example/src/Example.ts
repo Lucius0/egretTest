@@ -73,7 +73,7 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.createDataGroup();
         //
-        //this.createList();
+        this.createList();
         //
         //this.createTitleWindow();
         //
@@ -122,8 +122,8 @@ class Example extends egret.DisplayObjectContainer
         //this.testGesture();
         //
         //this.drawSector(100, 100, 50, 0, 270);
-
-        this.createAnnular();
+        //
+        //this.createAnnular();
     }
 
     /**
@@ -358,6 +358,9 @@ class Example extends egret.DisplayObjectContainer
         dataList.selectedIndex = 0;
         dataList.addEventListener(egret.gui.ListEvent.ITEM_CLICK, this.listClickhandler, this);
         this.guiLayer.addElement(dataList);
+        //dataList.validateNow();
+        //dataList.dataGroup.verticalScrollPosition = dataList.dataGroup.contentHeight + dataList.height;
+        //滚动到底部，但是老是滚不到最后
     }
 
     private listClickhandler(e:egret.gui.ListEvent):void
@@ -813,17 +816,17 @@ class Example extends egret.DisplayObjectContainer
         sp.graphics.endFill();// if you want a sector without filling color , please remove this line.
         this.addChild(sp);
     }
-
+    private controller:egret.gui.Scroller;
     private createScrollBar():void
     {
-        var controller:egret.gui.Scroller = new egret.gui.Scroller();
+        this.controller = new egret.gui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        controller.x = 40;
-        controller.y = 40;
-        controller.width = 400;
-        controller.height = 300;
-        controller.autoHideScrollBars = false; // 是否自动隐藏滚动条。
-        controller.verticalScrollPolicy = egret.gui.ScrollPolicy.OFF; //关闭垂直滚动策略
+        this.controller.x = 40;
+        this.controller.y = 40;
+        this.controller.width = 400;
+        this.controller.height = 300;
+        //controller.autoHideScrollBars = false; // 是否自动隐藏滚动条。
+        //controller.verticalScrollPolicy = egret.gui.ScrollPolicy.OFF; //关闭垂直滚动策略
         var group:egret.gui.Group = new egret.gui.Group();
         this.guiLayer.addElement(group);
         //创建一个大图添加到容器上
@@ -831,11 +834,17 @@ class Example extends egret.DisplayObjectContainer
         group.addElement(bmpAsset);
         var btn:egret.gui.Button = new egret.gui.Button();
         btn.label = "click me!";
-        this.guiLayer.addElement(btn);
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchScrollBar, this);
+        group.addElement(btn);
         //设置viewport
-        controller.viewport = group;
-        controller.validateNow();
-        this.guiLayer.addElement(controller);
+        this.controller.viewport = group;
+        this.controller.validateNow();
+        this.guiLayer.addElement(this.controller);
+    }
+
+    private touchScrollBar(e:egret.TouchEvent):void
+    {
+        this.controller.throwVertically(this.controller.getMaxScrollTop());
     }
 
     private createAnnular():void

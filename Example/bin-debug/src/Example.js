@@ -61,7 +61,7 @@ var Example = (function (_super) {
         //
         //this.createDataGroup();
         //
-        //this.createList();
+        this.createList();
         //
         //this.createTitleWindow();
         //
@@ -110,7 +110,8 @@ var Example = (function (_super) {
         //this.testGesture();
         //
         //this.drawSector(100, 100, 50, 0, 270);
-        this.createAnnular();
+        //
+        //this.createAnnular();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -287,6 +288,8 @@ var Example = (function (_super) {
         dataList.selectedIndex = 0;
         dataList.addEventListener(egret.gui.ListEvent.ITEM_CLICK, this.listClickhandler, this);
         this.guiLayer.addElement(dataList);
+        dataList.validateNow();
+        dataList.dataGroup.verticalScrollPosition = dataList.dataGroup.contentHeight + dataList.height;
     };
     __egretProto__.listClickhandler = function (e) {
         console.log(e.item.name + " clicked");
@@ -633,14 +636,14 @@ var Example = (function (_super) {
         this.addChild(sp);
     };
     __egretProto__.createScrollBar = function () {
-        var controller = new egret.gui.Scroller();
+        this.controller = new egret.gui.Scroller();
         //注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-        controller.x = 40;
-        controller.y = 40;
-        controller.width = 400;
-        controller.height = 300;
-        controller.autoHideScrollBars = false; // 是否自动隐藏滚动条。
-        controller.verticalScrollPolicy = egret.gui.ScrollPolicy.OFF; //关闭垂直滚动策略
+        this.controller.x = 40;
+        this.controller.y = 40;
+        this.controller.width = 400;
+        this.controller.height = 300;
+        //controller.autoHideScrollBars = false; // 是否自动隐藏滚动条。
+        //controller.verticalScrollPolicy = egret.gui.ScrollPolicy.OFF; //关闭垂直滚动策略
         var group = new egret.gui.Group();
         this.guiLayer.addElement(group);
         //创建一个大图添加到容器上
@@ -648,11 +651,15 @@ var Example = (function (_super) {
         group.addElement(bmpAsset);
         var btn = new egret.gui.Button();
         btn.label = "click me!";
-        this.guiLayer.addElement(btn);
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchScrollBar, this);
+        group.addElement(btn);
         //设置viewport
-        controller.viewport = group;
-        controller.validateNow();
-        this.guiLayer.addElement(controller);
+        this.controller.viewport = group;
+        this.controller.validateNow();
+        this.guiLayer.addElement(this.controller);
+    };
+    __egretProto__.touchScrollBar = function (e) {
+        this.controller.throwVertically(this.controller.getMaxScrollTop());
     };
     __egretProto__.createAnnular = function () {
         var annular = new Annular(this.stage.stageWidth / 2, this.stage.stageHeight / 2, 50, 80, 0xFFC125);
