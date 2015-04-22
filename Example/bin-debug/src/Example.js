@@ -288,8 +288,9 @@ var Example = (function (_super) {
         dataList.selectedIndex = 0;
         dataList.addEventListener(egret.gui.ListEvent.ITEM_CLICK, this.listClickhandler, this);
         this.guiLayer.addElement(dataList);
-        dataList.validateNow();
-        dataList.dataGroup.verticalScrollPosition = dataList.dataGroup.contentHeight + dataList.height;
+        //dataList.validateNow();
+        //dataList.dataGroup.verticalScrollPosition = dataList.dataGroup.contentHeight + dataList.height;
+        //滚动到底部，但是老是滚不到最后
     };
     __egretProto__.listClickhandler = function (e) {
         console.log(e.item.name + " clicked");
