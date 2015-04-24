@@ -18,7 +18,6 @@ class SocketDemo
         this.webSocket.addEventListener(egret.Event.CONNECT, this.onSocketOpen, this);
 
         this.webSocket.connect("echo.websocket.org", 80);
-
     }
 
     private onSocketOpen():void
