@@ -79,6 +79,7 @@ var egret_file_list = [
 	"core/egret/context/localStorage/localStorage.js",
 	"core/egret/utils/XML.js",
 	"core/egret/utils/ByteArray.js",
+	"core/egret/utils/getOption.js",
 	"core/egret/tween/Tween.js",
 	"core/egret/tween/Ease.js",
 	"core/egret/media/Sound.js",

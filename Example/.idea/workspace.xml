@@ -383,9 +383,13 @@
   <component name="ToolWindowManager">
 <<<<<<< Updated upstream
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+<<<<<<< Updated upstream
     <editor active="true" />
 =======
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
+>>>>>>> Stashed changes
+=======
     <editor active="false" />
 >>>>>>> Stashed changes
     <layout>

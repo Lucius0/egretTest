@@ -114,6 +114,7 @@ var Example = (function (_super) {
         //this.drawSector(100, 100, 50, 0, 270);
         //
         //this.createAnnular();
+        //
         this.testHitCheck();
     };
     /**
@@ -137,14 +138,16 @@ var Example = (function (_super) {
         this.guiLayer.addElement(label);
     };
     __egretProto__.createButton = function () {
-        var btn = new egret.gui.Button();
-        btn.label = "测试按钮";
-        btn.y = 100;
-        this.guiLayer.addElement(btn);
-        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchTapHandle, this);
+        RegisterSkinController.setup();
+        this.btn = new egret.gui.Button();
+        this.btn.label = "测试按钮";
+        this.btn.y = 100;
+        this.guiLayer.addElement(this.btn);
+        this.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchTapHandle, this);
     };
     __egretProto__.touchTapHandle = function (e) {
-        console.log("touch tap");
+        //console.log("touch tap");
+        this.btn.skinName = "skins.simple.TestBtn" + "Skin";
     };
     __egretProto__.createToggleButton = function () {
         this.toggleBtns = [];
@@ -671,48 +674,10 @@ var Example = (function (_super) {
         annular.setPercentWithAnimation(100, 10000);
         this.addChild(annular);
     };
+    //private hc:hitCheck.HitCheck;
     __egretProto__.testHitCheck = function () {
-        this.hc = new hitCheck.HitCheck(0, 0, this.stage.stageWidth, this.stage.stageHeight);
-        var sp = new egret.Shape();
-        sp.graphics.beginFill(0xffffff);
-        sp.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
-        sp.graphics.endFill();
-        this.addChild(sp);
-        for (var i = 0; i < 200; i++) {
-            var x = Math.floor(Math.random() * this.stage.stageWidth);
-            var y = Math.floor(Math.random() * this.stage.stageHeight);
-            var speedX = Math.floor(Math.random() * 3) - 1.5;
-            var speedY = Math.floor(Math.random() * 3) - 1.5;
-            var checkShape = new egret.Shape();
-            checkShape.graphics.beginFill(0xD1D1D1);
-            checkShape.graphics.drawRect(x, y, 10, 10);
-            checkShape.graphics.endFill();
-            this.checkBlock.push(checkShape);
-            this.speed.push({ speedX: speedX, speedY: speedY });
-            this.addChild(checkShape);
-        }
-        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnter, this);
-    };
-    __egretProto__.onEnter = function (e) {
-        this.hc.clear();
-        for (var i = 0; i < this.checkBlock.length; i++) {
-            this.checkBlock[i].x += this.speed[i]["speedX"];
-            this.checkBlock[i].y += this.speed[i]["speedY"];
-            if (this.checkBlock[i].x <= 0 || this.checkBlock[i].x >= this.stage.stageWidth || this.checkBlock[i].y <= 0 || this.checkBlock[i].y >= this.stage.stageHeight) {
-                var x = Math.floor(Math.random() * this.stage.stageWidth);
-                var y = Math.floor(Math.random() * this.stage.stageHeight);
-                this.checkBlock[i].x = x;
-                this.checkBlock[i].y = y;
-                var speedX = Math.floor(Math.random() * 3) - 1.5;
-                var speedY = Math.floor(Math.random() * 3) - 1.5;
-                this.speed[i] = { speedX: speedX, speedY: speedY };
-            }
-            this.hc.check(this.checkBlock[i].x, this.checkBlock[i].y, this.checkBlock[i].width, this.checkBlock[i].height, this.checkBlock[i], true);
-        }
-        var temp = this.hc.checkHit();
-        for (var j = 0; j < temp.length; j++) {
-            temp[i].colorTransform.color = 0x000000;
-        }
+        var hcd = new HitCheckDemo();
+        this.addChild(hcd);
     };
     return Example;
 })(egret.DisplayObjectContainer);
