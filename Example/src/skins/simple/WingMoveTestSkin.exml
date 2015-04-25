@@ -7,13 +7,19 @@
 	<w:HostComponent name="egret.gui.Panel"/>
 	<w:Declarations/>
 	<e:Group id="group1" height="672" width="628" x="0" y="0">
-		<e:UIAsset source="end_background_png" x="0" y="0"/>
+		<e:UIAsset id="uiasset1" source="end_background_png" x="0" y="0"/>
 	</e:Group>
 	<e:transitions>
 		<e:Array>
-			<e:Transition toState="open" fromState="close">
+			<e:Transition toState="close" fromState="open">
 				<e:Parallel>
 					<e:Move target="{group1}" yFrom="-672"/>
+				</e:Parallel>
+			</e:Transition>
+			<e:Transition toState="open" fromState="close">
+				<e:Parallel>
+					<e:Fade target="{group1}" alphaFrom="0" disableLayout="true"/>
+					<e:Move target="{uiasset1}" yFrom="-672" disableLayout="true"/>
 				</e:Parallel>
 			</e:Transition>
 		</e:Array>

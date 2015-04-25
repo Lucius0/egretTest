@@ -31,9 +31,9 @@ egret_h5.startGame = function () {
     context.deviceContext = new egret.HTML5DeviceContext();
     context.netContext = new egret.HTML5NetContext();
 
-    egret.StageDelegate.getInstance().setDesignSize(480, 800);
+    egret.StageDelegate.getInstance().setDesignSize(640, 800);
     context.stage = new egret.Stage();
-    var scaleMode =  egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE ? egret.StageScaleMode.SHOW_ALL : egret.StageScaleMode.NO_SCALE;
+    var scaleMode =  egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE ? egret.StageScaleMode.NO_BORDER : egret.StageScaleMode.NO_SCALE;
     context.stage.scaleMode = scaleMode;
 
     //WebGL is a Egret's beta property. It's off by default.
@@ -57,6 +57,8 @@ egret_h5.startGame = function () {
     if(rootClass) {
         var rootContainer = new rootClass();
         if(rootContainer instanceof egret.DisplayObjectContainer){
+            //rootContainer.rotation = 90; // 旋转90
+            //rootContainer.x = 640; //重新定位坐标，这个值就按照游戏的分辨率设置
             context.stage.addChild(rootContainer);
         }
         else{

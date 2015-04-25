@@ -2,8 +2,6 @@ var Example = (function (_super) {
     __extends(Example, _super);
     function Example() {
         _super.call(this);
-        this.checkBlock = [];
-        this.speed = [];
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
     var __egretProto__ = Example.prototype;
@@ -115,7 +113,8 @@ var Example = (function (_super) {
         //
         //this.createAnnular();
         //
-        this.testHitCheck();
+        //this.testHitCheck();
+        this.setScreenOrientation();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -674,10 +673,26 @@ var Example = (function (_super) {
         annular.setPercentWithAnimation(100, 10000);
         this.addChild(annular);
     };
-    //private hc:hitCheck.HitCheck;
     __egretProto__.testHitCheck = function () {
         var hcd = new HitCheckDemo();
         this.addChild(hcd);
+    };
+    __egretProto__.setScreenOrientation = function () {
+        // 1.把launcher里的文件备份一下。平时制作的时候还是要正常样子的，要不都成歪脖了。等最终发布了再用修改后的文件
+        // 2.打开egret_loader.js ，修改这一行，因为理论上这是一个竖屏游戏，所以宽高要按照竖着的设定。
+        // egret.StageDelegate.getInstance().setDesignSize(640, 800);
+        //if(rootClass) {
+        //    var rootContainer = new rootClass();
+        //    if(rootContainer instanceof egret.DisplayObjectContainer){
+        //        rootContainer.rotation = 90; // 旋转90
+        //        rootContainer.x = 640; //重新定位坐标，这个值就按照游戏的分辨率设置
+        //        context.stage.addChild(rootContainer);
+        //    }
+        //    else{
+        //        throw new Error("Document Class must be the subclass to egret.DisplayObjectContainer!");
+        //    }
+        //}
+        this.testHitCheck();
     };
     return Example;
 })(egret.DisplayObjectContainer);

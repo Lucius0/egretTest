@@ -163,10 +163,6 @@ declare module skins.simple{
 	}
 }
 declare module skins.simple{
-	class WingPabelSkin extends egret.gui.Skin{
-	}
-}
-declare module skins.simple{
-	class WingSkin extends egret.gui.Skin{
+	class WingMoveTestSkin extends egret.gui.Skin{
 	}
 }
