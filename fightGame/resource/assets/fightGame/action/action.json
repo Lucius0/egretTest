@@ -1,0 +1,31 @@
+﻿{
+"mc": {
+	"chara": {
+		"frameRate":24,
+		"labels": [
+			{"name":"walk","frame":1},
+			{"name":"stand","frame":15}
+		],
+		"frames": [
+			{"res":"chara0000","x":-3.85,"y":0,"duration":2},
+			{"res":"chara0002","x":-2.85,"y":0,"duration":2},
+			{"res":"chara0004","x":4.15,"y":1,"duration":2},
+			{"res":"chara0006","x":12.15,"y":3,"duration":2},
+			{"res":"chara0008","x":19.15,"y":1,"duration":2},
+			{"res":"chara0010","x":18.15,"y":1,"duration":2},
+			{"res":"chara0012","x":21.15,"y":1,"duration":2},
+			{"res":"chara0014","x":-1.85,"y":0,"duration":1}
+		]
+	}
+},
+"res": {
+	"chara0000":{"x":0,"y":0,"w":31,"h":70},
+	"chara0002":{"x":31,"y":0,"w":36,"h":71},
+	"chara0004":{"x":67,"y":0,"w":33,"h":70},
+	"chara0006":{"x":0,"y":71,"w":29,"h":68},
+	"chara0008":{"x":29,"y":71,"w":26,"h":68},
+	"chara0010":{"x":55,"y":71,"w":32,"h":69},
+	"chara0012":{"x":87,"y":71,"w":34,"h":70},
+	"chara0014":{"x":0,"y":141,"w":28,"h":74}
+}
+}
