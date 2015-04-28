@@ -16,6 +16,7 @@
 	"skins\\simple\\TreeItemRendererSkin.exml",
 	"skins\\simple\\VScrollBarSkin.exml",
 	"skins\\simple\\VSliderThumbSkin.exml",
+	"AssetAdapter.ts",
 	"AutoOrient.ts",
 	"skins\\simple\\AlertSkin.exml",
 	"skins\\simple\\ButtonSkin.exml",

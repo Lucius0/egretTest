@@ -2,11 +2,19 @@ class Main extends egret.DisplayObjectContainer {
 
     public constructor() {
         super();
-        console.info("%cGameperture","color:#1ac2ff;font-weight:bold;",
-            "A Quick Game Devlope Template for Egret Engine!");
-        console.info("gitHub:",'https://github.com/tommyZZM/gameperture-egret');
         client.setRender(320,480);
-        this.addEventListener(egret.Event.ADDED_TO_STAGE,this.start,this);
+        this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStage,this);
+    }
+
+    private onAddToStage(event:egret.Event)
+    {
+        //注入自定义的素材解析器
+        egret.Injector.mapClass("egret.gui.IAssetAdapter", AssetAdapter);
+        //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+        egret.gui.Theme.load("resource/theme.thm");
+        //初始化Resource资源加载库
+        RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.start, this);
+        RES.loadConfig("resource/resource.json", "resource/");
     }
 
     private start(event: egret.Event) {
@@ -20,26 +28,30 @@ class Main extends egret.DisplayObjectContainer {
             });
         });
 
-        var a = new egret.Sprite();
-        a.width = a.height = 100;
-        a.graphics.beginFill(0xffffff);
-        a.graphics.drawRect(0,0,100,100);
-        a.graphics.endFill();
-        a.anchorX = a.anchorY = 0.5;
-        test.canvasele.GamePosition.instance.lockPosition(a,0.5,0.5)
-        a.touchEnabled = true;
-        this.addChild(a);
-        a.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin,this);
-        a.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onTouchEnd,this);
-        a.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this);
+        //var a = new egret.Sprite();
+        //a.width = a.height = 100;
+        //a.graphics.beginFill(0xffffff);
+        //a.graphics.drawRect(0,0,100,100);
+        //a.graphics.endFill();
+        //a.anchorX = a.anchorY = 0.5;
+        //test.canvasele.GamePosition.instance.lockPosition(a,0.5,0.5)
+        //a.touchEnabled = true;
+        //this.addChild(a);
+        //a.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin,this);
+        //a.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onTouchEnd,this);
+        //a.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this);
+        var guiLayer:egret.gui.UIStage = new egret.gui.UIStage();
+        this.addChild(guiLayer);
+        var bmpAsset:egret.gui.UIAsset = new egret.gui.UIAsset("bgImage");
+        guiLayer.addElement(bmpAsset);
     }
 
-    protected onTouchBegin(e:egret.Event){
+    public onTouchBegin(e:egret.Event){
         //console.log('onTouchBegin');
         egret.Tween.get(e.target).to({scaleX:0.8,scaleY:0.8},200);
     }
 
-    protected onTouchEnd(e:egret.Event){
+    public onTouchEnd(e:egret.Event){
         //console.log('onTouchEnd');
         egret.Tween.get(e.target).to({scaleX:1,scaleY:1},200);
     }

@@ -2,12 +2,19 @@ var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
         _super.call(this);
-        console.info("%cGameperture", "color:#1ac2ff;font-weight:bold;", "A Quick Game Devlope Template for Egret Engine!");
-        console.info("gitHub:", 'https://github.com/tommyZZM/gameperture-egret');
         client.setRender(320, 480);
-        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.start, this);
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
     var __egretProto__ = Main.prototype;
+    __egretProto__.onAddToStage = function (event) {
+        //注入自定义的素材解析器
+        egret.Injector.mapClass("egret.gui.IAssetAdapter", AssetAdapter);
+        //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+        egret.gui.Theme.load("resource/theme.thm");
+        //初始化Resource资源加载库
+        RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.start, this);
+        RES.loadConfig("resource/resource.json", "resource/");
+    };
     __egretProto__.start = function (event) {
         var _this = this;
         egret.Profiler.getInstance().run();
@@ -19,18 +26,22 @@ var Main = (function (_super) {
                 _this.onResize();
             });
         });
-        var a = new egret.Sprite();
-        a.width = a.height = 100;
-        a.graphics.beginFill(0xffffff);
-        a.graphics.drawRect(0, 0, 100, 100);
-        a.graphics.endFill();
-        a.anchorX = a.anchorY = 0.5;
-        test.canvasele.GamePosition.instance.lockPosition(a, 0.5, 0.5);
-        a.touchEnabled = true;
-        this.addChild(a);
-        a.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        a.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onTouchEnd, this);
-        a.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        //var a = new egret.Sprite();
+        //a.width = a.height = 100;
+        //a.graphics.beginFill(0xffffff);
+        //a.graphics.drawRect(0,0,100,100);
+        //a.graphics.endFill();
+        //a.anchorX = a.anchorY = 0.5;
+        //test.canvasele.GamePosition.instance.lockPosition(a,0.5,0.5)
+        //a.touchEnabled = true;
+        //this.addChild(a);
+        //a.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin,this);
+        //a.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onTouchEnd,this);
+        //a.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this);
+        var guiLayer = new egret.gui.UIStage();
+        this.addChild(guiLayer);
+        var bmpAsset = new egret.gui.UIAsset("bgImage");
+        guiLayer.addElement(bmpAsset);
     };
     __egretProto__.onTouchBegin = function (e) {
         //console.log('onTouchBegin');

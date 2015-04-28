@@ -16,6 +16,7 @@ var game_file_list = [
 	"skins/simple/TreeItemRendererSkin.js",
 	"skins/simple/VScrollBarSkin.js",
 	"skins/simple/VSliderThumbSkin.js",
+	"AssetAdapter.js",
 	"AutoOrient.js",
 	"skins/simple/AlertSkin.js",
 	"skins/simple/ButtonSkin.js",
