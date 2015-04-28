@@ -692,6 +692,7 @@ var Example = (function (_super) {
         //        throw new Error("Document Class must be the subclass to egret.DisplayObjectContainer!");
         //    }
         //}
+        // var scaleMode =  egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE ? egret.StageScaleMode.NO_BORDER : egret.StageScaleMode.NO_SCALE;
         this.testHitCheck();
     };
     return Example;
