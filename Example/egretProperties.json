@@ -1,5 +1,5 @@
 {
-	"document_class": "TestTs3",
+	"document_class": "Example",
 	"modules": [
 		{
 			"name": "core"

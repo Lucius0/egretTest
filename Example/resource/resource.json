@@ -5,7 +5,7 @@
 		"name":"preload"
 	},
 	{
-		"keys":"rollMc_png,rollMc_json",
+		"keys":"rollMc_png,rollMc_json,woman_png,man_png,woman_json,man_json",
 	  	"name":"rollMc"
 	},
 	{
@@ -21,6 +21,26 @@
 	  	"name":"p2"
 	}],
 	"resources":[
+	{
+	  "name":"woman_png",
+	  "type":"image",
+	  "url":"assets/simple/walkman/woman.png"
+	},
+	{
+	  "name":"woman_json",
+	  "type":"json",
+	  "url":"assets/simple/walkman/woman.json"
+	},
+	{
+	  "name":"man_png",
+	  "type":"image",
+	  "url":"assets/simple/walkman/man.png"
+	},
+	{
+	  "name":"man_json",
+	  "type":"json",
+	  "url":"assets/simple/walkman/man.json"
+	},
 	{
 	  "name":"p2_rect",
 	  "type":"image",

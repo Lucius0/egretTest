@@ -126,8 +126,10 @@ class Example extends egret.DisplayObjectContainer
         //this.createAnnular();
         //
         //this.testHitCheck();
+        //
+        //this.setScreenOrientation();
 
-        this.setScreenOrientation();
+        this.walkMan();
     }
 
     /**
@@ -886,5 +888,25 @@ class Example extends egret.DisplayObjectContainer
         //}
         // var scaleMode =  egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE ? egret.StageScaleMode.NO_BORDER : egret.StageScaleMode.NO_SCALE;
         this.testHitCheck();
+    }
+
+    private walkMan():void
+    {
+        var data = RES.getRes("man_json");
+        var texture = RES.getRes("man_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        var man = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+
+        var data = RES.getRes("woman_json");
+        var texture = RES.getRes("woman_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        var woman = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+
+        this.addChild(man);
+        man.x = 10;
+        man.play(-1);
+        this.addChild(woman);
+        woman.x = 300;
+        woman.play(-1);
     }
 }

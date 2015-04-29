@@ -114,7 +114,9 @@ var Example = (function (_super) {
         //this.createAnnular();
         //
         //this.testHitCheck();
-        this.setScreenOrientation();
+        //
+        //this.setScreenOrientation();
+        this.walkMan();
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -694,6 +696,22 @@ var Example = (function (_super) {
         //}
         // var scaleMode =  egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE ? egret.StageScaleMode.NO_BORDER : egret.StageScaleMode.NO_SCALE;
         this.testHitCheck();
+    };
+    __egretProto__.walkMan = function () {
+        var data = RES.getRes("man_json");
+        var texture = RES.getRes("man_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        var man = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+        var data = RES.getRes("woman_json");
+        var texture = RES.getRes("woman_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+        var woman = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+        this.addChild(man);
+        man.x = 10;
+        man.play(-1);
+        this.addChild(woman);
+        woman.x = 300;
+        woman.play(-1);
     };
     return Example;
 })(egret.DisplayObjectContainer);

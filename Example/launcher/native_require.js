@@ -92,7 +92,7 @@ egret_native.egretStart = function () {
         configurable: true
     });
 
-    var document_class = "TestTs3";
+    var document_class = "Example";
     var rootClass;
     if (document_class) {
         rootClass = egret.getDefinitionByName(document_class);
