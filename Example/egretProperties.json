@@ -1,5 +1,5 @@
 {
-	"document_class": "Example",
+	"document_class": "FishGameEntry",
 	"modules": [
 		{
 			"name": "core"

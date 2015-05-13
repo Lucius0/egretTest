@@ -92,7 +92,7 @@ egret_native.egretStart = function () {
         configurable: true
     });
 
-    var document_class = "Example";
+    var document_class = "FishGameEntry";
     var rootClass;
     if (document_class) {
         rootClass = egret.getDefinitionByName(document_class);

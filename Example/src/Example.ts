@@ -129,7 +129,9 @@ class Example extends egret.DisplayObjectContainer
         //
         //this.setScreenOrientation();
 
-        this.walkMan();
+        //this.walkMan();
+
+        this.createFishGame();
     }
 
     /**
@@ -908,5 +910,10 @@ class Example extends egret.DisplayObjectContainer
         this.addChild(woman);
         woman.x = 300;
         woman.play(-1);
+    }
+
+    private createFishGame():void
+    {
+        // 修改egretProperties.json的入口为FishGameEntry
     }
 }

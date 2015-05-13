@@ -1,0 +1,28 @@
+{
+	"groups":[
+	{
+		"keys":"fish1,fish2,fish3,fish4",
+		"name":"fish"
+	}],
+	"resources":[
+	{
+		"name":"fish1",
+		"type":"image",
+		"url":"assets/simple/fish/fish1.png"
+	},
+	{
+		"name":"fish2",
+		"type":"image",
+		"url":"assets/simple/fish/fish2.png"
+	},
+	{
+		"name":"fish3",
+		"type":"image",
+		"url":"assets/simple/fish/fish3.png"
+	},
+	{
+		"name":"fish4",
+		"type":"image",
+		"url":"assets/simple/fish/fish4.png"
+	}]
+}
