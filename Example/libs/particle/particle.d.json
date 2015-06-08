@@ -1,8 +1,8 @@
 {
 	"file_list": [
-		"Particle.js",
-		"ParticleSystem.js",
-		"GravityParticle.js",
-		"GravityParticleSystem.js"
+		"Particle.ts",
+		"ParticleSystem.ts",
+		"GravityParticle.ts",
+		"GravityParticleSystem.ts"
 	]
 }

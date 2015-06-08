@@ -61,6 +61,7 @@ declare module particle {
         reset(): void;
     }
 }
+
 /**
  * Copyright (c) Egret-Labs.org. Permission is hereby granted, free of charge,
  * to any person obtaining a copy of this software and associated documentation
@@ -155,6 +156,7 @@ declare module particle {
         _render(renderContext: egret.RendererContext): void;
     }
 }
+
 /**
  * Copyright (c) Egret-Labs.org. Permission is hereby granted, free of charge,
  * to any person obtaining a copy of this software and associated documentation
@@ -186,6 +188,7 @@ declare module particle {
         reset(): void;
     }
 }
+
 /**
  * Copyright (c) Egret-Labs.org. Permission is hereby granted, free of charge,
  * to any person obtaining a copy of this software and associated documentation
@@ -342,3 +345,4 @@ declare module particle {
         advanceParticle(particle: Particle, dt: number): void;
     }
 }
+

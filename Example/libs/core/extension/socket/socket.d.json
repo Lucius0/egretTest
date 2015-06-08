@@ -1,7 +1,7 @@
 {
 	"file_list": [
-		"HTML5WebSocket.js",
-		"NativeSocket.js",
-		"WebSocket.js"
+		"HTML5WebSocket.ts",
+		"NativeSocket.ts",
+		"WebSocket.ts"
 	]
 }
