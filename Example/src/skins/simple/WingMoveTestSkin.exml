@@ -10,16 +10,45 @@
 		<e:UIAsset id="uiasset1" source="end_background_png" x="0" y="0"/>
 	</e:Group>
 	<e:transitions>
-		<e:Array>
-			<e:Transition toState="close" fromState="open">
-				<e:Parallel>
-					<e:Move target="{group1}" yFrom="-672"/>
-				</e:Parallel>
-			</e:Transition>
+		<e:Array>			
 			<e:Transition toState="open" fromState="close">
 				<e:Parallel>
 					<e:Fade target="{group1}" alphaFrom="0" disableLayout="true"/>
 					<e:Move target="{uiasset1}" yFrom="-672" disableLayout="true"/>
+				</e:Parallel>
+			</e:Transition>
+			<e:Transition toState="close" fromState="open">
+				<e:Parallel>
+					<e:Parallel target="{group1}">
+						<e:Fade alphaFrom="1" alphaTo="0"/>
+						<e:Fade startDelay="500" alphaFrom="0" alphaTo="1"/>
+						<e:Move startDelay="1000" yFrom="-600" yTo="0" autoCenterTransform="true">
+							<e:easer>
+								<e:Bounce/>
+							</e:easer>
+						</e:Move>
+						<e:Move startDelay="1500" yFrom="600" yTo="0" autoCenterTransform="true">
+							<e:easer>
+								<e:Elastic/>
+							</e:easer>
+						</e:Move>
+						<e:Scale scaleXBy="1" scaleYBy="1" startDelay="2000" autoCenterTransform="true">
+							<e:easer>
+								<e:Linear/>
+							</e:easer>
+						</e:Scale>
+						<e:Scale startDelay="2500" scaleXBy="-1" scaleYBy="-1" autoCenterTransform="true">
+							<e:easer>
+								<e:Power/>
+							</e:easer>
+						</e:Scale>
+						<e:Rotate autoCenterTransform="true" startDelay="3000" angleFrom="0" angleTo="180">
+							<e:easer>
+								<e:Sine/>
+							</e:easer>
+						</e:Rotate>
+						<e:Rotate autoCenterTransform="true" startDelay="3500" angleFrom="180" angleTo="360"/>
+					</e:Parallel>
 				</e:Parallel>
 			</e:Transition>
 		</e:Array>
